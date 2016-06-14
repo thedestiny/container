@@ -1,10 +1,12 @@
-web.iml
+*.iml
 out/
 .idea/
 web/css/
 web/js/
 lib/
 *.jar
-workspace.xml
+
+
+
 
 
