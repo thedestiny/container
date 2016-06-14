@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <%--<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">--%>
 </head>
 <body>
@@ -27,6 +27,11 @@
                 <c:when test="${requestScope.err == '1002'}">
                     <div class="alert alert-danger">
                         <p>验证码错误</p>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.err == '1003'}">
+                    <div class="alert alert-danger">
+                        <p>账户不存在</p>
                     </div>
                 </c:when>
             </c:choose>
@@ -69,7 +74,6 @@
                 $("#pwd").val(CryptoJS.MD5(pwd + salt).toString());
             })
         })
-
 
     </script>
 </body>

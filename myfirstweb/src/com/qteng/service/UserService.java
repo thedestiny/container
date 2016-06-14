@@ -12,7 +12,6 @@ public class UserService {
 
     public Count getCount(String user) {
 
-
-        return null;
+        return dao.login(user);
     }
 }
