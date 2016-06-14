@@ -14,8 +14,7 @@
       <h1>idea ABC</h1>
       <div class="graphic-container">
         <blocket>
-          这是一个段落
-
+          这是一个段落,tomact 正常启动！
         </blocket>
 
 

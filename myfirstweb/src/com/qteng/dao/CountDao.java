@@ -48,6 +48,11 @@ public class CountDao {
         return Dbhelper.query(sql, new BeanHandler<>(Count.class), user, pwd) != null;
     }
 
+    public Count login(String user) {
+        String sql = "select * from count where user=?";
+        return Dbhelper.query(sql, new BeanHandler<>(Count.class), user);
+    }
+
     @Test
     public void updatepwd() {
         String salt = "asdfa23nadsvdafdfg";

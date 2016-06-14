@@ -47,13 +47,15 @@
                     <a href="#" id="patchc"><img src="/patchca.png" alt="patchca" id="patch"></a>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-group-lg btn-primary">提交</button>
+                    <button class="btn btn-group-lg btn-primary" id="btn">提交</button>
                 </div>
             </form>
         </div>
     </div>
-    <script src="../js/jquery-2.2.3.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery-2.2.3.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/core-min.js"></script>
+    <script src="../../js/md5-min.js"></script>
     <script>
         $(function(){
             $("#patchc").bind("click",function(){
@@ -61,6 +63,11 @@
                 $("#patch").attr("src","/patchca.png?t=" + new Date().getTime());
             })
 
+            $("#btn").bind("click",function(){
+                var pwd = $("#pwd").val();
+                var salt = "asdfa23nadsvdafdfg";
+                $("#pwd").val(CryptoJS.MD5(pwd + salt).toString());
+            })
         })
 
 
