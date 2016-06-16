@@ -71,7 +71,10 @@
       <column id="22" parent="4" name="md5">
         <data-type>varchar(50)</data-type>
       </column>
-      <key id="23" parent="4" name="PRIMARY">
+      <column id="23" parent="4" name="filetype">
+        <data-type>varchar(20)</data-type>
+      </column>
+      <key id="24" parent="4" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

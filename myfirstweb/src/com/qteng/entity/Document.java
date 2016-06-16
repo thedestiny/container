@@ -11,6 +11,15 @@ public class Document {
     private long size;
     private String displaysize;
     private String md5;
+    private String filetype;
+
+    public String getFiletype() {
+        return filetype;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
+    }
 
     public int getId() {
         return id;
