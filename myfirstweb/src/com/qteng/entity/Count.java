@@ -2,6 +2,7 @@ package com.qteng.entity;
 
 /**
  * Created by xieyue on 2016/6/8.
+ * Count
  */
 public class Count {
     private int id;
