@@ -16,6 +16,10 @@ import org.slf4j.LoggerFactory;
  */
 public class EmailTest {
     Logger logger = LoggerFactory.getLogger(EmailTest.class);
+
+    /**
+     * 发送普通邮件
+     */
     @Test
     public void sendTextEmail(){
         SimpleEmail email = new SimpleEmail();
@@ -37,6 +41,9 @@ public class EmailTest {
 
     }
 
+    /**
+     * 发送html邮件
+     */
     @Test
     public void sendHtmlEmail(){
         HtmlEmail email = new HtmlEmail();
@@ -58,6 +65,9 @@ public class EmailTest {
 
     }
 
+    /**
+     * 发送含有附件的邮件
+     */
     @Test
     public void sendAttachEmail(){
         EmailAttachment ea = new EmailAttachment();

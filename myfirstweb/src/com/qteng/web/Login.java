@@ -42,7 +42,7 @@ public class Login extends HttpServlet {
 
         logger.info("execute doPost");
         UserService us = new UserService();
-        Count count = us.getCount(name);
+        final Count count = us.getCount(name);
         if (count != null) {
             if (count.getPwd().equals(code)) {
                 logger.info("execute redirect");
@@ -50,12 +50,16 @@ public class Login extends HttpServlet {
                     @Override
                     public void run() {
                         // zhuxiaoxue0104@126.com 3131500685@qq.com
-                        String email = "1830683298@qq.com";
+                        // 15346153300@163.com
+                        String email = count.getEmail();
                         String subject = "email from Liang";
-                        String content = "Dear friends! now is" + DateTime.now().toString("yyyy-MM-dd HH:mm:ss") + "tips";
-                        EmailUtil.sendEmail(email, subject, content);
+                        String content = "Dear friends! now is" + new DateTime().toString("ZZ EE yyyy-MM-dd HH:mm:ss a") +
+                                "tips:货币战争五已经正式的发售，宋鸿兵的货币战争主要讲述各个大国之间围绕货币进行" +
+                                "的争斗，可谓杀人不见血，掠夺他人的财富,这是群发";
+                        // EmailUtil.sendEmail(email, subject, content);
                     }
                 }).start();
+                session.setAttribute("user",name);
                 resp.sendRedirect("/success");
             } else {
                 req.setAttribute("err", 1001);

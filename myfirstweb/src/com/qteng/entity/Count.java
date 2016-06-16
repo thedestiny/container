@@ -8,6 +8,15 @@ public class Count {
     private String user;
     private String password;
     private String pwd;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getId() {
         return id;
@@ -42,7 +51,7 @@ public class Count {
     }
 
 
-    public Count( String user, String password) {
+    public Count(String user, String password) {
         this.user = user;
         this.password = password;
     }
