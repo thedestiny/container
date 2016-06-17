@@ -44,6 +44,10 @@ public class DocumentService {
         }
     }
 
+    public Document findFile(String md5) {
+        return documentDao.findDocumentByMD5(md5);
+    }
+
 
     public List<Document> getAllDocument() {
         return documentDao.findAllDocument();
@@ -67,13 +71,17 @@ public class DocumentService {
 
     private String diplaySize(long fileSize) {
         String formatSize = "";
-        if (fileSize % 1024 < 103) {
+        if (fileSize  < 103) {
+            // 输出范围 0-103B
             return fileSize + "B";
         } else if ((fileSize % 1024 > 103) && (fileSize / 1024 < 103)) {
+            // 输出范围0.10KB-103KB
             formatSize = format(fileSize) + "KB";
         } else if ((fileSize / 1024 % 1024 > 1) && (fileSize / 1024 / 1024 < 1000)) {
+            // 输出范围 0.10MB-1000MB
             formatSize = format(fileSize / 1024) + "MB";
         } else if ((fileSize / 1024 / 1024 % 1024 > 1) && (fileSize / 1024 / 1024 / 1024 < 103)) {
+            //输出范围0.10GB-
             formatSize = format(fileSize / 1024 / 1024) + "GB";
         }
         if (formatSize.startsWith(".")) {
@@ -81,7 +89,6 @@ public class DocumentService {
         }
         return formatSize;
     }
-
     public String format(long num) {
         String str = num * 100 / 1024 + "";
         str = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
@@ -93,6 +100,7 @@ public class DocumentService {
         long n = 3441462000L;
         System.out.println(diplaySize(n));
     }
+
 
 
 }

@@ -41,6 +41,7 @@ public class UploadServlet extends HttpServlet {
         long fileSize = part.getSize();
         DocumentService documentDao = new DocumentService();
         documentDao.upload(fileName, fileSize, inputStream);
+        resp.sendRedirect("/download");
     }
 
     private String getFilename(Part part) {

@@ -9,20 +9,21 @@ import java.sql.SQLException;
 
 /**
  * Created by xieyue on 2016/6/8.
+ * Dbhelper
  */
 public class Dbhelper {
 
     public static void update(String sql, Object...  params) {
         QueryRunner queryRunner = new QueryRunner(ConnectionManager.getDataSource());
-
         try {
+            System.out.println("execute Dbhelper update");
+            Class<?> type = params.getClass();
+            System.out.println(type.toString());
             queryRunner.update(sql, params);
         } catch (SQLException e) {
             throw new DataAccessException("execute " + sql + " encounter exception: ", e);
         }
-
     }
-
     public static <T> T query(String sql, ResultSetHandler<T> handler, Object... params) {
         QueryRunner queryRunner = new QueryRunner();
         Connection connection = null;

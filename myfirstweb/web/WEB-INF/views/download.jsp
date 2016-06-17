@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <a href="#" class="btn btn-sm btn-primary right">上传</a>
+                <a href="/upload" class="btn btn-sm btn-primary pull-right">上传</a>
                 <div class="table table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -43,7 +43,13 @@
                                 <td>${document.filename}</td>
                                 <td>${document.displaysize}</td>
                                 <td>${document.filetype}</td>
-                                <td></td>
+                                <td>
+                                    <c:if test="${document.preview}">
+                                        <%--预览另外弹框，下载在本页--%>
+                                        <a href="/preview?file=${document.md5}" target="_blank" class="btn btn-sm btn-primary">preview</a>
+                                    </c:if>
+                                    <a href="/preview?file=${document.md5}&down=down"   class="btn btn-sm btn-success">download</a>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>

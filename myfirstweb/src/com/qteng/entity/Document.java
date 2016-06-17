@@ -5,7 +5,7 @@ package com.qteng.entity;
  * Document
  */
 public class Document {
-    private int id ;
+    private int id;
     private String filename;
     private String savename;
     private long size;
@@ -68,4 +68,21 @@ public class Document {
     public void setMd5(String md5) {
         this.md5 = md5;
     }
+
+    public boolean isPreview() {
+        if (filetype.equals(".jpg")
+                || filetype.equals(".jpeg")
+                || filetype.equals(".pdf")
+                || filetype.equals(".bmp")
+                || filetype.equals(".png")
+                || filetype.equals(".gif")
+                ) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
 }
