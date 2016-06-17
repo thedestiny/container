@@ -4,13 +4,14 @@ import com.qteng.entity.Document;
 import com.qteng.utils.Dbhelper;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by xieyue on 2016/6/16.
@@ -42,10 +43,31 @@ public class DocumentDao {
         String sql = "select * from document";
         return Dbhelper.query(sql, new BeanListHandler<>(Document.class));
     }
-    @Test
-    public void test(){
 
-        Object[] object = Utils(findDocumentById(2), "filename", "savename", "size", "displaysize", "md5", "filetype");
+    @Test
+    public void test() {
+        //  Object[] object = Utils(findDocumentById(2), "filename", "savename", "size", "displaysize", "md5", "filetype");
+        String sql = "INSERT INTO document (filename,savename,size,displaysize,md5,filetype)VALUE (?,?,?,?,?,?)";
+        // 判断是否有等号
+        String regex = "[(,]\\w+[,)]";
+        // String line = "asdf456";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(sql);
+        if (matcher.find()) {
+
+            System.out.println(matcher.group(0));
+//            System.out.println(matcher.group(2));
+//            System.out.println(matcher.group(3));
+//            System.out.println(matcher.group(4));
+        }
+
+
+//        String[] array = sql.split("[(,)]");
+//        for (String str : array) {
+//            System.out.println(str);
+//        }
+
+
     }
 
     // CharSequence

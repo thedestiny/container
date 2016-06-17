@@ -74,14 +74,14 @@ public class DocumentService {
         if (fileSize  < 103) {
             // 输出范围 0-103B
             return fileSize + "B";
-        } else if ((fileSize % 1024 > 103) && (fileSize / 1024 < 103)) {
+        } else if ((fileSize  > 103) && (fileSize / 1024 < 103)) {
             // 输出范围0.10KB-103KB
             formatSize = format(fileSize) + "KB";
-        } else if ((fileSize / 1024 % 1024 > 1) && (fileSize / 1024 / 1024 < 1000)) {
+        } else if (fileSize / 1024 / 1024 < 1000) {
             // 输出范围 0.10MB-1000MB
             formatSize = format(fileSize / 1024) + "MB";
-        } else if ((fileSize / 1024 / 1024 % 1024 > 1) && (fileSize / 1024 / 1024 / 1024 < 103)) {
-            //输出范围0.10GB-
+        } else if (fileSize / 1024 / 1024 / 1024 < 103) {
+            //输出范围0.10GB-103GB
             formatSize = format(fileSize / 1024 / 1024) + "GB";
         }
         if (formatSize.startsWith(".")) {
