@@ -38,11 +38,11 @@ public class DocumentDao {
 
     public void insertDocument(Document document) {
         String sql = "INSERT INTO document (filename,savename,size,displaysize,md5,filetype)VALUE (?,?,?,?,?,?)";
-        // 这是之前的写法
-        //Dbhelper.update(sql, document.getFilename(), document.getSavename(), document.getSize(),
-               // document.getDisplaysize(), document.getMd5(), document.getFiletype());
-        // 这是现在的写法
-		Dbhelper.update(sql,Utilssmall.helpGet(document,sql));
+        // 之前的写法
+//        Dbhelper.update(sql, document.getFilename(), document.getSavename(), document.getSize(),
+//                document.getDisplaysize(), document.getMd5(), document.getFiletype());
+        // 现在的写法
+        Dbhelper.update(sql, Utilssmall.helpGet(document, sql));
     }
 
     public List<Document> findAllDocument() {
@@ -54,15 +54,13 @@ public class DocumentDao {
     public void test() {
         //  Object[] object = Utils(findDocumentById(2), "filename", "savename", "size", "displaysize", "md5", "filetype");
         String sql = "INSERT INTO document (filename,savename,size,displaysize,md5,filetype)VALUE (?,?,?,?,?,?)";
-        Object[] object = Utilssmall.helpGet(findDocumentById(2),sql);
-        for (Object obj:object) {
+        Object[] object = Utilssmall.helpGet(findDocumentById(2), sql);
+        for (Object obj : object) {
             System.out.println(obj);
         }
     }
 
     // CharSequence 字段
-
-
 
 
     public Object[] Utils(Object document, String... prarms) {

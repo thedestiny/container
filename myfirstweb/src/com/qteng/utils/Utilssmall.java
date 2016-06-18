@@ -1,5 +1,6 @@
 package com.qteng.utils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,4 +54,23 @@ public class Utilssmall {
         }
         return objects;
     }
+
+    /**
+     * 获取表单元素的值，用于注册时比较方便
+     * @param request  传入request
+     * @param parameters 按照顺序放入表单元素name对应的值
+     * @return 返回value数组
+     */
+    public static String[] getForms(HttpServletRequest request, Object... parameters) {
+        int len = parameters.length;
+        String[] value = new String[len];
+        int i = 0;
+        for (Object name : parameters) {
+            value[i++]=request.getParameter(name.toString());
+        }
+        return value;
+    }
+
+
+
 }
