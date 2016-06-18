@@ -2,6 +2,7 @@ package com.qteng.web;
 
 import com.qteng.entity.Document;
 import com.qteng.service.DocumentService;
+
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,7 @@ public class PreviewServlet extends HttpServlet{
                 resp.addHeader("Content-Disposition","attachment;filename=\""+fileName+"\"");
                 // 设置文件大小，便于浏览器显示进度
                 resp.setContentLength((int) document.getSize());
-                return;
+                // return; 预览和下载都需要数据流，只是输出方式不同，因此不能终止文件传输
             }
             // 响应预览
             logger.debug(" PreviewServlet 预览文件");

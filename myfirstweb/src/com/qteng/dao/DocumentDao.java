@@ -2,14 +2,21 @@ package com.qteng.dao;
 
 import com.qteng.entity.Document;
 import com.qteng.utils.Dbhelper;
+import com.qteng.utils.Utilssmall;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,11 +39,10 @@ public class DocumentDao {
     public void insertDocument(Document document) {
         String sql = "INSERT INTO document (filename,savename,size,displaysize,md5,filetype)VALUE (?,?,?,?,?,?)";
         // 这是之前的写法
-//        Dbhelper.update(sql, document.getFilename(), document.getSavename(), document.getSize(),
-//                document.getDisplaysize(), document.getMd5(), document.getFiletype());
-        // 现在这样写，第一个参数为传进来的对象，后面的不定长参数与sql里面的？对应的值一致，就是为了不写get而已
-        Object[] object = Utils(document, "filename", "savename", "size", "displaysize", "md5", "filetype");
-        Dbhelper.update(sql, object);
+        //Dbhelper.update(sql, document.getFilename(), document.getSavename(), document.getSize(),
+               // document.getDisplaysize(), document.getMd5(), document.getFiletype());
+        // 这是现在的写法
+		Dbhelper.update(sql,Utilssmall.helpGet(document,sql));
     }
 
     public List<Document> findAllDocument() {
@@ -48,29 +54,17 @@ public class DocumentDao {
     public void test() {
         //  Object[] object = Utils(findDocumentById(2), "filename", "savename", "size", "displaysize", "md5", "filetype");
         String sql = "INSERT INTO document (filename,savename,size,displaysize,md5,filetype)VALUE (?,?,?,?,?,?)";
-        // 判断是否有等号
-        String regex = "[(,]\\w+[,)]";
-        // String line = "asdf456";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(sql);
-        if (matcher.find()) {
-
-            System.out.println(matcher.group(0));
-//            System.out.println(matcher.group(2));
-//            System.out.println(matcher.group(3));
-//            System.out.println(matcher.group(4));
+        Object[] object = Utilssmall.helpGet(findDocumentById(2),sql);
+        for (Object obj:object) {
+            System.out.println(obj);
         }
-
-
-//        String[] array = sql.split("[(,)]");
-//        for (String str : array) {
-//            System.out.println(str);
-//        }
-
-
     }
 
-    // CharSequence
+    // CharSequence 字段
+
+
+
+
     public Object[] Utils(Object document, String... prarms) {
         Object[] objects = new Object[prarms.length];
         int i = 0;

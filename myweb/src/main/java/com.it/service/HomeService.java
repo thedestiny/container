@@ -2,6 +2,9 @@ package com.it.service;
 
 import com.it.dao.MovieDao;
 import com.it.entity.Movie;
+import org.apache.commons.lang.StringUtils;
+
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -11,18 +14,22 @@ import java.util.List;
 public class HomeService {
     private MovieDao movieDao = new MovieDao();
 
-    public List<Movie> showFilm(Integer startNum) {
+    public Page<Movie> showFilm(Integer startNum, String search) {
         // 每页展示数目
         int pageNum = 10;
-        int total = new Movie().getCount().intValue();
-        int totalPage = total / pageNum + 1;
-        if (total % pageNum == 0) {
-            totalPage--;
+        if (StringUtils.isNotEmpty(search)) {
+            try {
+                search = new String(search.getBytes("ISO8859-1"), "utf-8");
+            } catch (Exception e) {
+                throw new RuntimeException("转换异常", e);
+            }
         }
-        if (startNum < 0) {
-            startNum = 1;
-        }
-       return movieDao.findMovie(startNum, pageNum);
+        int totalSize = movieDao.getMovieTotal(search).intValue();
+        System.out.println(search);
+        Page<Movie> page = new Page<>(startNum, pageNum, totalSize, search);
+        List<Movie> movieList = movieDao.findMovie(page.getStartNum(), pageNum, search);
+        page.setItems(movieList);
+        return page;
     }
 
 

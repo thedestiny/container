@@ -1,8 +1,6 @@
 package com.qteng.web;
 
-import com.qteng.entity.Document;
 import com.qteng.service.DocumentService;
-import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +13,7 @@ import java.io.IOException;
 
 /**
  * Created by xieyue on 2016/6/16.
+ * DownloadServlet
  */
 @WebServlet("/download")
 public class DownloadServlet extends HttpServlet {
@@ -31,8 +30,5 @@ public class DownloadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("execute DownloadServlet doPost");
-
-
-
     }
 }

@@ -2,6 +2,7 @@ package com.it.web;
 
 import com.it.entity.Movie;
 import com.it.service.HomeService;
+import com.it.service.Page;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +28,17 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("execute doGet in HomeServlet");
         String startNum = req.getParameter("page");
+        String search = req.getParameter("search");
+
+        System.out.println(search);
         int p = 1;
         if (StringUtils.isNumeric(startNum)) {
             p = Integer.parseInt(startNum);
+
         }
-        List<Movie> movieList = homeService.showFilm(p);
-        req.setAttribute("movieList", movieList);
-        logger.debug("execute movieList in HomeServlet,size{}",movieList.size());
-        System.out.println( "   as " + movieList.size());
-        req.setAttribute("p", p);
+        Page<Movie> movie = homeService.showFilm(p, search);
+        req.setAttribute("movie", movie);
         req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+
     }
 }

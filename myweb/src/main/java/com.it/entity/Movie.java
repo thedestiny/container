@@ -15,7 +15,6 @@ public class Movie {
     private String screen;
     private String director;
     private String summary;
-    private static Long count = MovieDao.getMovieTotal();
 
     public Movie() {
 
@@ -29,9 +28,6 @@ public class Movie {
         this.id = id;
     }
 
-    public Long getCount() {
-        return count;
-    }
 
     public String getSummary() {
         return summary;

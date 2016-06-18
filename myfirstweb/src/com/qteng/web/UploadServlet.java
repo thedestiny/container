@@ -45,13 +45,12 @@ public class UploadServlet extends HttpServlet {
     }
 
     private String getFilename(Part part) {
-        // Collection<String> conten = part.getHeaders("Content-Disposition");
         String content = part.getHeader("Content-Disposition");
         // 获取最后一个引号
         int n = content.lastIndexOf("\"");
         // 获取最后一个等号
         int m = content.lastIndexOf("=");
-        String[] con = content.split("\"", 10);
+        String[] con = content.split("\"");
         for (int i = 0; i < con.length; i++) {
             System.out.println(i + "  " + con[i]);
         }

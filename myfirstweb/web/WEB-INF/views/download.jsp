@@ -48,7 +48,7 @@
                                         <%--预览另外弹框，下载在本页--%>
                                         <a href="/preview?file=${document.md5}" target="_blank" class="btn btn-sm btn-primary">preview</a>
                                     </c:if>
-                                    <a href="/preview?file=${document.md5}&down=down"   class="btn btn-sm btn-success">download</a>
+                                    <a href="/preview?file=${document.md5}&down=down" class="btn btn-sm btn-success">download</a>
                                 </td>
                             </tr>
                         </c:forEach>

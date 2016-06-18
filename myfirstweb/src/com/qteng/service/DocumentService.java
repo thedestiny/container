@@ -7,6 +7,8 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import java.io.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +64,7 @@ public class DocumentService {
             dir.mkdir();
         }
         FileOutputStream outputStream = new FileOutputStream(new File(dir, saveName));
-        IOUtils.copy(inputStream,outputStream);
+        IOUtils.copy(inputStream, outputStream);
         outputStream.flush();
         outputStream.close();
         inputStream.close();
@@ -70,25 +72,27 @@ public class DocumentService {
 
 
     private String diplaySize(long fileSize) {
-        String formatSize = "";
-        if (fileSize  < 103) {
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
+        df.applyPattern(".##");
+       //  String formatSize = "";
+        if (fileSize < 103) {
             // 输出范围 0-103B
             return fileSize + "B";
-        } else if ((fileSize  > 103) && (fileSize / 1024 < 103)) {
+        } else if ((fileSize > 103) && (fileSize / 1024 < 103)) {
             // 输出范围0.10KB-103KB
-            formatSize = format(fileSize) + "KB";
-        } else if (fileSize / 1024 / 1024 < 1000) {
+            return df.format((double) fileSize / 1024) + "KB";
+        } else if ((fileSize / 1024 > 102) && (fileSize / 1024 / 1024 < 1000)) {
             // 输出范围 0.10MB-1000MB
-            formatSize = format(fileSize / 1024) + "MB";
-        } else if (fileSize / 1024 / 1024 / 1024 < 103) {
+            return df.format((double) fileSize / 1024 / 1024) + "MB";
+        } else if ((fileSize / 1024 / 1024 > 999) && (fileSize / 1024 / 1024 / 1024 < 103)) {
             //输出范围0.10GB-103GB
-            formatSize = format(fileSize / 1024 / 1024) + "GB";
+            return df.format((double) fileSize / 1024 / 1024 / 1024) + "GB";
+        } else{
+            return null;
         }
-        if (formatSize.startsWith(".")) {
-            formatSize = "0" + formatSize;
-        }
-        return formatSize;
+
     }
+
     public String format(long num) {
         String str = num * 100 / 1024 + "";
         str = str.substring(0, str.length() - 2) + "." + str.substring(str.length() - 2);
@@ -98,9 +102,12 @@ public class DocumentService {
     @Test
     public void test() {
         long n = 3441462000L;
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance();
+        decimalFormat.applyPattern(".##");
+        String num = decimalFormat.format((double) 1000 / 12);
+        System.out.println(num);
         System.out.println(diplaySize(n));
     }
-
 
 
 }
