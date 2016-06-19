@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a4243d4b-5389-4bcf-8114-a20c7164fec1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myfirstweb/out/artifacts/myfirstweb_war_exploded/WEB-INF/classes/com/qteng/web/Login$1.class" afterPath="$PROJECT_DIR$/../myfirstweb/out/artifacts/myfirstweb_war_exploded/WEB-INF/classes/com/qteng/web/Login$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myfirstweb/out/artifacts/myfirstweb_war_exploded/WEB-INF/classes/com/qteng/web/Login.class" afterPath="$PROJECT_DIR$/../myfirstweb/out/artifacts/myfirstweb_war_exploded/WEB-INF/classes/com/qteng/web/Login.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myfirstweb/out/production/myfirstweb/com/qteng/web/Login$1.class" afterPath="$PROJECT_DIR$/../myfirstweb/out/production/myfirstweb/com/qteng/web/Login$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myfirstweb/out/production/myfirstweb/com/qteng/web/Login.class" afterPath="$PROJECT_DIR$/../myfirstweb/out/production/myfirstweb/com/qteng/web/Login.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myfirstweb/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../myfirstweb/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myfirstweb/src/com/qteng/test/MagicCube.java" afterPath="$PROJECT_DIR$/../myfirstweb/src/com/qteng/test/MagicCube.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myfirstweb/src/com/qteng/web/Login.java" afterPath="$PROJECT_DIR$/../myfirstweb/src/com/qteng/web/Login.java" />
-    </list>
+    <list default="true" id="a4243d4b-5389-4bcf-8114-a20c7164fec1" name="Default" comment="" />
     <ignored path="thegiant.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -162,6 +154,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../myweb" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -591,12 +584,12 @@
       <option name="number" value="Default" />
       <updated>1466307420304</updated>
       <workItem from="1466307426871" duration="1152000" />
-      <workItem from="1466342756149" duration="33000" />
+      <workItem from="1466342756149" duration="206000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1185000" />
+    <option name="totallyTimeSpent" value="1358000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
