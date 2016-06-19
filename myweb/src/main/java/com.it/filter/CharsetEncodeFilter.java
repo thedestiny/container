@@ -19,7 +19,7 @@ import java.util.Set;
  * 属性urlPatterns 指定过滤的URL模式，也可以使用value来声明，URL模式必选
  *
  */
-// @WebFilter(filterName="CharsetEncodeFilter",urlPatterns="/*")
+@WebFilter(filterName="CharsetEncodeFilter",urlPatterns="/*")
 public class CharsetEncodeFilter implements Filter {
 
     private static final String IGNORE_URI = "filter.ignore";
@@ -72,7 +72,9 @@ class EncodingRequest extends HttpServletRequestWrapper {
         if (value != null) {
 
             try {
+                System.out.println("before " + value);
                 value = new String(value.getBytes("ISO8859-1"), "UTF-8");
+                System.out.println("after " + value);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException("ISO8859-1 transform UTF-8 encounter exception", e);
             }

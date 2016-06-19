@@ -18,11 +18,11 @@ public class HomeService {
         // 每页展示数目
         int pageNum = 10;
         if (StringUtils.isNotEmpty(search)) {
-            try {
-                search = new String(search.getBytes("ISO8859-1"), "utf-8");
-            } catch (Exception e) {
-                throw new RuntimeException("转换异常", e);
-            }
+//            try {
+//               search = new String(search.getBytes("ISO8859-1"), "utf-8");
+//            } catch (Exception e) {
+//                throw new RuntimeException("转换异常", e);
+//            }
         }
         int totalSize = movieDao.getMovieTotal(search).intValue();
         System.out.println(search);

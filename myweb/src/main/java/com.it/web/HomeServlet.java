@@ -29,8 +29,7 @@ public class HomeServlet extends HttpServlet {
         logger.debug("execute doGet in HomeServlet");
         String startNum = req.getParameter("page");
         String search = req.getParameter("search");
-
-        System.out.println(search);
+        System.out.println(" do get " + search);
         int p = 1;
         if (StringUtils.isNumeric(startNum)) {
             p = Integer.parseInt(startNum);
