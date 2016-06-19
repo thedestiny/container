@@ -4,6 +4,7 @@ package com.qteng.web;
 import com.qteng.entity.Count;
 import com.qteng.service.UserService;
 import com.qteng.utils.EmailUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String name = req.getParameter("count");
         String code = req.getParameter("pwd");
         String pat = req.getParameter("pat");
