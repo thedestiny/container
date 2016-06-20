@@ -20,7 +20,7 @@ public class MovieDao {
     Logger logger = LoggerFactory.getLogger(MovieDao.class);
 
     public Long getMovieTotal() {
-        String sql = "select count(*) from movie ";
+        String sql = "select count(*) from movie";
         return Dbhelp.query(sql, new ScalarHandler<Long>());
     }
     public Long getMovieTotal(String search) {

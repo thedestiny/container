@@ -17,23 +17,23 @@ import java.util.Set;
  * CharsetEncodeFilter
  * 属性filterName 是过滤器名称，可选
  * 属性urlPatterns 指定过滤的URL模式，也可以使用value来声明，URL模式必选
- *
  */
 @WebFilter(filterName="CharsetEncodeFilter",urlPatterns="/*")
 public class CharsetEncodeFilter implements Filter {
 
     private static final String IGNORE_URI = "filter.ignore";
     private static final String URI_SEPARATOR = "/";
-    private Set<String> ignoreUris = new HashSet<>();
+    private  Set<String> ignoreUris = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String originalUris = Config.get(IGNORE_URI);
-        if (originalUris != null) {
-            String[] uris = originalUris.split(URI_SEPARATOR);
-            for (String uri : uris) {
-                this.ignoreUris.add(uri);
-            }
+        if (originalUris == null) {
+           return;
+        }
+        String[] uris = originalUris.split(URI_SEPARATOR);
+        for (String uri : uris) {
+            this.ignoreUris.add(uri);
         }
     }
 
@@ -43,10 +43,11 @@ public class CharsetEncodeFilter implements Filter {
         String uri = request.getRequestURI();
         System.out.println("uri is : " + uri);
         if (!ignoreUris.contains(uri)) {
-            System.out.println("调用方法 : " + request.getMethod());
+            // System.out.println("调用方法 : " + request.getMethod());
             if (request.getMethod().equals("GET")) {
                 request = new EncodingRequest(request);
             } else {
+                System.out.println("post 设置");
                 request.setCharacterEncoding("UTF-8");
             }
         }
@@ -57,9 +58,7 @@ public class CharsetEncodeFilter implements Filter {
     public void destroy() {
 
     }
-
 }
-
 class EncodingRequest extends HttpServletRequestWrapper {
 
     public EncodingRequest(HttpServletRequest request) {
@@ -70,11 +69,9 @@ class EncodingRequest extends HttpServletRequestWrapper {
     public String getParameter(String name) {
         String value = super.getParameter(name);
         if (value != null) {
-
             try {
-                System.out.println("before " + value);
                 value = new String(value.getBytes("ISO8859-1"), "UTF-8");
-                System.out.println("after " + value);
+                // System.out.println("value is : " + value);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException("ISO8859-1 transform UTF-8 encounter exception", e);
             }
