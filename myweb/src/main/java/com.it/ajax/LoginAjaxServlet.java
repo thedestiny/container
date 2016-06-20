@@ -45,6 +45,14 @@ public class LoginAjaxServlet extends HttpServlet {
         String tel = req.getParameter("tel");
         logger.debug("the name is {}", name);
         PrintWriter printWriter = resp.getWriter();
+        if(name == null || address == null){
+            printWriter.print( "post" );
+            return;
+        }
+        name = new String(name.getBytes("utf-8"),"ISO8859-1");
+        address = new String(address.getBytes("utf-8"),"ISO8859-1");
+
+
         if ("jim".equals(name)) {
             printWriter.print("false" + "post" + name + address + tel);
         } else {

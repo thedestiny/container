@@ -41,18 +41,18 @@
 
 <script src="../../js/ajaxtest.js"></script>
 <script>
-    document.querySelector("#get").onclick = function () {
+    document.querySelector("#post").onclick = function () {
         // this 意义 指的是调用者
         var obj = {
             name: document.querySelector("#user").value,
             address: document.querySelector("#pwd").value,
             tel: 13032884462
         };
-        Ajax.get("/loginajax", obj, function (result) {
+        Ajax.post("/loginajax", function (result) {
             alert(result);
         });
     };
-    document.querySelector("#post").onclick = function () {
+    document.querySelector("#get").onclick = function () {
         // this 意义 指的是调用者
         var obj = {
             name: document.querySelector("#user").value,
@@ -66,29 +66,6 @@
         });
     };
 
-
-    //    document.querySelector("#user").onchange = function () {
-    //        var value = this.value;
-    //        var xmlHttp = XMLHttp();
-    //        xmlHttp.open("get", "/loginajax?value=" + value, true);
-    //        xmlHttp.onreadystatechange = function () {
-    //            // 获取xmlHttp状态码　获取http状态码
-    //            if (xmlHttp.readyState == "4" ) {
-    //                if (xmlHttp.status == "200") {
-    //                    // 获取服务器响应数据
-    //                    console.log("type is " + xmlHttp.responseType);
-    //                    if (xmlHttp.responseText == "true") {
-    //                        document.querySelector("#res").innerHTML = "success";
-    //                    } else {
-    //                        document.querySelector("#res").innerHTML = "this account is already exists";
-    //                    }
-    //                } else {
-    //                    alert("server is  exception ");
-    //                }
-    //            }
-    //        };
-    //        xmlHttp.send();
-    //    };
 
 </script>
 </body>

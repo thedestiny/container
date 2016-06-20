@@ -15,15 +15,13 @@ public class MovieDaoTest {
 
     @Test
     public void getMovieTotalTest() {
-        MovieDao.getMovieTotal("123");
+
     }
 
     @Test
     public void findMovieTest() {
-        List<Movie> movieList = movieDao.findMovie(10, 10,"10");
-        for (Movie movie : movieList) {
-            System.out.println(movie.getCount());
-        }
+
+
     }
 
 }
