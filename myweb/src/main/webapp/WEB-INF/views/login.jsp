@@ -46,8 +46,6 @@
 <script src="../../js/ajaxtest.js"></script>
 <script>
 
-
-
     document.getElementById("read").onclick = function () {
         console.log(123);
         var xmlHttp = Ajax.getxmlHttp();
@@ -127,7 +125,6 @@
         con.setAttribute("class","container");
         con.appendChild(div);
     }
-
 
 </script>
 </body>

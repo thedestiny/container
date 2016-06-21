@@ -41,13 +41,13 @@ public class CharsetEncodeFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String uri = request.getRequestURI();
-        System.out.println("uri is : " + uri);
+        // System.out.println("uri is : " + uri);
         if (!ignoreUris.contains(uri)) {
             // System.out.println("调用方法 : " + request.getMethod());
             if (request.getMethod().equals("GET")) {
                 request = new EncodingRequest(request);
             } else {
-                System.out.println("post 设置");
+                // System.out.println("post 设置");
                 request.setCharacterEncoding("UTF-8");
             }
         }
