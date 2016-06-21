@@ -38,7 +38,8 @@ public class HttpUtils {
             }
         }
     }
-    public static void getRequestStream(String url,String path) {
+
+    public static void getRequestStream(String url, String path) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
             HttpGet httpGet = new HttpGet(url);
@@ -46,8 +47,8 @@ public class HttpUtils {
             int httpCode = response.getStatusLine().getStatusCode();
             if (httpCode == 200) {
                 InputStream inputStream = response.getEntity().getContent();
-                FileOutputStream  fileOutputStream = new FileOutputStream(path);
-                IOUtils.copy(inputStream,fileOutputStream);
+                FileOutputStream fileOutputStream = new FileOutputStream(path);
+                IOUtils.copy(inputStream, fileOutputStream);
                 inputStream.close();
                 fileOutputStream.flush();
                 fileOutputStream.close();
@@ -60,7 +61,7 @@ public class HttpUtils {
             try {
                 httpClient.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
     }
