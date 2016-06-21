@@ -37,10 +37,51 @@
     <button class="btn btn-primary col-sm-3 col-sm-push-1" id="post">POST</button>
     <button class="btn btn-success col-sm-3 col-sm-push-2" id="get">GET</button>
 </div>
+<div class="panel">
+    <button class="btn btn-success col-sm-3 col-sm-push-2" id="read">READ</button>
+    <div id="show"></div>
+</div>
 
 
 <script src="../../js/ajaxtest.js"></script>
 <script>
+
+
+
+    document.getElementById("read").onclick = function () {
+        console.log(123);
+        var xmlHttp = Ajax.getxmlHttp();
+        xmlHttp.open("get","/read.xml",true);
+        xmlHttp.onreadystatechange=function(){
+            var state = xmlHttp.readyState;
+            var status = xmlHttp.status;
+            if (state == 4) {
+                if (status == 200) {
+                    document.getElementById("show").innerText= "";
+                    var xmlDoc = xmlHttp.responseXML;
+                    var type = xmlHttp.responseType;
+                    console.log("type is :" + type);
+                    var array = xmlDoc.getElementsByTagName("user");
+                    for (var i = 0; i < array.length; i++) {
+                        var user = array[0];
+                        var id = user.getAttribute("id");
+                        var name = user.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+                        var age = user.getElementsByTagName("age")[0].childNodes[0].nodeValue;
+                        var nation = user.getElementsByTagName("nation")[0].childNodes[0].nodeValue;
+                        var hobby = user.getElementsByTagName("hobby")[0].childNodes[0].nodeValue;
+                        console.log("the content is :" + id + name + age + nation + hobby);
+                        show(id,name,age,nation,hobby);
+                    }
+                } else {
+                    console.log("server is busy");
+                }
+            }
+
+        }
+        xmlHttp.send();
+    };
+
+
     document.querySelector("#post").onclick = function () {
         // this 意义 指的是调用者
         var obj = {
@@ -48,7 +89,7 @@
             address: document.querySelector("#pwd").value,
             tel: 13032884462
         };
-        Ajax.post("/loginajax", function (result) {
+        Ajax.post("/loginajax", obj, function (result) {
             alert(result);
         });
     };
@@ -59,12 +100,33 @@
             address: "China",
             tel: 13032884462
         };
-        var str = " ";
         console.log(str);
         Ajax.get("/loginajax", obj, function (result) {
             alert(result);
         });
     };
+
+    function show(id,name,age,nation,hobby){
+        var div = document.createElement("div");
+        var idp = document.createElement("p");
+        var nameh3 = document.createElement("h3");
+        var agesmall = document.createElement("small");
+        var nationp = document.createElement("p");
+        var hobbyp = document.createElement("p");
+        idp.innerHTML = id;
+        nameh3.innerHTML = name;
+        agesmall.innerHTML = age;
+        nationp.innerHTML = nation;
+        hobbyp.innerHTML = hobby;
+        div.appendChild(idp);
+        nameh3.appendChild(agesmall);
+        div.appendChild(nameh3);
+        div.appendChild(nationp);
+        div.appendChild(hobbyp);
+        var con = document.getElementById("show");
+        con.setAttribute("class","container");
+        con.appendChild(div);
+    }
 
 
 </script>
