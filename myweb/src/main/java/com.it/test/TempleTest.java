@@ -1,5 +1,6 @@
 package com.it.test;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class TempleTest {
         for (String str : array) {
             System.out.println(str);
         }
+        DigestUtils.md5Hex("456789");
+
     }
 
 }

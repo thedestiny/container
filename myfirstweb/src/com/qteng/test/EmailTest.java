@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by xieyue on 2016/6/14.
+ * EmailTest
  */
 public class EmailTest {
     Logger logger = LoggerFactory.getLogger(EmailTest.class);

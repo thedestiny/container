@@ -72,23 +72,5 @@ public class Login extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }
 
-
-//        CountDao dao = new CountDao();
-//        if (dao.login(name, code)) {
-//            logger.info("execute redirect");
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    String email = "3131500685@163com";
-//                    String subject = "登陆验证提醒";
-//                    String content = "word cub is running!";
-//                    EmailUtil.sendEmail(email, subject, content);
-//                }
-//            }).start();
-//            resp.sendRedirect("/success");
-//        } else {
-//            req.setAttribute("err", 1001);
-//            req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
-//        }
     }
 }

@@ -47,6 +47,11 @@ public class HttpUtils {
             int httpCode = response.getStatusLine().getStatusCode();
             if (httpCode == 200) {
                 InputStream inputStream = response.getEntity().getContent();
+                int size = inputStream.available();
+                if(size <1024*100 || size >1024*1024*1024 || size >1024*50){
+                    System.out.println("file is to small or big!");
+                    return;
+                }
                 FileOutputStream fileOutputStream = new FileOutputStream(path);
                 IOUtils.copy(inputStream, fileOutputStream);
                 inputStream.close();

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by xieyue on 2016/6/14.
+ * EmailUtil
  */
 public class EmailUtil {
 
@@ -20,17 +21,17 @@ public class EmailUtil {
     public static void sendEmail(String email, String subject, String content) {
 
         HtmlEmail htmlEmail = new HtmlEmail();
-        htmlEmail.setHostName(Config.get("mail.hostname"));
-        htmlEmail.setSmtpPort(Integer.parseInt(Config.get("mail.port", "25")));
-        htmlEmail.setAuthentication(Config.get("mail.username"), Config.get("mail.password"));
-        htmlEmail.setCharset(Config.get("mail.charset"));
+        htmlEmail.setHostName(Config.get("mail.hostname")); // 主机号
+        htmlEmail.setSmtpPort(Integer.parseInt(Config.get("mail.port", "25"))); // 端口号
+        htmlEmail.setAuthentication(Config.get("mail.username"), Config.get("mail.password")); //授权码
+        htmlEmail.setCharset(Config.get("mail.charset")); // 字符集
         logger.debug("begin execute the try/catch");
         try {
-            htmlEmail.setFrom(Config.get("mail.fromEmail"));
-            htmlEmail.setSubject(subject);
-            htmlEmail.setHtmlMsg(content);
-            htmlEmail.addTo(email);
-            htmlEmail.send();
+            htmlEmail.setFrom(Config.get("mail.fromEmail")); // 发送方
+            htmlEmail.setSubject(subject); // 主题
+            htmlEmail.setHtmlMsg(content); // 内容
+            htmlEmail.addTo(email);  // 接收方
+            htmlEmail.send();  // 发送
             logger.debug(content);
             logger.debug("the email to {} is successful", email);
 

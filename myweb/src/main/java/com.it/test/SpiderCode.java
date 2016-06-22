@@ -1,4 +1,4 @@
-package com.it.ajax;
+package com.it.test;
 
 import com.it.utils.HttpUtils;
 import org.jsoup.Jsoup;
@@ -7,19 +7,22 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 /**
  * Created by xieyue on 2016/6/21.
- * ReptitleCode
+ * SpiderCode
  */
-public class ReptitleCode {
+public class SpiderCode {
 
     @Test
     public void downLoadImage() throws Exception {
-        int page = 7;
+        int page = 1;
         while (page++ < 10) {
             Document document = Jsoup.connect("http://www.topit.me/pop?p=" + page).cookie("is_click", "1").get();
             Elements elements = document.select("#content .catalog .e>a");
@@ -46,6 +49,7 @@ public class ReptitleCode {
 //            }
                 //System.out.println("图片地址 ：" + imgsrc);
                 if (Integer.parseInt(num) > 10) {
+                    System.out.println("downloading.....");
                     HttpUtils.getRequestStream(imgsrc, "G:/images/" + imgsrc.substring(imgsrc.lastIndexOf("/") + 1));
                 }
                 Thread.sleep(2000);
@@ -54,5 +58,30 @@ public class ReptitleCode {
 
     }
 
+    @Test
+    public void selectImage() throws Exception {
 
+        File filedoc = new File("G:/images");
+        File[] files = filedoc.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File file : files) {
+            String name = file.getName();
+            FileInputStream fileInputStream = new FileInputStream(file);
+            int size = fileInputStream.available();
+            fileInputStream.close();
+            System.out.println(size);
+            if (size < 1024 * 100) {
+                if (file.isFile()) {
+                    System.out.println(file);
+                    if (file.delete()) {
+                        System.out.println(name + " is delete success!");
+                    } else {
+                        System.out.println(name + " is delete failure!");
+                    }
+                }
+            }
+        }
+    }
 }

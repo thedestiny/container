@@ -3,6 +3,7 @@ package com.qteng.service;
 import com.qteng.dao.DocumentDao;
 import com.qteng.entity.Document;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -107,6 +108,11 @@ public class DocumentService {
         String num = decimalFormat.format((double) 1000 / 12);
         System.out.println(num);
         System.out.println(diplaySize(n));
+
+        String save = FileUtils.byteCountToDisplaySize(123400000);
+        System.out.println(save);
+
+
     }
 
 
