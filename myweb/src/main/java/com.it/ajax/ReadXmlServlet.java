@@ -28,11 +28,11 @@ public class ReadXmlServlet extends HttpServlet {
         printWriter.print("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         printWriter.print("<users>");
         printWriter.print("<user id=\"1001\"><name>tom</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
-        printWriter.print("<user id=\"1001\"><name>tom</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
-        printWriter.print("<user id=\"1001\"><name>tom</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
-        printWriter.print("<user id=\"1001\"><name>tom</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
-        printWriter.print("<user id=\"1001\"><name>tom</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
-        printWriter.print("<user id=\"1001\"><name>tom</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
+        printWriter.print("<user id=\"1002\"><name>jom</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
+        printWriter.print("<user id=\"1003\"><name>sam</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
+        printWriter.print("<user id=\"1004\"><name>tim</name><age>18</age><nation>USA</nation><hobby>ball</hobby></user>");
+        printWriter.print("<user id=\"1005\"><name>jom</name><age>18</age><nation>CAN</nation><hobby>ball</hobby></user>");
+        printWriter.print("<user id=\"1006\"><name>pom</name><age>18</age><nation>UK</nation><hobby>ball</hobby></user>");
         printWriter.print("</users>");
         printWriter.flush();
         printWriter.close();

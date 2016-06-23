@@ -17,13 +17,14 @@
             margin-top: 20px;
             line-height: 25px;
         }
+        .panel{
+            position: absolute;
+            top:120px;
+        }
     </style>
 </head>
 <body>
 
-<form action="/login" class="form-group" id="form" method="post" enctype="application/x-www-form-urlencoded">
-
-</form>
 <div class="container col-sm-4 col-sm-push-3">
     <div id="username" class="form-group form-inline ">
         <label for="user" class="control-label col-sm-4">Account</label>
@@ -34,50 +35,85 @@
         <label for="pwd" class="control-label col-sm-4">Password</label>
         <input type="text" id="pwd" class="form-control col-sm-8 col-sm-pull-1" name="pwd" placeholder="input password">
     </div>
-    <button class="btn btn-primary col-sm-3 col-sm-push-1" id="post">POST</button>
-    <button class="btn btn-success col-sm-3 col-sm-push-2" id="get">GET</button>
+    <div class="form-group">
+        <button class="btn btn-primary col-sm-3 col-sm-push-1" id="post">POST</button>
+        <button class="btn btn-success col-sm-3 col-sm-push-2" id="get">GET</button>
+        <button class="btn btn-success col-sm-3 col-sm-push-3" id="read">READ</button>
+    </div>
+    <div class="panel form-group">
+        <ul id="show"></ul>
+    </div>
+
 </div>
-<div class="panel">
-    <button class="btn btn-success col-sm-3 col-sm-push-2" id="read">READ</button>
-    <div id="show"></div>
-</div>
+
+
 
 
 <script src="../../js/ajaxtest.js"></script>
 <script>
 
-    document.getElementById("read").onclick = function () {
-        console.log(123);
+    //    document.getElementById("read").onclick = function () {
+    //        console.log(123);
+    //        var xmlHttp = Ajax.getxmlHttp();
+    //        xmlHttp.open("get", "/read.xml", true);
+    //        xmlHttp.onreadystatechange = function () {
+    //            var state = xmlHttp.readyState;
+    //            var status = xmlHttp.status;
+    //            if (state == 4) {
+    //                if (status == 200) {
+    //                    document.getElementById("show").innerText = "";
+    //                    var xmlDoc = xmlHttp.responseXML;
+    //                    var array = xmlDoc.getElementsByTagName("user");
+    //                    for (var i = 0; i < array.length; i++) {
+    //                        var user = array[i];
+    //                        var id = user.getAttribute("id");
+    //                        var name = user.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+    //                        var age = user.getElementsByTagName("age")[0].childNodes[0].nodeValue;
+    //                        var nation = user.getElementsByTagName("nation")[0].childNodes[0].nodeValue;
+    //                        var hobby = user.getElementsByTagName("hobby")[0].childNodes[0].nodeValue;
+    //                        console.log("the content is :" + id + name + age + nation + hobby);
+    //                        show(id, name, age, nation, hobby);
+    //                    }
+    //                } else {
+    //                    console.log("server is busy");
+    //                }
+    //            }
+    //        };
+    //        xmlHttp.send();
+    //    };
+
+    document.getElementById("read").onclick = get("/read.xml", function (xmlDoc) {
+        var array = xmlDoc.getElementsByTagName("user");
+        for (var i = 0; i < array.length; i++) {
+            var user = array[i];
+            var id = user.getAttribute("id");
+            var name = user.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+            var age = user.getElementsByTagName("age")[0].childNodes[0].nodeValue;
+            var nation = user.getElementsByTagName("nation")[0].childNodes[0].nodeValue;
+            var hobby = user.getElementsByTagName("hobby")[0].childNodes[0].nodeValue;
+            console.log("the content is :" + id + name + age + nation + hobby);
+            show(id, name, age, nation, hobby);
+        }
+    });
+    function get(url, fun) {
+        console.log("execute log!");
         var xmlHttp = Ajax.getxmlHttp();
-        xmlHttp.open("get","/read.xml",true);
-        xmlHttp.onreadystatechange=function(){
+        xmlHttp.open("get", url, true);
+        xmlHttp.onreadystatechange = function () {
             var state = xmlHttp.readyState;
             var status = xmlHttp.status;
             if (state == 4) {
                 if (status == 200) {
-                    document.getElementById("show").innerText= "";
+                    document.getElementById("show").innerText = "";
                     var xmlDoc = xmlHttp.responseXML;
-                    var type = xmlHttp.responseType;
-                    console.log("type is :" + type);
-                    var array = xmlDoc.getElementsByTagName("user");
-                    for (var i = 0; i < array.length; i++) {
-                        var user = array[0];
-                        var id = user.getAttribute("id");
-                        var name = user.getElementsByTagName("name")[0].childNodes[0].nodeValue;
-                        var age = user.getElementsByTagName("age")[0].childNodes[0].nodeValue;
-                        var nation = user.getElementsByTagName("nation")[0].childNodes[0].nodeValue;
-                        var hobby = user.getElementsByTagName("hobby")[0].childNodes[0].nodeValue;
-                        console.log("the content is :" + id + name + age + nation + hobby);
-                        show(id,name,age,nation,hobby);
-                    }
+                    fun(xmlDoc);
                 } else {
                     console.log("server is busy");
                 }
             }
-
-        }
+        };
         xmlHttp.send();
-    };
+    }
 
 
     document.querySelector("#post").onclick = function () {
@@ -104,8 +140,8 @@
         });
     };
 
-    function show(id,name,age,nation,hobby){
-        var div = document.createElement("div");
+    function show(id, name, age, nation, hobby) {
+        var li = document.createElement("li");
         var idp = document.createElement("p");
         var nameh3 = document.createElement("h3");
         var agesmall = document.createElement("small");
@@ -116,14 +152,14 @@
         agesmall.innerHTML = age;
         nationp.innerHTML = nation;
         hobbyp.innerHTML = hobby;
-        div.appendChild(idp);
+        li.appendChild(idp);
         nameh3.appendChild(agesmall);
-        div.appendChild(nameh3);
-        div.appendChild(nationp);
-        div.appendChild(hobbyp);
+        li.appendChild(nameh3);
+        li.appendChild(nationp);
+        li.appendChild(hobbyp);
         var con = document.getElementById("show");
-        con.setAttribute("class","container");
-        con.appendChild(div);
+        con.setAttribute("class", "container");
+        con.appendChild(li);
     }
 
 </script>
