@@ -23,6 +23,7 @@ public class TransServlet extends HttpServlet {
         String url = "http://fanyi.youdao.com/openapi.do?keyfrom=kaishengit&" +
                 "key=1587754017&type=data&doctype=xml&version=1.1&q=" + word;
         String xml = HttpUtils.getText(url);
+        System.out.println(url);
         resp.setContentType("text/xml;charset=utf-8");
         PrintWriter printWriter = resp.getWriter();
         printWriter.print(xml);

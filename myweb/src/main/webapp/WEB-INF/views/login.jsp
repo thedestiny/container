@@ -17,9 +17,10 @@
             margin-top: 20px;
             line-height: 25px;
         }
-        .panel{
+
+        .panel {
             position: absolute;
-            top:120px;
+            top: 120px;
         }
     </style>
 </head>
@@ -45,8 +46,6 @@
     </div>
 
 </div>
-
-
 
 
 <script src="../../js/ajaxtest.js"></script>
@@ -81,39 +80,43 @@
     //        };
     //        xmlHttp.send();
     //    };
-
-    document.getElementById("read").onclick = get("/read.xml", function (xmlDoc) {
-        var array = xmlDoc.getElementsByTagName("user");
-        for (var i = 0; i < array.length; i++) {
-            var user = array[i];
-            var id = user.getAttribute("id");
-            var name = user.getElementsByTagName("name")[0].childNodes[0].nodeValue;
-            var age = user.getElementsByTagName("age")[0].childNodes[0].nodeValue;
-            var nation = user.getElementsByTagName("nation")[0].childNodes[0].nodeValue;
-            var hobby = user.getElementsByTagName("hobby")[0].childNodes[0].nodeValue;
-            console.log("the content is :" + id + name + age + nation + hobby);
-            show(id, name, age, nation, hobby);
-        }
-    });
-    function get(url, fun) {
-        console.log("execute log!");
-        var xmlHttp = Ajax.getxmlHttp();
-        xmlHttp.open("get", url, true);
-        xmlHttp.onreadystatechange = function () {
-            var state = xmlHttp.readyState;
-            var status = xmlHttp.status;
-            if (state == 4) {
-                if (status == 200) {
-                    document.getElementById("show").innerText = "";
-                    var xmlDoc = xmlHttp.responseXML;
-                    fun(xmlDoc);
-                } else {
-                    console.log("server is busy");
-                }
-            }
+    (function () {
+        document.getElementById("read").onclick = function (){
+            get("/read.xml", fun);
         };
-        xmlHttp.send();
-    }
+        function fun (xmlDoc) {
+            var array = xmlDoc.getElementsByTagName("user");
+            for (var i = 0; i < array.length; i++) {
+                var user = array[i];
+                var id = user.getAttribute("id");
+                var name = user.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+                var age = user.getElementsByTagName("age")[0].childNodes[0].nodeValue;
+                var nation = user.getElementsByTagName("nation")[0].childNodes[0].nodeValue;
+                var hobby = user.getElementsByTagName("hobby")[0].childNodes[0].nodeValue;
+                console.log("the content is :" + id + name + age + nation + hobby);
+                show(id, name, age, nation, hobby);
+            }
+        }
+        function get(url, fun) {
+            console.log("execute log!");
+            var xmlHttp = Ajax.getxmlHttp();
+            xmlHttp.open("get", url, true);
+            xmlHttp.onreadystatechange = function () {
+                var state = xmlHttp.readyState;
+                var status = xmlHttp.status;
+                if (state == 4) {
+                    if (status == 200) {
+                        document.getElementById("show").innerText = "";
+                        var xmlDoc = xmlHttp.responseXML;
+                        fun(xmlDoc);
+                    } else {
+                        console.log("server is busy");
+                    }
+                }
+            };
+            xmlHttp.send();
+        }
+    })();
 
 
     document.querySelector("#post").onclick = function () {
