@@ -36,7 +36,7 @@ public class SmallUtils {
         }
         Object[] objects = new Object[map.size()];
         // sql拆分为数组
-        String[] array = sql.split("[ (),=]?");
+        String[] array = sql.split("[ (),=<>?]");
         for (String value : array) {
             if (map.containsKey(value)) {
                 try {
