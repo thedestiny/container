@@ -1,25 +1,25 @@
 package com.it.web;
 
-import com.it.utils.SmallUtils;
+import com.it.servive.IssueService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
 
 /**
- * Created by xieyue on 2016/6/24.
- * UploadServlet
+ * Created by xieyue on 2016/6/25.
+ * IssueQueServlet
  */
-@WebServlet("/upload")
-@MultipartConfig
-public class UploadServlet extends HttpServlet {
+@WebServlet("issue/que")
+public class IssueQueServlet extends HttpServlet {
 
-
+    private Logger logger = LoggerFactory.getLogger(IssueQueServlet.class);
+    private IssueService issueService = new IssueService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -27,9 +27,9 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Part part = req.getPart("file");
-        String filename = SmallUtils.getFilename(part);
-        System.out.println(filename);
-    }
 
+        String username = req.getParameter("username");
+        String content = req.getParameter("content");
+
+    }
 }

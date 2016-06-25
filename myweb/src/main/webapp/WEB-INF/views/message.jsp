@@ -19,28 +19,43 @@
             <h1>The new message</h1>
         </div>
     </nav>
+    <button class="btn btn-primary" id="btn1">handle</button>
     <div class="panel">
         <div class="panel-heading">
             <h3>Today is Germ VS UK</h3>
-            <a type="button" class="btn btn-block btn-primary" id="btn" style="display: none">
-                你有<span class="badge" id="num"></span>条新消息未读
-            </a>
+            <div class="alert">
+                <a type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+                <a type="button" class="btn btn-block btn-primary" id="btn" style="display: none">
+                    你有<span class="badge" id="num"></span>条新消息未读
+                </a>
+            </div>
         </div>
         <div class="panel-body" id="msg">
             <c:forEach var="message" items="${messageList}">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                            ${message.author}
+                <div class="alert">
+                    <a type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                                ${message.author}
+                        </div>
+                        <div class="panel-body">
+                                ${message.msg}
+                        </div>
                     </div>
-                    <div class="panel-body">
-                            ${message.msg}
-                    </div>
+
                 </div>
             </c:forEach>
         </div>
     </div>
 </div>
+
+
 <script src="../../js/jquery-2.2.3.min.js"></script>
+<script src="../../js/handlebars-v4.0.5.js"></script>
 <script type="qteng/template" id="temp">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -50,8 +65,25 @@
             {{message}}
         </div>
     </div>
-
-
+</script>
+<script type="temple" id="handle">
+<div class="panel panel-default">
+    <div class="panel-heading">
+            {{author}}
+            {{#if isVip}}
+            <span class="text-danger">VIP</span>
+            {{else}}
+            <span class="text-danger">UIP</span>
+            {{/if}}
+    </div>
+    <div class="panel-body">
+         <ul>
+            {{#each msg}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
 </script>
 <script>
     $(function () {
@@ -75,8 +107,8 @@
             for (var i = newData.length - 1; i >= 0; i--) {
                 var item = newData[i];
                 var temp = $("#temp").html();
-                temp = temp.replace("{{author}}",item.author);
-                temp = temp.replace("{{message}}",item.msg);
+                temp = temp.replace("{{author}}", item.author);
+                temp = temp.replace("{{message}}", item.msg);
                 $msg.prepend(temp);
             }
             idMax = newData[0].id;
@@ -84,6 +116,17 @@
             $btn.fadeOut();
         });
         setInterval(update, 10000);
+
+        $("#btn1").click(function(){
+            var json = {
+                "author": "李四",
+                "msg": ["晚上请李总吃饭", "6月25日发合同", "7月1日去出差"],
+                "isVip": true};
+            var source = $("#handle").html();
+            var temple = Handlebars.compile(source);
+            var html = temple(json);
+            $("#msg").prepend(html);
+        });
     });
 </script>
 

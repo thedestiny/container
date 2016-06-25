@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>FileUPload</title>
+    <title>ImageUPload</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="js/webuploader/webuploader.css">
     <style>
@@ -20,20 +20,14 @@
 <body>
 
 <div>
-    <h2 class="page-header">Ajax FileUpload</h2>
+    <h2 class="page-header">Ajax ImageUpload</h2>
 </div>
-
 <div class="container">
-    <div id="load">选择文件</div>
-    <h2>文件上传队列</h2>
-    <ul id="list"></ul>
+    <div id="load">选择image</div>
+    <h2>img上传队列</h2>
+    <ul id="list" class="list-unstyled list-inline"></ul>
     <button id="btn" class="btn btn-primary">上传文件</button>
 </div>
-
-
-
-
-
 <script src="js/jquery-2.2.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/webuploader/webuploader.min.js"></script>
@@ -47,7 +41,10 @@
             <span id="num" class="text-info" ></span>
         </div>
     </div>
+
 </div>
+
+
 </script>
 
 <script>
@@ -57,19 +54,30 @@
             server: "/upload",
             pick: "#load",
             fileVal: "file",
-            auto: false
+            auto: false,
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
         });
         var $list = $("#list");
         uploader.on("fileQueued", function (file) {
-            var html = '<li id = "' + file.id + '">' + file.name + '</li>';
+            var html = '<li id = "' + file.id + '"><img class="img-thumbnail"></li>';
             console.log(html);
             $list.append(html);
+            uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    return;
+                }
+                $("#" + file.id).find("img").attr("src", src);
+            }, 100, 100);
         });
         uploader.on("uploadProgress", function (file, percentage) {
             percentage = parseInt(percentage * 100);
             var $li = $("#" + file.id);
-            var n =$li.find(".progress").length;
-            if (n > 0 ) {
+            var n = $li.find(".progress").length;
+            if (n > 0) {
                 $li.find("#bar").css("width", percentage + "%");
                 $li.find("#num").html(percentage + "%");
             } else {
@@ -77,21 +85,17 @@
                 $li.append(temp);
             }
         });
-        uploader.on("uploadSuccess",function(file){
-            $("#"+file.id).css("color","cyan");
+        uploader.on("uploadSuccess", function (file) {
+            $("#" + file.id).css("color", "cyan");
         });
-        uploader.on("uploadError",function(file){
-            $("#"+file.id).css("color","red");
+        uploader.on("uploadError", function (file) {
+            $("#" + file.id).css("color", "red");
         });
-        uploader.on("uploadComplete",function(file){
+        uploader.on("uploadComplete", function (file) {
             console.log(file.name + "is execute !");
-            var $li = $("#" + file.id);
-            setTimeout(function(){
-                $li.find(".progress").outerHTML = "";
-            },1000);
         });
-        $("#btn").bind("click",function(){
-           uploader.upload();
+        $("#btn").bind("click", function () {
+            uploader.upload();
         });
 
 
