@@ -25,8 +25,8 @@
                 <input type="password" class="form-control " name="password" id="pwd">
             </div>
             <div class=" form-group">
-                <label for="resume">简介</label>
-                <input type="text" class="form-control " name="resume" id="resume">
+                <label for="email">email</label>
+                <input type="email" class="form-control " name="email" id="email">
             </div>
             <div class=" form-group">
                 <button style="display: block" id="btn" type="button" class="btn btn-primary">注册</button>
@@ -53,7 +53,7 @@
                     required: true,
                     minlength: 6
                 },
-                resume: {
+                email: {
                     required: true,
                     minlength: 6
 
@@ -69,7 +69,7 @@
                     required: "请输入密码",
                     minlength: "最少{0}个"
                 },
-                resume: {
+                email: {
                     required: "请输入简介",
                     minlength: "最少{0}个"
                 }
@@ -101,9 +101,7 @@
             }
         });
         $btn.click(function () {
-            console.log("sadfsdfaaaaaS");
             $("#regForm").submit();
-
         });
     });
 </script>

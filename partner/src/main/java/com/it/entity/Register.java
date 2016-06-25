@@ -19,6 +19,18 @@ public class Register {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Register{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", identify='" + identify + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

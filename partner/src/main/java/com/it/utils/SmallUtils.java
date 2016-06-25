@@ -1,5 +1,7 @@
 package com.it.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.servlet.http.Part;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -41,7 +43,9 @@ public class SmallUtils {
         for (String value : array) {
             if (map.containsKey(value)) {
                 try {
+                    System.out.println(count + " : " + map.get(value).invoke(object).toString());
                     objects[count++] = map.get(value).invoke(object);
+
                 } catch (Exception e) {
                     throw new RuntimeException("method.invoke(?) 抛出异常", e);
                 }
@@ -62,8 +66,14 @@ public class SmallUtils {
 //                }
 //            }
 //        }
-
-        return objects;
+        Object[] objects1 = new Object[count];
+        int n =0;
+        for (Object obj: objects) {
+            if(obj != null){
+                objects1[n++] = obj;
+            }
+        }
+        return objects1;
     }
 
     public static String getFilename(Part part) {

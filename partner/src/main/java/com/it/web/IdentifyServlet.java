@@ -2,8 +2,11 @@ package com.it.web;
 
 import com.it.dao.UserDao;
 import com.it.entity.User;
+import com.it.servive.RegisterService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +23,8 @@ import java.io.IOException;
 public class IdentifyServlet extends HttpServlet {
 
     private UserDao userDao = new UserDao();
+    private Logger logger = LoggerFactory.getLogger(IdentifyServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -35,7 +40,8 @@ public class IdentifyServlet extends HttpServlet {
             User user = new User(name, email, pwd, md5pwd, timeNow);
             userDao.insert(user);
         } else {
-
+            logger.debug("注册超时，请重新注册！");
+            resp.sendRedirect("/register");
         }
         // 此步认证成功，进行注册，将数据移至user中。detail.jsp 是记录用户的详细信息，可以跳过。
         req.getRequestDispatcher("WEB-INF/views/detail.jsp").forward(req, resp);

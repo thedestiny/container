@@ -30,7 +30,7 @@ public class Dbhelp {
             logger.debug("execute update in Dbhelp");
             return queryRunner.update(sql, parameters);
         } catch (SQLException e) {
-            throw new DataAccessException("execute sql" + sql + "encounter exception", e);
+            throw new DataAccessException("execute sql " + sql + "encounter exception", e);
         }
     }
 
