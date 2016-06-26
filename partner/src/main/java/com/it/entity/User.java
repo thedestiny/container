@@ -23,6 +23,15 @@ public class User {
     private Integer ansnum;
     private Integer accept;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public User(String username, String email, String password, String md5pwd, String time) {
         this.username = username;
         this.email = email;

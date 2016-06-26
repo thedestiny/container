@@ -3,6 +3,7 @@ package com.it.dao;
 import com.it.entity.User;
 import com.it.utils.Dbhelp;
 import com.it.utils.SmallUtils;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 
 /**
  * Created by xieyue on 2016/6/25.
@@ -52,4 +53,8 @@ public class UserDao {
         return Dbhelp.update(sql, SmallUtils.helpGet(user, sql));
     }
 
+    public User login(User user) {
+        String sql = "select * from user where username = ? and password = ?";
+        return Dbhelp.query(sql,new BeanHandler<>(User.class),SmallUtils.helpGet(user,sql));
+    }
 }

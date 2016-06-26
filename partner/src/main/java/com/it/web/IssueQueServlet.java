@@ -15,7 +15,7 @@ import java.io.IOException;
  * Created by xieyue on 2016/6/25.
  * IssueQueServlet
  */
-@WebServlet("issue/que")
+@WebServlet("/issue/que")
 public class IssueQueServlet extends HttpServlet {
 
     private Logger logger = LoggerFactory.getLogger(IssueQueServlet.class);

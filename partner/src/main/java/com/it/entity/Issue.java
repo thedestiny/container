@@ -10,11 +10,20 @@ public class Issue {
     private Integer id;
     private String questioner;
     private String question;
-    private String answer;
+    private Integer answer;
     private Integer like;
     private Integer right;
     private Integer skim;
     private String time;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Issue() {
     }
@@ -51,11 +60,11 @@ public class Issue {
         this.question = question;
     }
 
-    public String getAnswer() {
+    public Integer getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(Integer answer) {
         this.answer = answer;
     }
 

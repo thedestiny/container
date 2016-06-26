@@ -12,43 +12,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
- * Created by xieyue on 2016/6/25.
- * IssueAnsServlet
+ * Created by xieyue on 2016/6/26.
+ * IssueServlet
  */
-@WebServlet("/issue/ans")
-public class IssueAnsServlet extends HttpServlet {
-
-    private Logger logger = LoggerFactory.getLogger(IssueAnsServlet.class);
+@WebServlet("/issue")
+public class IssueServlet extends HttpServlet {
+    private Logger logger = LoggerFactory.getLogger(IssueServlet.class);
     private IssueService issueService = new IssueService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String question = req.getParameter("question");
-        Issue issue = issueService.findIssue(question);
-        req.setAttribute("issue", issue);
-        req.getRequestDispatcher("/WEb-INF/views/answer.jsp").forward(req, resp);
+
+        List<Issue> issueList = issueService.getAllIssue();
+        req.setAttribute("issueList",issueList);
+        logger.debug(" execute IssueServlet doGet ");
+        req.getRequestDispatcher("/WEB-INF/views/issue.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String question = req.getParameter("question");
         String username = req.getParameter("username");
-        String answer = req.getParameter("answer");
-        logger.debug(" username is :" + username + " question is : " + answer);
-        boolean flag = issueService.dealAns(question, username, answer);
+        String question = req.getParameter("question");
+        logger.debug(" username is :" + username + " question is : " + question);
+        boolean flag = issueService.dealQue(username, question);
         PrintWriter out = resp.getWriter();
         resp.setContentType("text/html;charset=utf-8");
-        if (flag) {
+        if(flag){
             out.print("true");
-        } else {
+        } else{
             out.print("false");
         }
         out.flush();
         out.close();
-
 
     }
 }
