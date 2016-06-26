@@ -27,16 +27,25 @@
                     提问：
                 </div>
                 <div>
-                    <a href="/issue/ans?question=${issue.question}" style="font-size: 20px">${issue.content}</a>
+                    <a href="#" style="font-size: 20px">${issue.content}</a>
                 </div>
             </div>
         </div>
     </div>
     <c:forEach var ="answer" items="${answerList}">
-
+        <div>
+            <div>
+                <a style="font-size: 18px">${answer.user}</a>&nbsp;&nbsp;于
+                <small>${answer.time}</small>
+                回答：
+            </div>
+            <div>
+                <a href="#" style="font-size: 20px">${answer.content}</a>
+            </div>
+        </div>
     </c:forEach>
     <hr>
-    <form class="form-inline row" action="/issue" method="post">
+    <form class="form-inline row" action="/issue/ans" method="post">
         <div class="form-group ">
             <label for="username">用户名</label>
             <div class="input-group ">
@@ -47,6 +56,7 @@
             <label for="answer">回答</label>
             <div class="input-group">
                 <input type="text"  class="form-control col-sm-6" id="answer" name="answer">
+                <input type="text"  class="form-control col-sm-6 hide" id="question" name="question" value="${issue.question}">
             </div>
         </div>
         <button class="btn btn-primary" id="btn" type="submit">回答</button>

@@ -1,6 +1,7 @@
 package com.it.servive;
 
 import com.it.dao.IssueDao;
+import com.it.entity.Answer;
 import com.it.entity.Issue;
 import com.it.utils.SmallUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -64,9 +65,15 @@ public class IssueService {
      * @param content  回答内容
      * @return 是否提交成功
      */
-    public boolean dealAns(String question, String username, String content) {
+    public boolean dealAns(String question, String username, String content) throws IOException {
         String time = SmallUtils.getTime();
         File fileAns = new File(ansPath + question);
+        logger.debug("fileAns is :" + fileAns.getPath() + fileAns.getName());
+        if (!fileAns.exists()) {
+            fileAns.createNewFile();
+        }
+        logger.debug(" after fileAns is :" + fileAns.getPath() + fileAns.getName());
+        Answer answer = new Answer(username, time, content);
         String ansSave = username + "+++" + time + "+++" + content;
         ansList.add(ansSave);
         try {
@@ -111,5 +118,23 @@ public class IssueService {
             }
         }
         return issue;
+    }
+
+    public List<Answer> findAllAnswer(String question) throws IOException {
+
+        File fileAns = new File(ansPath + question);
+        if (!fileAns.exists()) {
+            fileAns.createNewFile();
+            logger.debug(" server is busy!");
+            return null;
+        }
+        List<String> list = FileUtils.readLines(fileAns, "utf-8");
+        List<Answer> answerList = new ArrayList<>();
+        for (String str : list) {
+            String[] array = str.split("\\+++");
+            array[1] = array[1].replace("/", " ");
+            answerList.add(new Answer(array[0], array[1], array[2]));
+        }
+        return answerList;
     }
 }

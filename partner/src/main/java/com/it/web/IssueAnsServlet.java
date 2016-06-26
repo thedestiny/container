@@ -1,5 +1,6 @@
 package com.it.web;
 
+import com.it.entity.Answer;
 import com.it.entity.Issue;
 import com.it.servive.IssueService;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Created by xieyue on 2016/6/25.
@@ -27,8 +29,10 @@ public class IssueAnsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String question = req.getParameter("question");
         Issue issue = issueService.findIssue(question);
+        List<Answer> answerList = issueService.findAllAnswer(question);
         req.setAttribute("issue", issue);
-        req.getRequestDispatcher("/WEb-INF/views/answer.jsp").forward(req, resp);
+        req.setAttribute("answerList", answerList);
+        req.getRequestDispatcher("/WEB-INF/views/answer.jsp").forward(req, resp);
     }
 
     @Override
