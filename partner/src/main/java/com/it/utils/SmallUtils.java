@@ -92,11 +92,11 @@ public class SmallUtils {
 
 
     public static String getTime() {
-        return new DateTime().toString("MM-dd/HH:mm:ss");
+        return new DateTime().toString("MM-dd HH:mm:ss");
     }
 
-    public static String StringgetTime(int hours) {
-        return new DateTime().plusHours(hours).toString("MM-dd/HH:mm:ss");
+    public static String getTime(int hours) {
+        return new DateTime().plusHours(hours).toString("MM-dd HH:mm:ss");
     }
 
     /**

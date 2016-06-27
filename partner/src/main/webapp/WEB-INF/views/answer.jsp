@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
 </head>
 <body>
-<div class="page-header">
+<div class="page-header" id="user">
     <h1>${user.username} ,欢迎回答</h1>
 </div>
 <div class="container">
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <c:forEach var ="answer" items="${answerList}">
+    <c:forEach var="answer" items="${answerList}">
         <div>
             <div>
                 <a style="font-size: 18px">${answer.user}</a>&nbsp;&nbsp;于
@@ -45,7 +45,7 @@
         </div>
     </c:forEach>
     <hr>
-    <form class="form-inline row" action="/issue/ans" method="post">
+    <form class="form-inline row" id="queForm">
         <div class="form-group ">
             <label for="username">用户名</label>
             <div class="input-group ">
@@ -55,11 +55,11 @@
         <div class="form-group">
             <label for="answer">回答</label>
             <div class="input-group">
-                <input type="text"  class="form-control col-sm-6" id="answer" name="answer">
-                <input type="text"  class="form-control col-sm-6 hide" id="question" name="question" value="${issue.question}">
+                <input type="text" class="form-control col-sm-6" id="answer" name="answer">
+                <input type="text" class="form-control col-sm-6 hide" name="question" value="${issue.question}">
             </div>
         </div>
-        <button class="btn btn-primary" id="btn" type="submit">回答</button>
+        <button class="btn btn-primary" id="btn" type="button">回答</button>
     </form>
 </div>
 <script src="../../js/jquery-1.11.3.min.js"></script>
@@ -68,29 +68,29 @@
 <script>
     $(function () {
         var $btn = $("#btn");
-//        $btn.click(function () {
-//            $("#queForm").submit();
-//            $.post();
-//            $.ajax({
-//                url: "/issue",
-//                type: 'post',
-//                data: $("#queForm").serialize(),
-//                timeout: 6000,
-//                beforeSend: function () {
-//                    $btn.text("提交中").attr("disabled", "disabled");
-//                },
-//                success: function () {
-//                    alert("提交成功");
-//                },
-//                error: function () {
-//                    alert("提交失败");
-//                },
-//                complete: function () {
-//                    console.log("execute....");
-//                    $btn.text("提交").removeAttr("disabled");
-//                }
-//            });
-//        });
+        $btn.click(function () {
+            $.ajax({
+                url: "/issue/ans",
+                type: 'post',
+                data: $("#queForm").serialize(),
+                timeout: 6000,
+                beforeSend: function () {
+                    $btn.text("提交中").attr("disabled", "disabled");
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    $("#user").prepend("<h2>" + data + "</h2>");
+                },
+                error: function () {
+                    alert("提交失败");
+                },
+                complete: function () {
+                    console.log("execute....");
+                    $btn.text("提交").removeAttr("disabled");
+                }
+            });
+        });
 
 
     });

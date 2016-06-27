@@ -1,9 +1,12 @@
 package com.it.dao;
 
 import com.it.entity.Issue;
+import com.it.utils.CacheUtils;
 import com.it.utils.Dbhelp;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -13,6 +16,7 @@ import java.util.List;
  */
 public class IssueDao {
 
+    private Logger logger = LoggerFactory.getLogger(IssueDao.class);
 
     public Integer insertQue(String username, String question, String time) {
         System.out.println(username + " : " + question + " : " + time);
@@ -46,8 +50,18 @@ public class IssueDao {
     }
 
     public List<Issue> getAllIssue() {
-        String sql = "select * from issue limit 0 , 20 ";
-        return Dbhelp.query(sql, new BeanListHandler<>(Issue.class));
+        List<Issue> issueList;
+        Object object = CacheUtils.get("issueList");
+        if (object != null) {
+            issueList = (List<Issue>) object;
+            logger.debug(" select data from cache");
+        } else {
+            String sql = "select * from issue order by id desc limit 0 , 20 ";
+            issueList = Dbhelp.query(sql, new BeanListHandler<>(Issue.class));
+            CacheUtils.set("issueList", issueList);
+            logger.debug(" select data from database");
+        }
+        return issueList;
     }
 
     public Issue findIssue(String question) {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 类似于类的完全限定名-->
+<mapper namespace="com.qteng.mapper.AdminMapper">
+
+    <select id="queryById" parameterType="int" resultType="Admin">
+        SELECT id ,account,password,pwd,email FROM admin WHERE id = #{id}
+    </select>
+
+    <select id="queryAll"  resultType="Admin">
+        SELECT id ,account,password,pwd,email FROM admin
+    </select>
+
+    <delete id="delById" parameterType="int" >
+        DELETE FROM admin WHERE id = #{id}
+    </delete>
+
+    <insert id="insertAdmin" parameterType="Admin">
+        insert into admin (account,password,pwd,email) VALUES ( #{account} , #{password}, #{pwd}, #{email})
+    </insert>
+
+    <update id="updateAdmin" parameterType="Admin">
+        UPDATE admin set password = #{password} ,pwd= #{pwd} ,email=#{email} WHERE id= #{id}
+    </update>
+</mapper>

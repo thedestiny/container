@@ -1,11 +1,13 @@
 package com.it.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by xieyue on 2016/6/25.
  * User 注册完成时将Register数据复制过来，并删除Register中的数据
  * 完善个人资料时填写剩余内容
  */
-public class User {
+public class User  implements Serializable{
 
     private String id;
     private String username;

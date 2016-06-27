@@ -43,16 +43,13 @@ public class IssueAnsServlet extends HttpServlet {
         String answer = req.getParameter("answer");
         logger.debug(" username is :" + username + " question is : " + answer);
         boolean flag = issueService.dealAns(question, username, answer);
-        PrintWriter out = resp.getWriter();
+        // 两个位置不能放反了
         resp.setContentType("text/html;charset=utf-8");
-        if (flag) {
-            out.print("true");
-        } else {
-            out.print("false");
-        }
+        PrintWriter out = resp.getWriter();
+        String result = flag ? "提交成功" : "提交失败";
+        logger.debug("  result is : " + result);
+        out.print(result);
         out.flush();
         out.close();
-
-
     }
 }

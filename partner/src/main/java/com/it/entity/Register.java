@@ -1,10 +1,12 @@
 package com.it.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by xieyue on 2016/6/25.
  * Register 注册时使用该数据库
  */
-public class Register {
+public class Register implements Serializable {
 
     private Integer id;
     private String username;
@@ -17,6 +19,18 @@ public class Register {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Register{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", identify='" + identify + '\'' +
+                ", time='" + time + '\'' +
+                '}';
     }
 
     public Integer getId() {

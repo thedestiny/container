@@ -1,11 +1,13 @@
 package com.it.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by xieyue on 2016/6/25.
  * Issue
  * 存放question和answer
  */
-public class Issue {
+public class Issue implements Serializable {
 
     private Integer id;
     private String questioner;
@@ -34,6 +36,21 @@ public class Issue {
 
     public void setQuestioner(String questioner) {
         this.questioner = questioner;
+    }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id=" + id +
+                ", questioner='" + questioner + '\'' +
+                ", question='" + question + '\'' +
+                ", answer=" + answer +
+                ", like=" + like +
+                ", right=" + right +
+                ", skim=" + skim +
+                ", time='" + time + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 
     public Integer getId() {

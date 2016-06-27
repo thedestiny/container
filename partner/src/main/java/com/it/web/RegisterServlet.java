@@ -43,7 +43,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug(" execute RegisterServlet doPost");
         String name = req.getParameter("username");
-        String pwd = req.getParameter("pwd");
+        String pwd = req.getParameter("password");
         String email = req.getParameter("email");
         registerService.register(new Register(name, email, pwd));
         req.setAttribute("email", email);

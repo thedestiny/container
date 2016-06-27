@@ -36,32 +36,32 @@
     </form>
     <hr>
     <div id="show">
-        <div class="panel">
-            <div class="btn-toolbar col-sm-4">
-                <a href="#" class="btn btn-md btn-primary btn-group">
-                    <small>0</small>
-                    点赞</a>
-                <a href="#" class="btn btn-md  btn-default btn-group">
-                    <small>0</small>
-                    回答</a>
-                <a href="#" class="btn btn-md btn-success btn-group">
-                    <small>0</small>
-                    浏览</a>
-            </div>
-            <div>
-                <div>
-                    <a style="font-size: 18px">jim</a>&nbsp;&nbsp;于
-                    <small>2016-06-26</small>
-                    提问：
-                </div>
-                <div>
-                    <a href="#" style="font-size: 20px">this is my first question</a>
-                </div>
-            </div>
-        </div>
+        <%--<div class="panel">--%>
+            <%--<div class="btn-toolbar col-sm-4">--%>
+                <%--<a href="#" class="btn btn-md btn-primary btn-group">--%>
+                    <%--<small>0</small>--%>
+                    <%--点赞</a>--%>
+                <%--<a href="#" class="btn btn-md  btn-default btn-group">--%>
+                    <%--<small>0</small>--%>
+                    <%--回答</a>--%>
+                <%--<a href="#" class="btn btn-md btn-success btn-group">--%>
+                    <%--<small>0</small>--%>
+                    <%--浏览</a>--%>
+            <%--</div>--%>
+            <%--<div>--%>
+                <%--<div>--%>
+                    <%--<a style="font-size: 18px">jim</a>&nbsp;&nbsp;于--%>
+                    <%--<small>2016-06-26</small>--%>
+                    <%--提问：--%>
+                <%--</div>--%>
+                <%--<div>--%>
+                    <%--<a href="#" style="font-size: 20px">this is my first question</a>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <c:forEach var="issue" items="${issueList}">
             <div class="panel">
-                <div class="btn-toolbar col-sm-4">
+                <div class="btn-toolbar col-sm-3">
                     <a href="/issue/ans?question=${issue.question}" class="btn btn-md btn-primary btn-group">
                         <small>${issue.like}</small>
                         点赞</a>
