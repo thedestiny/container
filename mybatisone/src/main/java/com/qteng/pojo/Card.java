@@ -1,6 +1,7 @@
 package com.qteng.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Card implements Serializable{
 
@@ -11,6 +12,14 @@ public class Card implements Serializable{
 	private String tel;
 	private Integer ctime;
 	private Integer count;
+	private List<Book> bookList;
+	public List<Book> getBookList() {
+		return bookList;
+	}
+
+	public void setBookList(List<Book> bookList) {
+		this.bookList = bookList;
+	}
 
 	public Integer getCtime() {
 		return ctime;

@@ -12,5 +12,6 @@ public interface RecordMapper {
 
     List<Record> queryByBookCode(String bcode);
     List<Record> queryByCardCode(String ccode);
+    List<Record> queryCardRecord(String ccode);
 
 }

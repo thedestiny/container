@@ -55,6 +55,6 @@
     <mappers>
         <mapper resource="mapper/AdminMapper.xml"/>
         <mapper resource="mapper/RecordMapper.xml"/>
+        <mapper resource="mapper/CardMapper.xml"/>
     </mappers>
-
 </configuration>

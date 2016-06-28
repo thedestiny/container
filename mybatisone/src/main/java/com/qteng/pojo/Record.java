@@ -1,6 +1,7 @@
 package com.qteng.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Record implements Serializable {
 	private static final long serialVersionUID = -3194272717030008962L;
@@ -13,9 +14,18 @@ public class Record implements Serializable {
 	private Integer bday;
 	private Book book;
 	private Card card;
+	private List<Book> bookList;
 
 	public Book getBook() {
 		return book;
+	}
+
+	public List<Book> getBookList() {
+		return bookList;
+	}
+
+	public void setBookList(List<Book> bookList) {
+		this.bookList = bookList;
 	}
 
 	public void setBook(Book book) {
