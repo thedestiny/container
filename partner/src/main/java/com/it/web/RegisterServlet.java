@@ -31,9 +31,9 @@ public class RegisterServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(req, resp);
         } else {
             boolean flag = registerService.usernameExist(name);
+            resp.setContentType("text/html;charset=utf-8");
             PrintWriter out = resp.getWriter();
-            String str = flag ? "true" : "false";
-            out.print(str);
+            out.print(flag ? "true" : "false");
             out.flush();
             out.close();
         }
@@ -45,10 +45,16 @@ public class RegisterServlet extends HttpServlet {
         String name = req.getParameter("username");
         String pwd = req.getParameter("password");
         String email = req.getParameter("email");
-        registerService.register(new Register(name, email, pwd));
-        req.setAttribute("email", email);
-        // feedback.jsp 展示一个界面,连接邮箱进行验证。
-        req.getRequestDispatcher("WEB-INF/views/feedback.jsp").forward(req, resp);
+        int n = registerService.register(new Register(name, email, pwd));
+        if(n == 1){
+            req.setAttribute("email", email);
+            // feedback.jsp 展示一个界面,连接邮箱进行验证。
+            req.getRequestDispatcher("WEB-INF/views/feedback.jsp").forward(req, resp);
+        } else{
+            logger.debug( " 请重新注册！");
+            resp.sendRedirect("/register");
+        }
+
 
     }
 }

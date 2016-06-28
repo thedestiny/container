@@ -1,10 +1,12 @@
 package com.it.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by xieyue on 2016/6/25.
  * Register 注册时使用该数据库
  */
-public class Register {
+public class Register implements Serializable {
 
     private Integer id;
     private String username;

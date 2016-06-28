@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 类似于类的完全限定名-->
+<mapper namespace="com.qteng.mapper.CardMapper">
+
+    <select id="queryRecordByCard" parameterType="String" resultMap="cardMap"
+            resultType="com.qteng.pojo.Card">
+        SELECT card.code ,card.user,book.title,record.bcstate,record.brtime,record.retime,record.bday
+        FROM card
+        inner JOIN record on card.code = record.ccode
+        inner join book ON record.bcode = book.code
+        WHERE card.code = #{code}
+    </select>
+
+    <resultMap id="cardMap" type="com.qteng.pojo.Card">
+        <id column="code" property="code"/>
+        <result column="user" property="user"/>
+        <!--<assocation property="record" javaType="Record">-->
+            <!--<result column="bcstate" property="bcstate"/>-->
+            <!--<result column="brtime" property="brtime"/>-->
+            <!--<result column="retime" property="retime"/>-->
+            <!--<result column="bday" property="bday"/>-->
+        <!--</assocation>-->
+        <collection property="bookList" ofType="com.qteng.pojo.Book">
+            <result column="title" property="title"/>
+        </collection>
+
+    </resultMap>
+</mapper>

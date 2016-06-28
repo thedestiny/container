@@ -1,6 +1,10 @@
 package com.it.utils;
 
+<<<<<<< HEAD
 import org.apache.commons.lang.StringUtils;
+=======
+import org.joda.time.DateTime;
+>>>>>>> open
 
 import javax.servlet.http.Part;
 import java.lang.reflect.Method;
@@ -51,6 +55,13 @@ public class SmallUtils {
                 }
             }
         }
+        Object[] objects1 = new Object[count];
+        int n = 0;
+        for (Object obj : objects) {
+            if (obj != null) {
+                objects1[n++] = obj;
+            }
+        }
 
 //        String regex = "(?<=[(, ])\\s*?\\w+\\s*?(?=[,)=])";
 //        Pattern pattern = Pattern.compile(regex);
@@ -66,6 +77,7 @@ public class SmallUtils {
 //                }
 //            }
 //        }
+<<<<<<< HEAD
         Object[] objects1 = new Object[count];
         int n =0;
         for (Object obj: objects) {
@@ -73,6 +85,9 @@ public class SmallUtils {
                 objects1[n++] = obj;
             }
         }
+=======
+
+>>>>>>> open
         return objects1;
     }
 
@@ -89,5 +104,34 @@ public class SmallUtils {
         }
         System.out.println(con[con.length - 2]);
         return content.substring(m + 2, n);
+    }
+
+
+    public static String getTime() {
+        return new DateTime().toString("MM-dd HH:mm:ss");
+    }
+
+    public static String getTime(int hours) {
+        return new DateTime().plusHours(hours).toString("MM-dd HH:mm:ss");
+    }
+
+    /**
+     *
+     * @param time1 第一个时间
+     * @param time2 第二个时间
+     * @return ture 则 time1 > time2 ,否则相反。
+     */
+    public static boolean CompareTime(String time1, String time2) {
+        return time1.compareTo(time2) > 0;
+    }
+
+    public static Map<String,String> listToMap(List list){
+
+        return null;
+    }
+
+    public static List<String> mapToList(Map map){
+
+        return null;
     }
 }

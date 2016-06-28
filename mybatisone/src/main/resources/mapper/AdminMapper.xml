@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 类似于类的完全限定名-->
+
+<mapper namespace="com.qteng.mapper.AdminMapper">
+
+    <select id="queryById" parameterType="int" resultType="Admin">
+        SELECT id ,account,password,pwd,email FROM admin WHERE id = #{id}
+    </select>
+
+    <select id="queryAll" resultType="Admin">
+        SELECT id ,account,password,pwd,email FROM admin
+    </select>
+
+    <delete id="delById" parameterType="int">
+        DELETE FROM admin WHERE id = #{id}
+    </delete>
+
+    <insert id="insertAdmin" parameterType="Admin">
+        insert into admin (account,password,pwd,email) VALUES ( #{account} , #{password}, #{pwd}, #{email})
+    </insert>
+
+    <update id="updateAdmin" parameterType="Admin">
+        UPDATE admin set password = #{password} ,pwd= #{pwd} ,email=#{email} WHERE id= #{id}
+    </update>
+
+    <insert id="insertA" parameterType="Admin" useGeneratedKeys="true" keyProperty="id">
+        insert into admin (account,password,pwd,email) VALUES ( #{account} , #{password}, #{pwd}, #{email})
+    </insert>
+    <!--map-->
+    <select id="queryByMap" parameterType="map" resultType="Admin">
+        SELECT * FROM admin WHERE account= #{account} AND email = #{email}
+    </select>
+    <!--参数-->
+    <select id="queryByParams" resultType="Admin">
+        SELECT * FROM admin WHERE account= #{param1} AND email = #{param2}
+    </select>
+    <!--注解annotation-->
+    <select id="queryByAno" resultType="Admin">
+        SELECT * FROM admin WHERE account= #{account} AND email = #{email}
+    </select>
+
+    <insert id="insertAdmins" parameterType="list">
+        insert into admin (account,password,pwd,email) VALUES
+        <foreach collection="list" item="admin" separator=",">
+            ( #{admin.account} , #{admin.password}, #{admin.pwd}, #{admin.email})
+        </foreach>
+    </insert>
+
+    <select id="findAdminByParams" resultType="Admin" parameterType="map">
+        SELECT * FROM admin
+        <where>
+            <if test="account != null and account != ''">
+                account LIKE concat('%',#{account},'%')
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="pwd != null and pwd != ''">
+                and pwd = #{pwd}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAdminByIds" parameterType="list" resultType="Admin">
+        SELECT * FROM admin WHERE id IN
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

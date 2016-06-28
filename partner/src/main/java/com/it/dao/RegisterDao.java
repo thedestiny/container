@@ -33,10 +33,12 @@ public class RegisterDao {
      * @return 返回 Register对象
      */
     public Register queryUsername(String username) {
-        String sql = "select * from register where username= ?";
-        return Dbhelp.query(sql, new BeanHandler<>(Register.class), username);
+        String sql = "select * from register where username = ? ";
+        logger.debug(" username is {}", username);
+        return Dbhelp.query(sql, new BeanHandler<>(Register.class), username.trim());
     }
 
+<<<<<<< HEAD
     @Test
     public void testsmall() {
         Register register = new Register("xieyue", "xieyue86@163.com", "asdfasdf");
@@ -52,4 +54,8 @@ public class RegisterDao {
 
 
     }
+=======
+
+
+>>>>>>> open
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 类似于类的完全限定名-->
+
+<mapper namespace="com.qteng.mapper.RecordMapper">
+    <cache eviction="LRU" flushInterval="60000" readOnly="true" size="1024"/>
+
+    <select id="queryByBookCode" parameterType="String" resultType="Record" >
+        select bcode,book.title as 'book.title', book.author as 'book.author', ccode, card.user as 'card.user' , bcstate,brtime,retime,bday
+        from record
+        INNER JOIN book ON record.bcode = book.code
+        inner JOIN card ON record.ccode = card.code
+        WHERE bcode = #{bcode}
+    </select>
+
+    <select id="queryByCardCode" parameterType="String" resultMap="recodeMap">
+        select  bcode, ccode , bcstate,brtime,retime,bday,book.title , book.author , card.user
+        from record
+        INNER JOIN book ON record.bcode = book.code
+        inner JOIN card ON record.ccode = card.code
+        WHERE ccode = #{ccode}
+    </select>
+
+
+    <resultMap id="recodeMap" type="com.qteng.pojo.Record">
+        <id column="bcode" property="bcode"/>
+        <result column="ccode" property="ccode"/>
+        <result column="bcstate" property="bcstate"/>
+        <result column="brtime" property="brtime"/>
+        <result column="retime" property="retime"/>
+        <result column="bday" property="bday"/>
+        <association property="book" javaType="Book" column="bcode">
+            <result column="title" property="title"/>
+            <result column="author" property="author"/>
+        </association>
+        <association property="card" javaType="Card" column="ccode">
+            <result column="user" property="user"/>
+        </association>
+    </resultMap>
+
+    <select id="queryCardRecord" parameterType="String" resultMap="cardMap"
+            resultType="com.qteng.pojo.Record">
+        select  ccode,card.user,book.title , bcstate,brtime,retime,bday
+        from record
+        INNER JOIN book ON record.bcode = book.code
+        inner JOIN card ON record.ccode = card.code
+        WHERE ccode = #{ccode}
+    </select>
+
+    <resultMap id="cardMap" type="com.qteng.pojo.Record">
+        <id column="ccode" property="ccode"/>
+        <result column="bcstate" property="bcstate"/>
+        <result column="brtime" property="brtime"/>
+        <result column="retime" property="retime"/>
+        <result column="bday" property="bday"/>
+        <association property="card" javaType="Card" >
+            <result column="user" property="user"/>
+        </association>
+        <collection property="bookList" ofType="com.qteng.pojo.Book">
+            <result column="title" property="title"/>
+        </collection>
+    </resultMap>
+
+
+
+
+
+
+
+</mapper>

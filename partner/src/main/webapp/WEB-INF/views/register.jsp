@@ -25,8 +25,13 @@
                 <input type="password" class="form-control " name="password" id="pwd">
             </div>
             <div class=" form-group">
+<<<<<<< HEAD
                 <label for="email">email</label>
                 <input type="email" class="form-control " name="email" id="email">
+=======
+                <label for="email">邮箱</label>
+                <input type="text" class="form-control " name="email" id="email">
+>>>>>>> open
             </div>
             <div class=" form-group">
                 <button style="display: block" id="btn" type="button" class="btn btn-primary">注册</button>
@@ -42,7 +47,8 @@
     $(function () {
         var $btn = $("#btn");
         var $img = $("#img");
-        $("#regForm").validate({
+        var $form = $("#regForm");
+        $form.validate({
             rules: {
                 username: {
                     required: true,
@@ -76,11 +82,11 @@
             },
             errorElement: "span",
             errorClass: "text-danger",
-            submitHandler: function (form) {
+            submitHandler: function ($form) {
                 $.ajax({
                     url: "/register",
                     type: "post",
-                    data: $(form).serialize(),
+                    data: $($form).serialize(),
                     timeout: 60000,
                     beforeSend: function () {
                         $btn.text("注册中").attr("disabled", "disabled");

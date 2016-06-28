@@ -16,7 +16,7 @@ import java.util.Set;
  * Created by xieyue on 2016/6/20.
  * AccessFilter
  */
-@WebFilter(urlPatterns = "/*")
+// @WebFilter(urlPatterns = "/*")
 public class AccessFilter implements Filter {
 
     private static final String IGNORE_URI = "filter.ignore";
