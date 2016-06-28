@@ -73,10 +73,6 @@
                     $btn.text("登陆").removeAttr("disabled");
                 }
             });
-
-
-
-
         });
     });
 

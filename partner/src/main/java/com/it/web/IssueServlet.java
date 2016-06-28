@@ -27,7 +27,7 @@ public class IssueServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Issue> issueList = issueService.getAllIssue();
-        req.setAttribute("issueList",issueList);
+        req.setAttribute("issueList", issueList);
         logger.debug(" execute IssueServlet doGet ");
         req.getRequestDispatcher("/WEB-INF/views/issue.jsp").forward(req, resp);
     }
@@ -39,15 +39,10 @@ public class IssueServlet extends HttpServlet {
         String question = req.getParameter("question");
         logger.debug(" username is :" + username + " question is : " + question);
         boolean flag = issueService.dealQue(username, question);
-        PrintWriter out = resp.getWriter();
         resp.setContentType("text/html;charset=utf-8");
-        if(flag){
-            out.print("true");
-        } else{
-            out.print("false");
-        }
+        PrintWriter out = resp.getWriter();
+        out.print(flag ? "提问成功" : "提问失败");
         out.flush();
         out.close();
-
     }
 }

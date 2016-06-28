@@ -1,8 +1,10 @@
 package com.qteng.pojo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Book {
+public class Book implements Serializable{
+	private static final long serialVersionUID = -3981248998221109612L;
 	private Integer id;
 	private String code;
 	private String title;

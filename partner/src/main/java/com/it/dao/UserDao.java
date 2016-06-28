@@ -1,5 +1,6 @@
 package com.it.dao;
 
+import com.it.entity.Register;
 import com.it.entity.User;
 import com.it.utils.Dbhelp;
 import com.it.utils.SmallUtils;
@@ -56,5 +57,10 @@ public class UserDao {
     public User login(User user) {
         String sql = "select * from user where username = ? and password = ?";
         return Dbhelp.query(sql,new BeanHandler<>(User.class),SmallUtils.helpGet(user,sql));
+    }
+
+    public User queryUsername(String username) {
+        String sql = "select * from user where username = ? ";
+        return Dbhelp.query(sql, new BeanHandler<>(User.class), username);
     }
 }

@@ -28,7 +28,7 @@ public class IssueService {
     private static String quePath = "G:/issue/que";
     // 存储答案
     private static String ansPath = "G:/issue/ans/";
-    private static List<String> ansList = new ArrayList<>();
+    List<String> ansList = new ArrayList<>();
     private static List<String> queList = new ArrayList<>();
     private static List<String> temple = new ArrayList<>();
 
@@ -50,7 +50,9 @@ public class IssueService {
         // question+++username+++content+++time
         String saveQue = question + "+++" + username + "+++" + content + "+++" + time;
         logger.debug("  :" + saveQue);
-        queList.add(saveQue);
+        // 清除问题列表的缓存
+        CacheUtils.remove("queList");
+        logger.debug("queList is {}",CacheUtils.get("queList"));
         temple.add(saveQue);
         try {
             FileUtils.writeLines(fileQue, temple, true);
@@ -71,11 +73,9 @@ public class IssueService {
      */
     public boolean dealAns(String question, String username, String content) throws IOException {
         String time = SmallUtils.getTime();
-        ansList = (List<String>) CacheUtils.get(question);
-        ansList.clear();
-        // question 为问题的md5值
+        // 清空 question 对应的值,question 为问题的md5值,即清除缓存。
+        CacheUtils.remove(question);
         File fileAns = new File(ansPath + question);
-        logger.debug("fileAns is :" + fileAns.getPath());
         if (!fileAns.exists()) {
             fileAns.createNewFile();
             logger.debug(" execute createFile ");
@@ -83,7 +83,6 @@ public class IssueService {
         logger.debug(" after fileAns is :" + fileAns.getPath());
         Answer answer = new Answer(username, time, content);
         String ansSave = username + "+++" + time + "+++" + content;
-        ansList.add(ansSave);
         temple.add(ansSave);
         try {
             FileUtils.writeLines(fileAns, temple, true);
@@ -92,7 +91,6 @@ public class IssueService {
         } catch (IOException e) {
             throw new RuntimeException("回答失败", e);
         }
-
     }
 
     public List<Issue> getAllIssue() {
@@ -117,33 +115,32 @@ public class IssueService {
                 issue.setContent(str[2]);
             }
         }
-        queList.clear();
         return issue;
     }
-
+    @SuppressWarnings("unchecked")
     public List<Answer> findAllAnswer(String question) throws IOException {
-
-        File fileAns = new File(ansPath + question);
-        if (!fileAns.exists()) {
-            fileAns.createNewFile();
-            logger.debug(" server is busy!");
+        // readAns 中上是否有question的缓存，没有创建，有的话什么也不做。
+        readAns(question);
+        List<String> list = (List<String>) CacheUtils.get(question);
+        List<Answer> answerList = new ArrayList<>();
+        if(list == null){
             return null;
         }
-        List<String> list = FileUtils.readLines(fileAns, "utf-8");
-        List<Answer> answerList = new ArrayList<>();
         for (String str : list) {
             String[] array = str.split("\\+++");
             answerList.add(new Answer(array[0], array[1], array[2]));
         }
         return answerList;
     }
-
+    @SuppressWarnings("unchecked")
     private List<Issue> readQue(List<Issue> list) {
 
         Object object = CacheUtils.get("queList");
+        logger.debug("object is :{}" , object == null);
         if (object == null) {
             File fileQue = new File(quePath);
             try {
+                queList.clear();
                 queList = FileUtils.readLines(fileQue, "utf-8");
                 CacheUtils.set("queList", queList);
                 logger.debug(" read queList from Disk");
@@ -163,10 +160,10 @@ public class IssueService {
         return list;
     }
 
-
     private void readAns(String question) throws IOException {
 
-        Object object = CacheUtils.get("question");
+        Object object = CacheUtils.get(question);
+        System.out.println("object is :" + object);
         if (object == null) {
             File fileAns = new File(ansPath + question);
             if (!fileAns.exists()) {
@@ -176,14 +173,11 @@ public class IssueService {
             }
             try {
                 ansList = FileUtils.readLines(fileAns, "utf-8");
-                CacheUtils.set("question", ansList);
+                CacheUtils.set(question, ansList);
                 logger.debug(" read queList from Disk");
             } catch (IOException e) {
                 throw new RuntimeException("读取文档失败", e);
             }
-        } else {
-            ansList = (List<String>) object;
-            logger.debug(" read queList from cache");
         }
     }
 

@@ -47,7 +47,7 @@ public class AdminTest {
     @Test
     public void testInsert(){
         SqlSession sqlSession = BatisUtils.getSqlSession();
-        Admin admin = new Admin("flash","save","sdf","123456");
+        Admin admin = new Admin("superman","save","sdf","123456");
         sqlSession.insert("com.qteng.mapper.AdminMapper.insertAdmin",admin);
         sqlSession.commit();
         sqlSession.close();
@@ -63,9 +63,9 @@ public class AdminTest {
         sqlSession.update("com.qteng.mapper.AdminMapper.updateAdmin",admin);
         sqlSession.commit();
         sqlSession.close();
-
-
     }
+
+
 
 
 }

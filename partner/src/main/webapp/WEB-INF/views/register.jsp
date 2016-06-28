@@ -42,7 +42,8 @@
     $(function () {
         var $btn = $("#btn");
         var $img = $("#img");
-        $("#regForm").validate({
+        var $form = $("#regForm");
+        $form.validate({
             rules: {
                 username: {
                     required: true,
@@ -76,11 +77,11 @@
             },
             errorElement: "span",
             errorClass: "text-danger",
-            submitHandler: function (form) {
+            submitHandler: function ($form) {
                 $.ajax({
                     url: "/register",
                     type: "post",
-                    data: $(form).serialize(),
+                    data: $($form).serialize(),
                     timeout: 60000,
                     beforeSend: function () {
                         $btn.text("注册中").attr("disabled", "disabled");

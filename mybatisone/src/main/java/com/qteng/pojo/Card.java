@@ -1,7 +1,10 @@
 package com.qteng.pojo;
 
-public class Card {
+import java.io.Serializable;
 
+public class Card implements Serializable{
+
+	private static final long serialVersionUID = -2674095200532896617L;
 	private Integer id;
 	private String code;
 	private String user;

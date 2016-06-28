@@ -24,6 +24,14 @@ public class LoginServlet extends HttpServlet {
     private Logger logger = LoggerFactory.getLogger(LoginServlet.class);
     private LoginService loginService = new LoginService();
 
+
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.debug(" execute LoginServlet doGet ");
+        req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("username");
@@ -32,17 +40,10 @@ public class LoginServlet extends HttpServlet {
         user.setUsername(name);
         user.setPassword(pwd);
         user = loginService.login(user);
-        String json = new Gson().toJson(user).replace("{", "\"");
-        json = json.replace("}", "\"");
+        String json = new Gson().toJson(user);
         logger.debug("json is : " + json);
         logger.debug(" execute LoginServlet doPost ");
-        //resp.sendRedirect("/issue?json=" + json);
+        // resp.sendRedirect("/issue?json=" + json);
         resp.sendRedirect("/issue");
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug(" execute LoginServlet doGet ");
-        req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
 }

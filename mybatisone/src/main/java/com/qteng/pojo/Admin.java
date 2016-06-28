@@ -1,6 +1,9 @@
 package com.qteng.pojo;
 
-public class Admin {
+import java.io.Serializable;
+
+public class Admin implements Serializable {
+	private static final long serialVersionUID = 5947959269686166678L;
 	private Integer id;
 	private String account;
 	private String password;
@@ -21,6 +24,14 @@ public class Admin {
 				", email='" + email + '\'' +
 				'}';
 	}
+
+	/**
+	 *
+	 * @param account sdf
+	 * @param password asdf
+	 * @param pwd  asdf
+     * @param email  asdf
+     */
 
 	public Admin(String account, String password, String pwd, String email) {
 		this.account = account;

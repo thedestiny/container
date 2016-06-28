@@ -19,36 +19,41 @@ public class IssueDao {
     private Logger logger = LoggerFactory.getLogger(IssueDao.class);
 
     public Integer insertQue(String username, String question, String time) {
+        CacheUtils.remove("issueList");
         System.out.println(username + " : " + question + " : " + time);
         String sql = " insert into issue ( questioner, question , time ) values ( ? , ? , ? )";
         return Dbhelp.update(sql, username, question, time);
     }
 
     public Integer updateQue() {
-
+        CacheUtils.remove("issueList");
         return 1;
     }
 
     public Integer updateAnswer(String question) {
+        CacheUtils.remove("issueList");
         String sql = "update issue set answer = answer + 1 where question = ? ";
         return Dbhelp.update(sql, question);
     }
 
     public Integer updateLike(String question) {
+        CacheUtils.remove("issueList");
         String sql = "update issue set like = like + 1 where question = ? ";
         return Dbhelp.update(sql, question);
     }
 
     public Integer updateRight(String question) {
+        CacheUtils.remove("issueList");
         String sql = "update issue set right = right + 1 where question = ? ";
         return Dbhelp.update(sql, question);
     }
 
     public Integer updateSkim(String question) {
+        CacheUtils.remove("issueList");
         String sql = "update issue set skim = skim + 1 where question = ? ";
         return Dbhelp.update(sql, question);
     }
-
+@SuppressWarnings("unchecked")
     public List<Issue> getAllIssue() {
         List<Issue> issueList;
         Object object = CacheUtils.get("issueList");

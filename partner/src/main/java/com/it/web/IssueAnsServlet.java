@@ -30,8 +30,10 @@ public class IssueAnsServlet extends HttpServlet {
         String question = req.getParameter("question");
         Issue issue = issueService.findIssue(question);
         List<Answer> answerList = issueService.findAllAnswer(question);
+        if(answerList != null){
+            req.setAttribute("answerList", answerList);
+        }
         req.setAttribute("issue", issue);
-        req.setAttribute("answerList", answerList);
         req.getRequestDispatcher("/WEB-INF/views/answer.jsp").forward(req, resp);
     }
 

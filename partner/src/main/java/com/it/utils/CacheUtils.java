@@ -9,7 +9,7 @@ import net.sf.ehcache.Element;
  * Created by xieyue on 2016/6/27.
  * CacheUtils
  */
-public class CacheUtils<T> {
+public class CacheUtils {
 
     private static CacheManager cacheManager = new CacheManager();
     private static Ehcache ehcache = cacheManager.getEhcache("user");
