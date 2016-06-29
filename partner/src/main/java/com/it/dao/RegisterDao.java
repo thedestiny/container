@@ -4,7 +4,6 @@ import com.it.entity.Register;
 import com.it.utils.Dbhelp;
 import com.it.utils.SmallUtils;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,10 +21,7 @@ public class RegisterDao {
     public Integer Insert(Register register) {
         String sql = "insert into register ( username, email, password, identify, time) " +
                 "VALUES (?,?,?,?,?)";
-        System.out.println(register.toString());
         return Dbhelp.update(sql, SmallUtils.helpGet(register, sql));
-//        return Dbhelp.update(sql, register.getUsername(), register.getEmail(), register.getPassword(), register.getIdentify()
-//                , register.getTime());
     }
 
     /**
@@ -38,24 +34,6 @@ public class RegisterDao {
         return Dbhelp.query(sql, new BeanHandler<>(Register.class), username.trim());
     }
 
-<<<<<<< HEAD
-    @Test
-    public void testsmall() {
-        Register register = new Register("xieyue", "xieyue86@163.com", "asdfasdf");
-        register.setTime("2015-2-26");
-        register.setIdentify("asdfasdgdfgdsf");
-        String sql = "insert into register ( username, email, password, identify, time) " +
-                "VALUES (?,?,?,?,?)";
-        Object[] array = SmallUtils.helpGet(register, sql);
-        System.out.println("length is :" + array.length);
-        for (Object obj: array) {
-            System.out.println("  123: " + obj.toString());
-        }
 
 
-    }
-=======
-
-
->>>>>>> open
 }

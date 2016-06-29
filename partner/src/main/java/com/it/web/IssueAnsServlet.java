@@ -1,10 +1,7 @@
 package com.it.web;
 
-<<<<<<< HEAD
-=======
 import com.it.entity.Answer;
 import com.it.entity.Issue;
->>>>>>> open
 import com.it.servive.IssueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +42,6 @@ public class IssueAnsServlet extends HttpServlet {
 
         String question = req.getParameter("question");
         String username = req.getParameter("username");
-<<<<<<< HEAD
-        String content = req.getParameter("content");
-        issueService.dealAns(question, username, content);
-=======
         String answer = req.getParameter("answer");
         logger.debug(" username is :" + username + " question is : " + answer);
         boolean flag = issueService.dealAns(question, username, answer);
@@ -60,6 +53,5 @@ public class IssueAnsServlet extends HttpServlet {
         out.print(result);
         out.flush();
         out.close();
->>>>>>> open
     }
 }

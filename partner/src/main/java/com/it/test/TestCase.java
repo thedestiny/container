@@ -1,5 +1,6 @@
 package com.it.test;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.gson.Gson;
 import com.it.entity.Answer;
 import com.it.entity.User;
@@ -8,15 +9,13 @@ import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
+
 import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
->>>>>>> open
 
 /**
  * Created by xieyue on 2016/6/25.
@@ -25,19 +24,6 @@ import java.util.Map;
 public class TestCase {
 
     @Test
-<<<<<<< HEAD
-    public void temple(){
-        File file = new File("G:/issue/aaa");
-        try {
-            if(file.createNewFile()){
-                System.out.println("success !");
-            } else {
-                System.out.println("failure !");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-=======
     public void temple() {
         User user = new User();
         user.setUsername("jim");
@@ -93,7 +79,6 @@ public class TestCase {
         Answer answer = new Answer("jim", "2016-12-25", "sadfsadfsadfsdf");
 
 
->>>>>>> open
     }
 
 

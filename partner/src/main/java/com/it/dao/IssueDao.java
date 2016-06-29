@@ -1,12 +1,5 @@
 package com.it.dao;
 
-<<<<<<< HEAD
-import com.it.utils.Dbhelp;
-import com.it.utils.SmallUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-=======
 import com.it.entity.Issue;
 import com.it.utils.CacheUtils;
 import com.it.utils.Dbhelp;
@@ -17,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
->>>>>>> open
 /**
  * Created by xieyue on 2016/6/25.
  * IssueDao
@@ -26,17 +18,6 @@ public class IssueDao {
 
     private Logger logger = LoggerFactory.getLogger(IssueDao.class);
 
-<<<<<<< HEAD
-    public Integer insertQue(String username, String quemd5, String time) {
-        String sql = "insert into issue ( questioner , question , time ) values ( ?, ?, ?)";
-        return Dbhelp.update(sql, username, quemd5, time);
-    }
-
-
-
-
-
-=======
     public Integer insertQue(String username, String question, String time) {
         CacheUtils.remove("issueList");
         System.out.println(username + " : " + question + " : " + time);
@@ -87,7 +68,6 @@ public class IssueDao {
         }
         return issueList;
     }
->>>>>>> open
 
     public Issue findIssue(String question) {
         String sql = "select * from issue where question = ? ";

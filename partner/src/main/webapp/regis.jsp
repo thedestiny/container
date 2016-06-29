@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: xieyue
-  Date: 2016/6/25
-  Time: 15:51
+  Date: 2016/6/23
+  Time: 16:31
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Register</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -25,25 +25,27 @@
                 <input type="password" class="form-control " name="password" id="pwd">
             </div>
             <div class=" form-group">
-                <label for="email">邮箱</label>
-                <input type="text" class="form-control " name="email" id="email">
+                <label for="resume">简介</label>
+                <input type="text" class="form-control " name="resume" id="resume">
             </div>
             <div class=" form-group">
                 <button style="display: block" id="btn" type="button" class="btn btn-primary">注册</button>
-                <img src="../../img/ajax-loader.gif" alt="waitting" style="display: none" id="img">
+                <img src="img/ajax-loader.gif" alt="waitting" style="display: none" id="img">
             </div>
         </form>
     </div>
+
+
+
 </div>
-<script src="../../js/jquery-2.2.3.min.js"></script>
-<script src="../../js/jquery.validate.min.js"></script>
-<script src="../../js/messages_zh.min.js"></script>
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/messages_zh.min.js"></script>
 <script>
     $(function () {
         var $btn = $("#btn");
         var $img = $("#img");
-        var $form = $("#regForm");
-        $form.validate({
+        $("#regForm").validate({
             rules: {
                 username: {
                     required: true,
@@ -54,7 +56,7 @@
                     required: true,
                     minlength: 6
                 },
-                email: {
+                resume: {
                     required: true,
                     minlength: 6
 
@@ -70,18 +72,18 @@
                     required: "请输入密码",
                     minlength: "最少{0}个"
                 },
-                email: {
+                resume: {
                     required: "请输入简介",
                     minlength: "最少{0}个"
                 }
             },
             errorElement: "span",
             errorClass: "text-danger",
-            submitHandler: function ($form) {
+            submitHandler: function (form) {
                 $.ajax({
                     url: "/register",
                     type: "post",
-                    data: $($form).serialize(),
+                    data: $(form).serialize(),
                     timeout: 60000,
                     beforeSend: function () {
                         $btn.text("注册中").attr("disabled", "disabled");
@@ -103,7 +105,6 @@
         });
         $btn.click(function () {
             $("#regForm").submit();
-
         });
     });
 </script>

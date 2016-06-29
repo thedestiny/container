@@ -1,10 +1,6 @@
 package com.it.utils;
 
-<<<<<<< HEAD
-import org.apache.commons.lang.StringUtils;
-=======
 import org.joda.time.DateTime;
->>>>>>> open
 
 import javax.servlet.http.Part;
 import java.lang.reflect.Method;
@@ -47,9 +43,7 @@ public class SmallUtils {
         for (String value : array) {
             if (map.containsKey(value)) {
                 try {
-                    System.out.println(count + " : " + map.get(value).invoke(object).toString());
                     objects[count++] = map.get(value).invoke(object);
-
                 } catch (Exception e) {
                     throw new RuntimeException("method.invoke(?) 抛出异常", e);
                 }
@@ -77,17 +71,7 @@ public class SmallUtils {
 //                }
 //            }
 //        }
-<<<<<<< HEAD
-        Object[] objects1 = new Object[count];
-        int n =0;
-        for (Object obj: objects) {
-            if(obj != null){
-                objects1[n++] = obj;
-            }
-        }
-=======
 
->>>>>>> open
         return objects1;
     }
 

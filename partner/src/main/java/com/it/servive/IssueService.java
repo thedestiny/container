@@ -1,50 +1,27 @@
 package com.it.servive;
 
 import com.it.dao.IssueDao;
-<<<<<<< HEAD
-import com.it.dao.UserDao;
-import com.it.utils.TimeUtils;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.IOUtils;
-=======
 import com.it.entity.Answer;
 import com.it.entity.Issue;
 import com.it.utils.CacheUtils;
 import com.it.utils.SmallUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
->>>>>>> open
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-<<<<<<< HEAD
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-=======
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> open
 
 /**
  * Created by xieyue on 2016/6/25.
  * IssueService
  */
 public class IssueService {
-    private Logger logger = LoggerFactory.getLogger(IssueService.class);
 
     // 存储问题
-<<<<<<< HEAD
-    private Map<String, String> queMap = new HashMap<>();
-    private IssueDao issueDao = new IssueDao();
-
-    String quepath = "G:/issue/que/";
-    String anspath = "G:/issue/ans/";
-
-=======
     private static IssueDao issueDao = new IssueDao();
     private static Logger logger = LoggerFactory.getLogger(IssueService.class);
     // 存储问题
@@ -55,33 +32,11 @@ public class IssueService {
     private static List<String> queList = new ArrayList<>();
     private static List<String> temple = new ArrayList<>();
 
->>>>>>> open
     /**
      * @param username 提问者
      * @param content  提问内容
      * @return 是否提交成功
      */
-<<<<<<< HEAD
-    public boolean dealQue(String username, String content) throws Exception {
-        //截取前20位
-        String quemd5 = DigestUtils.md5Hex(content);
-        FileOutputStream outputStream = new FileOutputStream(new File(quepath, quemd5));
-        File file = new File(anspath + quemd5);
-        if(file.createNewFile()){
-
-        }
-        IOUtils.write(content, outputStream);
-        outputStream.flush();
-        outputStream.close();
-        issueDao.insertQue(username,quemd5, TimeUtils.getTime());
-
-
-
-        return false;
-    }
-
-    /**
-=======
     public boolean dealQue(String username, String content) throws IOException {
         // 计算问题内容的md5值 所有的问题装在一个que文件中,每个问题提出时就创建一个以
         // 问题内容md5值为名称的文件存储答案，并且放在anspath文件夹下。
@@ -112,7 +67,6 @@ public class IssueService {
 
     /**
      * @param question 问题的MD5值
->>>>>>> open
      * @param username 回答者
      * @param content  回答内容
      * @return 是否提交成功
@@ -139,17 +93,12 @@ public class IssueService {
         }
     }
 
-<<<<<<< HEAD
-    public boolean dealAns(String question, String username, String content) {
-
-=======
     public List<Issue> getAllIssue() {
 //        List<Issue> list = issueDao.getAllIssue();
 //        list = readQue(list);
 //        return list;
         return readQue(issueDao.getAllIssue());
     }
->>>>>>> open
 
     public Issue findIssue(String question) {
 

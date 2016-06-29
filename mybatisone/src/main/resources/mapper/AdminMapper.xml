@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 类似于类的完全限定名-->
-
 <mapper namespace="com.qteng.mapper.AdminMapper">
 
     <select id="queryById" parameterType="int" resultType="Admin">

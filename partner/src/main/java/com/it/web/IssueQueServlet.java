@@ -20,7 +20,6 @@ public class IssueQueServlet extends HttpServlet {
 
     private Logger logger = LoggerFactory.getLogger(IssueQueServlet.class);
     private IssueService issueService = new IssueService();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
