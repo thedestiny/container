@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.it.mapper.TagMapper">
+
+    <delete id="deleteTag" parameterType="Tag">
+       DELETE FROM t_tag WHERE userid = #{userid} and tag = #{tag}
+    </delete>
+
+    <insert id="insertTags" parameterType="list">
+        INSERT into t_tag VALUES
+        <foreach collection="list" item="tag" separator=",">
+            ( #{tag.userid} , #{tag.tag} )
+        </foreach>
+    </insert>
+
+
+
+
+
+
+
+</mapper>

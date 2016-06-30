@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <typeAlias type="com.it.pojo.Issue"  alias="Issue"/>
+        <typeAlias type="com.it.pojo.User"   alias="User"/>
+        <typeAlias type="com.it.pojo.Tag"   alias="Tag"/>
+        <typeAlias type="com.it.pojo.Topic"   alias="Topic"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql:///sfsource"/>
+                <property name="username" value="root"/>
+                <property name="password" value="lky86"/>
+            </dataSource>
+        </environment>
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql:///sfsource"/>
+                <property name="username" value="root"/>
+                <property name="password" value="lky86"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+    <!-- 加载mapper文件 -->
+    <mappers>
+        <mapper resource="mapper/IssueMapper.xml"/>
+        <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/TagMapper.xml"/>
+        <mapper resource="mapper/TopicMapper.xml"/>
+    </mappers>
+</configuration>

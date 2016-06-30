@@ -14,17 +14,17 @@
 </head>
 <body>
 <div class="page-header" id="head">
-    <h1>${user.username} 欢迎提问</h1>
+    <h1>${user.username}, 欢迎提问</h1>
 </div>
 
 <div class="container">
     <form class="form-inline row" id="queForm">
-        <div class="form-group ">
-            <label for="username">用户名</label>
-            <div class="input-group ">
-                <input type="text" class="form-control" id="username" name="username">
-            </div>
-        </div>
+        <%--<div class="form-group ">--%>
+        <%--<label for="username">用户名</label>--%>
+        <%--<div class="input-group ">--%>
+        <%--<input type="text" class="form-control" id="username" name="username">--%>
+        <%--</div>--%>
+        <%--</div>--%>
         <div class="form-group">
             <label for="question">问大家：</label>
             <div class="input-group">
@@ -67,12 +67,16 @@
 <script src="../../js/bootstrap.min.js"></script>
 <script>
     $(function () {
+
         var $btn = $("#btn");
         $btn.click(function () {
             $.ajax({
                 url: "/issue",
-                type: 'post',
-                data: $("#queForm").serialize(),
+                type: "post",
+                data: {
+                    username:"${user.username}",
+                    question:$("#question").val()
+                },
                 timeout: 6000,
                 beforeSend: function () {
                     $btn.text("提交中").attr("disabled", "disabled");

@@ -1,7 +1,6 @@
 package com.it.dao;
 
-import com.it.entity.Register;
-import com.it.entity.User;
+import com.it.pojo.User;
 import com.it.utils.Dbhelp;
 import com.it.utils.SmallUtils;
 import org.apache.commons.dbutils.handlers.BeanHandler;

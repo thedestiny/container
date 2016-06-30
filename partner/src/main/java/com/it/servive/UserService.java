@@ -1,7 +1,7 @@
 package com.it.servive;
 
 import com.it.dao.UserDao;
-import com.it.entity.User;
+import com.it.pojo.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

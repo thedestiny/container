@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-xs-3">
 
-            <form id="regForm">
+            <form id="regForm" method="post" action="/login">
                 <h2 style="color: red">用户登陆界面</h2>
                 <div class="form-group">
                     <label>账号</label>
@@ -39,7 +39,7 @@
                     <label>密码</label>
                     <input type="text" class="form-control" name="password">
                 </div>
-                <button type="button" id="subBtn" class="btn btn-primary">登陆</button>
+                <button type="submit" id="subBtn" class="btn btn-primary">登陆</button>
             </form>
         </div>
     </div>
@@ -50,31 +50,28 @@
 <script src="../../js/jquery.validate.min.js"></script>
 
 <script>
-    $(function () {
-        var $btn = $("#subBtn");
-        $btn.click(function () {
-            $("#regForm").submit();
-            $.ajax({
-                url: "/login",
-                type: "post",
-                data: $("#regForm").serialize(),
-                beforeSend: function () {
-                    $btn.text("登陆中...").attr("disabled", "disabled");
-                },
-                success: function () {
-                    //alert("登陆成功");
-                    console.log("登陆成功");
-                },
-                error: function () {
-                    //alert("服务器忙，请稍后再试");
-                    console.log("服务器忙，请稍后再试");
-                },
-                complete: function () {
-                    $btn.text("登陆").removeAttr("disabled");
-                }
-            });
-        });
-    });
+//    $(function () {
+//        var $btn = $("#subBtn");
+//        $btn.click(function () {
+//            $.ajax({
+//                url: "/login",
+//                type: "post",
+//                data: $("#regForm").serialize(),
+//                beforeSend: function () {
+//                    $btn.text("登陆中...").attr("disabled", "disabled");
+//                },
+//                success: function () {
+//                    console.log("登陆成功");
+//                },
+//                error: function () {
+//                    console.log("服务器忙，请稍后再试");
+//                },
+//                complete: function () {
+//                    $btn.text("登陆").removeAttr("disabled");
+//                }
+//            });
+//        });
+//    });
 
 </script>
 </body>

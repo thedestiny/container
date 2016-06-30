@@ -1,6 +1,6 @@
 package com.it.dao;
 
-import com.it.entity.Issue;
+import com.it.pojo.Issue;
 import com.it.utils.CacheUtils;
 import com.it.utils.Dbhelp;
 import org.apache.commons.dbutils.handlers.BeanHandler;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.it.mapper.TopicMapper">
+
+
+    <insert id="insertTopic" parameterType="Topic">
+        INSERT into t_topic (issueid,theme) VALUES ( #{issueid} ,#{theme})
+    </insert>
+    <delete id="deleteTopic">
+       DELETE FROM  t_topic WHERE ( #{issueid} ,#{theme})
+    </delete>
+
+    <select id="queryTopicByTheme" parameterType="String" resultType="com.it.pojo.Topic">
+        SELECT * FROM t_topic WHERE theme = #{theme}
+    </select>
+
+    <select id="queryTopicByIssueid" parameterType="int" resultType="com.it.pojo.Topic">
+        SELECT * from t_topic WHERE issueid = #{issueid}
+    </select>
+</mapper>

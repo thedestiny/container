@@ -1,21 +1,17 @@
 package com.it.test;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.gson.Gson;
-import com.it.entity.Answer;
-import com.it.entity.User;
-import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import com.it.pojo.Answer;
+import com.it.pojo.User;
 import org.apache.commons.io.FileUtils;
-import org.joda.time.DateTime;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xieyue on 2016/6/25.

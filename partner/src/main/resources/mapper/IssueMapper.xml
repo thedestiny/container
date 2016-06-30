@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 类似于类的完全限定名-->
+<mapper namespace="com.it.mapper.IssueMapper">
+
+    <insert id="insertQue" parameterType="Map">
+        INSERT INTO
+        issue (questioner,question,time)
+        VALUES (#{questioner},#{question},#{time})
+    </insert>
+
+    <update id="updateAnswer" parameterType="String">
+        UPDATE issue SET answer = answer + 1 WHERE question = #{question}
+    </update>
+    <update id="updateLike" parameterType="String">
+        UPDATE issue SET issue.like = issue.like  + 1  WHERE question = #{question}
+    </update>
+    <update id="updateRight" parameterType="String">
+        UPDATE issue SET issue.right = issue.right + 1 WHERE question = #{question}
+    </update>
+    <update id="updateSkim" parameterType="String">
+        UPDATE issue SET skim = skim + 1 WHERE question = #{question}
+    </update>
+
+    <select id="getAllIssue" resultType="Issue">
+        SELECT questioner,question,answer,issue.like,issue.right,skim,issue.time
+        FROM issue
+        ORDER by id DESC
+        limit 0 ,20
+    </select>
+
+    <select id="getIssueByQuestioner" parameterType="String" resultType="Issue">
+        SELECT questioner,question,answer,issue.like,issue.right,skim,issue.time
+        FROM issue
+        WHERE questioner = #{questioner}
+        ORDER by id DESC
+        limit 0 ,20
+    </select>
+
+</mapper>

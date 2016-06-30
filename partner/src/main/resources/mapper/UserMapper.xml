@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 类似于类的完全限定名-->
+<mapper namespace="com.it.mapper.UserMapper">
+
+    <insert id="insertUser" parameterType="User">
+    insert into user (username,email,password,md5pwd, time)
+    VALUES ( #{username},#{email},#{password},#{md5pwd},#{time})
+    </insert>
+
+    <update id="updateQue" parameterType="String">
+        UPDATE user SET quenum = quenum +1
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateAns" parameterType="String">
+        UPDATE user SET ansnum = ansnum +1
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateAcc" parameterType="String">
+        UPDATE user
+        SET accept = accept +1
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateInfo" parameterType="User">
+        UPDATE user
+        <set>
+            <if test="brith !=null and brith != ''">brith = #{brith}, </if>
+            <if test="job !=null and job != ''">job = #{job}, </if>
+            <if test="tel !=null and tel != ''">tel=#{tel}, </if>
+            <if test="address !=null and address != ''">address=#{address}, </if>
+            <if test="resume !=null and resume != ''">resume = #{resume}, </if>
+            <if test="sex !=null and sex != ''">sex = #{sex}, </if>
+            <if test="email !=null and email != ''">email= #{email}, </if>
+        </set>
+        WHERE username = #{username}
+    </update>
+
+    <update id="updatePwd" parameterType="User">
+        UPDATE user SET md5pwd = #{md5pwd}
+        WHERE username = #{username}
+    </update>
+
+    <select id="queryUsername" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE  username = #{username}
+    </select>
+
+</mapper>
+        
+            

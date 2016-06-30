@@ -2,8 +2,7 @@ package com.it.servive;
 
 import com.it.dao.RegisterDao;
 import com.it.dao.UserDao;
-import com.it.entity.Register;
-import com.it.utils.EmailUtil;
+import com.it.pojo.Register;
 import com.it.utils.SmallUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;

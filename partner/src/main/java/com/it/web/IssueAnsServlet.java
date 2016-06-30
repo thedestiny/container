@@ -1,7 +1,7 @@
 package com.it.web;
 
-import com.it.entity.Answer;
-import com.it.entity.Issue;
+import com.it.pojo.Answer;
+import com.it.pojo.Issue;
 import com.it.servive.IssueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

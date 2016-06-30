@@ -1,8 +1,6 @@
 package com.it.dao;
 
-import com.it.entity.User;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import com.it.pojo.User;
 import org.junit.Test;
 
 import java.io.File;

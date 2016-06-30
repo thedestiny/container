@@ -1,7 +1,7 @@
 package com.it.web;
 
 import com.it.dao.UserDao;
-import com.it.entity.User;
+import com.it.pojo.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 

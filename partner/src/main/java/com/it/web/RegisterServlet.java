@@ -1,6 +1,6 @@
 package com.it.web;
 
-import com.it.entity.Register;
+import com.it.pojo.Register;
 import com.it.servive.RegisterService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

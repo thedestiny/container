@@ -1,7 +1,7 @@
 package com.it.dao;
 
-import com.it.entity.Issue;
-import junit.framework.Assert;
+import com.it.pojo.Issue;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

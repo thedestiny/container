@@ -1,9 +1,8 @@
 package com.it.web;
 
 import com.google.gson.Gson;
-import com.it.entity.User;
+import com.it.pojo.User;
 import com.it.servive.LoginService;
-import com.it.servive.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,6 @@ public class LoginServlet extends HttpServlet {
         String json = new Gson().toJson(user);
         logger.debug("json is : " + json);
         logger.debug(" execute LoginServlet doPost ");
-        // resp.sendRedirect("/issue?json=" + json);
-        resp.sendRedirect("/issue");
+        resp.sendRedirect("/issue?json=" + json);
     }
 }

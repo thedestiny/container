@@ -1,6 +1,8 @@
 package com.it.web;
 
-import com.it.entity.Issue;
+import com.google.gson.Gson;
+import com.it.pojo.Issue;
+import com.it.pojo.User;
 import com.it.servive.IssueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @WebServlet("/issue")
 public class IssueServlet extends HttpServlet {
+
     private Logger logger = LoggerFactory.getLogger(IssueServlet.class);
     private IssueService issueService = new IssueService();
 
@@ -27,6 +30,10 @@ public class IssueServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Issue> issueList = issueService.getAllIssue();
+        String json = req.getParameter("json");
+        User user = new Gson().fromJson(json, User.class);
+        logger.debug("user is {}", user);
+        req.setAttribute("user", user);
         req.setAttribute("issueList", issueList);
         logger.debug(" execute IssueServlet doGet ");
         req.getRequestDispatcher("/WEB-INF/views/issue.jsp").forward(req, resp);

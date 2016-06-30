@@ -1,4 +1,4 @@
-package com.it.entity;
+package com.it.pojo;
 
 import java.io.Serializable;
 
@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class User  implements Serializable{
 
+    private static final long serialVersionUID = -8991403488062658206L;
     private String id;
     private String username;
     private String email;

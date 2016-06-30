@@ -1,8 +1,8 @@
 package com.it.servive;
 
 import com.it.dao.IssueDao;
-import com.it.entity.Answer;
-import com.it.entity.Issue;
+import com.it.pojo.Answer;
+import com.it.pojo.Issue;
 import com.it.utils.CacheUtils;
 import com.it.utils.SmallUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -154,8 +154,8 @@ public class IssueService {
         for (int i = 0, n = list.size(); i < n; i++) {
             String[] str = queList.get(n - 1 - i).split("\\+++");
             list.get(i).setContent(str[2]);
-            System.out.println(list.get(i).toString());
-            System.out.println(queList.get(n - 1 - i));
+            // System.out.println(list.get(i).toString());
+            // System.out.println(queList.get(n - 1 - i));
         }
         return list;
     }
