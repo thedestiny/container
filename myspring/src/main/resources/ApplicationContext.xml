@@ -2,88 +2,119 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启基于注解的Bean管理和DI 7.1-->
+    <context:component-scan base-package="com.qteng"/>
+    <!--开启基于注解的AOP-->
+    <aop:aspectj-autoproxy/>
+
+    <context:property-placeholder location ="classpath:config.properties"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxWaitMillis" value="${jdbc.maxwait}"/>
+        <property name="initialSize" value="${jdbc.initsize}"/>
+        <property name="maxTotal" value="${jdbc.maxsize}"/>
+        <property name="maxIdle" value="${jdbc.maxidle}"/>
+        <property name="minIdle" value="${jdbc.minidle}"/>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
 
+
+
+
+
+
+
+
+    <!-- 6.30-->
     <!-- AOP-->
     <!-- 将通知类放入spring容器中-->
-    <bean id="information" class="com.qteng.aop.Information"/>
-    <aop:config>
-        <!--引用通知类对象-->
-        <aop:aspect ref="information">
-            <!-- 定义切入点表达式-->
-            <aop:pointcut id="myPointCut" expression="execution(* com.qteng.mapper..*.*(..))"/>
-            <!-- 环绕通知-->
-            <aop:around method="aroundInf" pointcut-ref="myPointCut"/>
-            <!--加入各种通知，前置，后置，最终，异常-->
-            <!--<aop:before method="beforeInf" pointcut-ref="myPointCut"/>-->
-            <!--<aop:after-returning method="afterReturningInf" pointcut-ref="myPointCut" returning="result"/>-->
-            <!--<aop:after-throwing method="exceptionInf" pointcut-ref="myPointCut" throwing="e"/>-->
-            <!--<aop:after method="finallyInf" pointcut-ref="myPointCut"/>-->
-        </aop:aspect>
-    </aop:config>
+    <!--<bean id="information" class="com.qteng.aop.Information"/>-->
+    <!--<aop:config>-->
+        <!--&lt;!&ndash;引用通知类对象&ndash;&gt;-->
+        <!--<aop:aspect ref="information">-->
+            <!--&lt;!&ndash; 定义切入点表达式&ndash;&gt;-->
+            <!--<aop:pointcut id="myPointCut" expression="execution(* com.qteng.mapper..*.*(..))"/>-->
+            <!--&lt;!&ndash; 环绕通知&ndash;&gt;-->
+            <!--<aop:around method="aroundInf" pointcut-ref="myPointCut"/>-->
+            <!--&lt;!&ndash;加入各种通知，前置，后置，最终，异常&ndash;&gt;-->
+            <!--&lt;!&ndash;<aop:before method="beforeInf" pointcut-ref="myPointCut"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<aop:after-returning method="afterReturningInf" pointcut-ref="myPointCut" returning="result"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<aop:after-throwing method="exceptionInf" pointcut-ref="myPointCut" throwing="e"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<aop:after method="finallyInf" pointcut-ref="myPointCut"/>&ndash;&gt;-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
     <!--id 是类名首字母小写，class 类的完全限定名
        init-method 类初始化时执行 destroy-method 类销毁时执行
        scope property 非单例  singleton 单例
        lazy-init 该类延迟加载 alias 别名-->
-    <bean id="userDao" class="com.qteng.mapper.UserDao"
-          init-method="init" destroy-method="destroy"
-          scope="prototype"/>
-    <alias name="userDao" alias="dao"/>
-    <bean id="userDao1" class="com.qteng.mapper.UserDao1"/>
-    <!-- 本类引入其他类时，通过接口导入 通过set注入-->
-    <!--<bean id="userService" class="com.qteng.service.UserService">-->
-        <!--&lt;!&ndash; 三种写法：&ndash;&gt;-->
-        <!--<property name="userDaox" ref="userDao"/>-->
-        <!--&lt;!&ndash;<property name="userDaox">&ndash;&gt;-->
-        <!--&lt;!&ndash;<ref bean="userDao"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;</property>&ndash;&gt;-->
-        <!--&lt;!&ndash;<property name="userDaox">&ndash;&gt;-->
-        <!--&lt;!&ndash;<bean class="com.qteng.mapper.UserDao"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;</property>&ndash;&gt;-->
-    <!--</bean>-->
+    <!--<bean id="userDao" class="com.qteng.mapper.UserDao"-->
+          <!--init-method="init" destroy-method="destroy"-->
+          <!--scope="prototype"/>-->
+    <!--<alias name="userDao" alias="dao"/>-->
 
+    <!--<bean id="userDao1" class="com.qteng.mapper.UserDao1"/>-->
+     <!--本类引入其他类时，通过接口导入 通过set注入-->
+    <!--<bean id="userService" class="com.qteng.service.UserService">-->
+    <!--&lt;!&ndash; 三种写法：&ndash;&gt;-->
+    <!--<property name="userDaox" ref="userDao"/>-->
+    <!--&lt;!&ndash;<property name="userDaox">&ndash;&gt;-->
+    <!--&lt;!&ndash;<ref bean="userDao"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="userDaox">&ndash;&gt;-->
+    <!--&lt;!&ndash;<bean class="com.qteng.mapper.UserDao"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+    <!--</bean>-->
 
 
     <!-- 通过p:方式 -->
     <!--<bean id="userService" class="com.qteng.service.UserService" p:userDaox="userDao"/>-->
     <!-- 通过构造方法 有构造方法，不能有set-->
-    <bean id="userService" class="com.qteng.service.UserService">
-        <constructor-arg type="com.qteng.mapper.UserMapper" ref="userDao" />
-    </bean>
+    <!--<bean id="userService" class="com.qteng.service.UserService">-->
+        <!--<constructor-arg type="com.qteng.mapper.UserMapper" ref="dao"/>-->
+    <!--</bean>-->
 
     <!--byName ByType constructor-->
     <!--<bean name="userService" class="com.qteng.service.UserService" autowire="byName"/>-->
 
     <!-- 实体类-->
-    <!--<bean id="user" class="com.qteng.pojo.User" p:age="18">-->
-        <!--&lt;!&ndash; p:name="jim" &ndash;&gt;-->
-        <!--<property name="name" value="jim"/>-->
-        <!--<property name="lists">-->
-            <!--<list>-->
-                <!--<value>flash</value>-->
-                <!--<value>queen</value>-->
-                <!--<value>iron</value>-->
-            <!--</list>-->
-        <!--</property>-->
-        <!--<property name="maps">-->
-            <!--<map>-->
-                <!--<entry key="k1" value="v1"/>-->
-                <!--<entry key="k2" value="v2"/>-->
-            <!--</map>-->
-        <!--</property>-->
-        <!--<property name="properties">-->
-            <!--<props>-->
-                <!--<prop key="ks">kv</prop>-->
-                <!--<prop key="k2">k2</prop>-->
-            <!--</props>-->
-        <!--</property>-->
-        <!--<property name="userDao" ref="userDao"/>-->
-    <!--</bean>-->
+    <bean id="user" class="com.qteng.pojo.User" p:age="18">
+        <!-- p:name="jim" -->
+        <property name="name" value="jim"/>
+        <property name="lists">
+            <list>
+                <value>flash</value>
+                <value>queen</value>
+                <value>iron</value>
+            </list>
+        </property>
+        <property name="maps">
+            <map>
+                <entry key="k1" value="v1"/>
+                <entry key="k2" value="v2"/>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="ks">kv</prop>
+                <prop key="k2">k2</prop>
+            </props>
+        </property>
+    </bean>
     <!-- spring注入：set注入 constructor,自动注入-->
 
 

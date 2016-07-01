@@ -1,7 +1,6 @@
 package com.qteng.pojo;
 
-import com.qteng.mapper.UserDao;
-
+import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -12,7 +11,7 @@ import java.util.Set;
  * User
  */
 
-
+@Named
 public class User {
 
     private String name;
@@ -21,7 +20,6 @@ public class User {
     private Set<String> sets;
     private Map<String, Object> maps;
     private Properties properties;
-    private UserDao userDao;
 
 
     @Override
@@ -84,13 +82,6 @@ public class User {
         this.properties = properties;
     }
 
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 }
 
 

@@ -23,9 +23,9 @@ public class UserDaoTest {
         UserService userService = (UserService) context.getBean("userService");
         userService.sayHai();
         System.out.println("==============================");
-//        User user = (User) context.getBean("user");
-//        System.out.println(user.getProperties().toString());
-//        user.getUserDao().sayHello();
+        User user = (User) context.getBean("user");
+        System.out.println(user.getProperties().toString());
+
 
 
 
