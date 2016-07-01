@@ -8,11 +8,11 @@ package com.qteng.mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UserDao1 implements UserMapper {
+public class UserDao1  {
     Logger logger = LoggerFactory.getLogger(UserDao1.class);
 
 
-    @Override
+
     public String sayHello() {
         System.out.println("this is UserDao1");
         logger.debug("this is UserDao1");

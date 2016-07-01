@@ -80,6 +80,19 @@ public class Movie {
         return film;
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", film='" + film + '\'' +
+                ", rate=" + rate +
+                ", issue='" + issue + '\'' +
+                ", screen='" + screen + '\'' +
+                ", director='" + director + '\'' +
+                ", summary='" + summary + '\'' +
+                '}';
+    }
+
     public void setFilm(String film) {
         this.film = film;
     }

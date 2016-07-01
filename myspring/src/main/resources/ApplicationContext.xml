@@ -3,21 +3,25 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <!-- p / context/ tx/aop-->
     <!--开启基于注解的Bean管理和DI 7.1-->
     <context:component-scan base-package="com.qteng"/>
     <!--开启基于注解的AOP-->
     <aop:aspectj-autoproxy/>
 
-    <context:property-placeholder location ="classpath:config.properties"/>
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+    <context:property-placeholder location="classpath:config.properties"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
@@ -32,9 +36,24 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+     <!--jdbc 事务管理器-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 基于注解的事务  @Transactional-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <!-- 配置mybatis的SqlSessionFactoryBean-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--将pojo包中的所有类起别名为类的名字-->
+        <property name="typeAliasesPackage" value="com.qteng.pojo"/>
+        <!-- 自动加载classpath中的所有xml-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
 
-
+    
 
 
 
@@ -45,30 +64,30 @@
     <!-- 将通知类放入spring容器中-->
     <!--<bean id="information" class="com.qteng.aop.Information"/>-->
     <!--<aop:config>-->
-        <!--&lt;!&ndash;引用通知类对象&ndash;&gt;-->
-        <!--<aop:aspect ref="information">-->
-            <!--&lt;!&ndash; 定义切入点表达式&ndash;&gt;-->
-            <!--<aop:pointcut id="myPointCut" expression="execution(* com.qteng.mapper..*.*(..))"/>-->
-            <!--&lt;!&ndash; 环绕通知&ndash;&gt;-->
-            <!--<aop:around method="aroundInf" pointcut-ref="myPointCut"/>-->
-            <!--&lt;!&ndash;加入各种通知，前置，后置，最终，异常&ndash;&gt;-->
-            <!--&lt;!&ndash;<aop:before method="beforeInf" pointcut-ref="myPointCut"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<aop:after-returning method="afterReturningInf" pointcut-ref="myPointCut" returning="result"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<aop:after-throwing method="exceptionInf" pointcut-ref="myPointCut" throwing="e"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<aop:after method="finallyInf" pointcut-ref="myPointCut"/>&ndash;&gt;-->
-        <!--</aop:aspect>-->
+    <!--&lt;!&ndash;引用通知类对象&ndash;&gt;-->
+    <!--<aop:aspect ref="information">-->
+    <!--&lt;!&ndash; 定义切入点表达式&ndash;&gt;-->
+    <!--<aop:pointcut id="myPointCut" expression="execution(* com.qteng.mapper..*.*(..))"/>-->
+    <!--&lt;!&ndash; 环绕通知&ndash;&gt;-->
+    <!--<aop:around method="aroundInf" pointcut-ref="myPointCut"/>-->
+    <!--&lt;!&ndash;加入各种通知，前置，后置，最终，异常&ndash;&gt;-->
+    <!--&lt;!&ndash;<aop:before method="beforeInf" pointcut-ref="myPointCut"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<aop:after-returning method="afterReturningInf" pointcut-ref="myPointCut" returning="result"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<aop:after-throwing method="exceptionInf" pointcut-ref="myPointCut" throwing="e"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<aop:after method="finallyInf" pointcut-ref="myPointCut"/>&ndash;&gt;-->
+    <!--</aop:aspect>-->
     <!--</aop:config>-->
     <!--id 是类名首字母小写，class 类的完全限定名
        init-method 类初始化时执行 destroy-method 类销毁时执行
        scope property 非单例  singleton 单例
        lazy-init 该类延迟加载 alias 别名-->
     <!--<bean id="userDao" class="com.qteng.mapper.UserDao"-->
-          <!--init-method="init" destroy-method="destroy"-->
-          <!--scope="prototype"/>-->
+    <!--init-method="init" destroy-method="destroy"-->
+    <!--scope="prototype"/>-->
     <!--<alias name="userDao" alias="dao"/>-->
 
     <!--<bean id="userDao1" class="com.qteng.mapper.UserDao1"/>-->
-     <!--本类引入其他类时，通过接口导入 通过set注入-->
+    <!--本类引入其他类时，通过接口导入 通过set注入-->
     <!--<bean id="userService" class="com.qteng.service.UserService">-->
     <!--&lt;!&ndash; 三种写法：&ndash;&gt;-->
     <!--<property name="userDaox" ref="userDao"/>-->
@@ -85,7 +104,7 @@
     <!--<bean id="userService" class="com.qteng.service.UserService" p:userDaox="userDao"/>-->
     <!-- 通过构造方法 有构造方法，不能有set-->
     <!--<bean id="userService" class="com.qteng.service.UserService">-->
-        <!--<constructor-arg type="com.qteng.mapper.UserMapper" ref="dao"/>-->
+    <!--<constructor-arg type="com.qteng.mapper.UserMapper" ref="dao"/>-->
     <!--</bean>-->
 
     <!--byName ByType constructor-->
