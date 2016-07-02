@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 类似于类的完全限定名-->
+<mapper namespace="com.qteng.mapper.MovieMapper">
+
+
+    <insert id="insertMovie" parameterType="Movie">
+        INSERT into movie (film,rate,issue,screen,director,summary)
+        VALUES ( #{film},#{rate},#{issue},#{screen},#{director},#{summary})
+    </insert>
+    <delete id="deleteMovie" parameterType="int">
+        DELETE FROM movie WHERE id = #{id}
+    </delete>
+    <select id="queryMovieByName" parameterType="String" resultType="Movie">
+        SELECT * FROM  movie WHERE film = #{film}
+    </select>
+    <select id="queryAllMovie" resultType="Movie">
+        SELECT * FROM movie
+    </select>
+    <select id="queryTotal" resultType="java.lang.Long">
+        SELECT count(*) FROM movie
+    </select>
+
+</mapper>
+        
+            

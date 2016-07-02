@@ -29,7 +29,13 @@ public class TempleTest {
             System.out.println(str);
         }
         DigestUtils.md5Hex("456789");
+    }
 
+    @Test
+    public void testtem(){
+        String temp = "(this is my first name)";
+        String nu = temp.replace("(","").replace(")","");
+        System.out.println(nu);
     }
 
 }

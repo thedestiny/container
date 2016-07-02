@@ -21,27 +21,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-@Named
-public class MovieDao implements MovieMapper{
+//@Named
+public class MovieDao {
     Logger logger = LoggerFactory.getLogger(MovieDao.class);
 
-    @Inject
+//    @Inject
     private JdbcTemplate jdbcTemplate;
 
-    @Override
+//    @Override
     public void insertMovie(Movie movie) {
         logger.debug("execute MovieDao insertMovie");
         String sql = " insert into movie ( film, rate, issue, screen, director,summary) values(?,?,?,?,?,?)";
         jdbcTemplate.update(sql, SmallUtils.helpGet(movie, sql));
     }
 
-    @Override
+//    @Override
     public void deleteMovie(Integer id) {
         String sql = " delete from movie where id = ?";
         jdbcTemplate.update(sql,id);
     }
 
-    @Override
+//    @Override
     public Movie queryMovieByName(String film) {
         String sql = " SELECT * from movie WHERE film = ?";
         return jdbcTemplate.queryForObject(sql, new RowMapper<Movie>() {
@@ -61,13 +61,13 @@ public class MovieDao implements MovieMapper{
 
     // 不论是单个对象还是多个对象的集合，都用new BeanPropertyRowMapper
     // 单个对象用queryObject 多个对象用query
-    @Override
+//    @Override
     public List<Movie> queryAllMovie() {
         String sql = "select * from movie ";
         return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Movie.class));
     }
 
-    @Override
+//    @Override
     public Long queryTotal() {
         String sql = " select count(*) from movie";
         return jdbcTemplate.queryForObject(sql, new SingleColumnRowMapper<Long>());

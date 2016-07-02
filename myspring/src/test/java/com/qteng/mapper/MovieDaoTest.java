@@ -24,7 +24,7 @@ public class MovieDaoTest {
 
     Logger logger = LoggerFactory.getLogger(MovieDaoTest.class);
 
-    @Inject
+
     private MovieMapper movieMapper;
 
     @Test

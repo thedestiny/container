@@ -5,6 +5,7 @@ package com.qteng.mapper;
  */
 
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,4 +22,6 @@ public class UserDao1  {
         }
         return " 123";
     }
+
+
 }

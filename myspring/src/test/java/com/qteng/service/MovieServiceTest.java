@@ -6,6 +6,8 @@ package com.qteng.service;
 
 
 import com.qteng.pojo.Movie;
+import com.qteng.util.SmallUtils;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,6 +32,13 @@ public class MovieServiceTest {
         logger.debug("execute MovieServiceTest insertMovieTest ");
         Movie movie = new Movie("flash",9.6F,"2016","2016","queen","the flash movie");
         movieService.insertMovie(movie);
-
     }
+
+
+
+
+
+
+
+
 }

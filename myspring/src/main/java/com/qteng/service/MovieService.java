@@ -19,8 +19,6 @@ import javax.inject.Named;
 @Transactional
 public class MovieService {
     Logger logger = LoggerFactory.getLogger(MovieService.class);
-
-
     // Service调用mapper的是接口的实现类
     @Inject
     private MovieMapper movieMapper;
