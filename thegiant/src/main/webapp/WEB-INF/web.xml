@@ -19,4 +19,14 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!--加载spring容器-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!--指定spring容器加载的配置文件地址-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:ApplicationContext*.xml</param-value>
+    </context-param>
+
 </web-app>

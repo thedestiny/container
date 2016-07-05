@@ -19,13 +19,9 @@ public class LoginController {
 
     @RequestMapping(value = "/login/{id:\\d+}")
     public String login( @PathVariable Integer id){
-
         logger.debug(" id is {}",id);
         return "login";
     }
-
-
-
 
 
 }
