@@ -10,16 +10,48 @@
 <html>
 <head>
     <title>Books</title>
-
     <link rel="stylesheet" href="<c:url value="/static/css/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <style>
+        #search{
+            width: 40px;
+        }
+        #group{
+            margin-top: -65px;
+        }
+    </style>
 </head>
 <body>
 
 
-
 <div class="container">
     <div class="page-header">
-        <h1>图书馆</h1>
+        <h1>图书馆</h1> <a href="#"><i class="fa fa-user"></i></a>
+    </div>
+    <c:if test="${not empty message}">
+        <div class="alert alert-info alert-dismissible">
+            <button class="close" data-dismiss="alert" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <p class="lead"><strong>tips:</strong>${message}</p>
+        </div>
+    </c:if>
+
+    <div class="well well-sm">
+        <form class="form form-inline" method="get">
+            <div class="form-group">
+                <input type="text" name="title" id="title" class="form-control" placeholder="输入书籍名" value="${rtitle}">
+            </div>
+            <div class="form-group">
+                <input type="text" name="author" id="author" class="form-control" placeholder="输入作者名" value="${rauthor}">
+            </div>
+            <div class="form-group">
+                <input type="text" name="press" id="press" class="form-control" placeholder="输入出版社名" value="${rpress}">
+            </div>
+            <button class="btn btn-info">搜索</button>
+            <button type="reset" id="reset" class="btn btn-default">重置</button>
+            <a href="/books/add"  class="btn btn-success pull-right">添加书籍</a>
+        </form>
     </div>
     <div class="panel">
         <table class="table table-bordered">
@@ -37,6 +69,9 @@
             </thead>
             <tbody>
             <c:forEach items="${page.bookList}" var="book" varStatus="num">
+                <c:if test="${empty page.bookList}">
+                    <h3>没有找到相关书籍</h3>
+                </c:if>
                 <tr>
                     <td>${num.count}</td>
                     <td>${book.code}</td>
@@ -51,23 +86,57 @@
                     </td>
                 </tr>
             </c:forEach>
-
-
             </tbody>
-
-
-
-
         </table>
+        <div class="form-inline" style="display: inline-block; vertical-align:middle">
+            <ul class="pagination" id="page" style="display: inline-block"></ul>
+            <div id="group" class="form-group">
+                <input type="text" id="search" class="form-control">
+                <button class="btn btn-success" id="btn">Go</button>
+            </div>
+        </div>
     </div>
 
 
 </div>
-<script src="../../../static/js/jquery-2.2.3.min.js"></script>
-<script src="../../../static/js/jquery.twbsPagination.min.js"></script>
+<script src="/static/js/jquery-2.2.3.min.js"></script>
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 <script>
     $(function(){
-
+        $("#page").twbsPagination({
+            totalPages:${page.totalPages},
+            visiblePages:6,
+            first:'首页',
+            prev:'上一页',
+            next:'下一页',
+            last:'末页',
+            href:'?page={{number}}'+"&title="+
+            encodeURIComponent('${rtitle}')+"&press="+
+            encodeURIComponent('${rpress}')+"&author="+
+            encodeURIComponent('${rauthor}')
+        });
+        // 修改
+        $(".btn-primary").click(function(){
+            var id = $(this).attr("rel");
+            window.location.href="books/update/"+id;
+        });
+        //删除
+        $(".btn-danger").click(function(){
+            if(confirm("确认删除吗？")){
+                var id = $(this).attr("rel");
+                alert(id);
+                window.location.href="books/del/"+id;
+            }
+        });
+        // 重置
+        $("#reset").click(function(){
+            window.location.href="/books";
+        });
+        // 跳转指定页
+        $("#btn").click(function(){
+            window.location.href="/books?page="+$("#search").val()
+        });
 
 
 

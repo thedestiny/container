@@ -39,15 +39,31 @@ public class BookService {
     public Page findBook(Map<String, Object> map) {
         int totalBars = queryCount(map);
         int bars = 6;
-        int pages = 1;
+        int pages = Integer.parseInt(map.get("page").toString());
         // page 总条数/每页几条/起始页
         Page page = new Page(totalBars, bars, pages);
-        int start = (pages - 1) * bars;
-        map.put("start", start);
+        map.put("start", page.getStart());
         map.put("bars",bars);
         page.setBookList(bookMapper.findBooks(map));
         return page;
     }
 
 
+    public boolean delBookById(Integer id){
+        return bookMapper.delBookById(id) == 1 ;
+    }
+
+
+    public Boolean insertBook(Book book) {
+        return bookMapper.insertBook(book) == 1;
+    }
+
+    public Boolean updateBook(Book book){
+        return bookMapper.updateBook(book) == 1;
+    }
+
+
+    public Book findBookById(Integer id) {
+        return bookMapper.findBookById(id);
+    }
 }

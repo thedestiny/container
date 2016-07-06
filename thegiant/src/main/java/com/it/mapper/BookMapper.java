@@ -15,4 +15,12 @@ public interface BookMapper {
     List<Book> findBooks(Map<String, Object> map);
 
     long queryCount(Map<String, Object> map);
+
+    Integer delBookById(Integer id);
+
+    Integer insertBook(Book book);
+
+    Integer updateBook(Book book);
+
+    Book findBookById(Integer id);
 }

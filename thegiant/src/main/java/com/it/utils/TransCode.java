@@ -5,6 +5,7 @@ package com.it.utils;
  */
 
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +16,14 @@ public class TransCode {
 
 
     public static String toUTF8(String str){
-        try {
-            return new String(str.getBytes("ISO8859-1"),"utf-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("转码异常");
+        if(StringUtils.isNotEmpty(str)){
+            try {
+                return new String(str.getBytes("ISO8859-1"),"utf-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("转码异常");
+            }
         }
+        return "";
     }
 
 

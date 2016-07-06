@@ -4,19 +4,19 @@
 
     <select id="findBooks" parameterType="map" resultType="Book">
         SELECT * FROM book
-         <where>
-             <if test="title != null and title != ''">
+        <where>
+            <if test="title != null and title != ''">
                  title like concat("%",#{title},"%")
              </if>
-             <if test="press != null and press != ''">
-                 press = #{press}
+            <if test="press != null and press != ''">
+                 and press = #{press}
              </if>
-             <if test="author != null and author != ''">
-                 author = #{author}
+            <if test="author != null and author != ''">
+                 and author = #{author}
              </if>
-         </where>
-         order by id desc
-         limit #{start},#{bars}
+        </where>
+        order by id desc
+        limit #{start},#{bars}
     </select>
 
     <select id="queryCount" resultType="long" parameterType="map">
@@ -26,13 +26,31 @@
                 title like concat("%",#{title},"%")
             </if>
             <if test="press != null and press != ''">
-                press = #{press}
+                and press = #{press}
             </if>
             <if test="author != null and author != ''">
-                author = #{author}
+                and author = #{author}
             </if>
         </where>
         order by id desc
+    </select>
+
+    <delete id="delBookById" parameterType="int">
+        DELETE from book WHERE id=#{id}
+    </delete>
+
+    <insert id="insertBook" parameterType="Book">
+        insert into book (code,title,author,press,station,btime)
+        VALUES (#{code},#{title},#{author},#{press},"在库",0)
+    </insert>
+
+    <update id="updateBook" parameterType="Book" >
+        UPDATE book set title = #{title},author= #{author},press=#{press},station =#{station},btime=#{btime}
+        where code = #{code}
+    </update>
+
+    <select id="findBookById" parameterType="int" resultType="Book">
+        SELECT * FROM book WHERE id = #{id}
     </select>
 
 
