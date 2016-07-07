@@ -135,12 +135,11 @@
         });
         // 跳转指定页
         $("#btn").click(function(){
-            window.location.href="/books?page="+$("#search").val()
+            window.location.href="/books?page="+$("#search").val()+"&title="+
+                    encodeURIComponent('${rtitle}')+"&press="+
+                    encodeURIComponent('${rpress}')+"&author="+
+                    encodeURIComponent('${rauthor}')
         });
-
-
-
-
     });
 </script>
 

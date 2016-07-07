@@ -108,8 +108,14 @@ public class Book implements Serializable {
 
 	@Override
 	public String toString() {
-		return  code +"  " + title  + "\t\t" + author  +"\t" + press + "\t"+ station+ "\t" +total +"\t" + remain;
-				
+		return "Book{" +
+				"id=" + id +
+				", code='" + code + '\'' +
+				", title='" + title + '\'' +
+				", author='" + author + '\'' +
+				", press='" + press + '\'' +
+				", station='" + station + '\'' +
+				", btime=" + btime +
+				'}';
 	}
-
 }

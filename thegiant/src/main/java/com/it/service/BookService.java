@@ -66,4 +66,20 @@ public class BookService {
     public Book findBookById(Integer id) {
         return bookMapper.findBookById(id);
     }
+
+    public List<Book> findByDataTables(Map<String, Object> param) {
+        return bookMapper.findByDatables(param);
+    }
+
+    public long tableCount() {
+        return bookMapper.tableCount();
+    }
+
+    public long countByKeyWord(String keyword) {
+        return bookMapper.countByKeyWord(keyword);
+    }
+
+    public Book findBookByCode(String code) {
+        return bookMapper.findBookByCode(code);
+    }
 }

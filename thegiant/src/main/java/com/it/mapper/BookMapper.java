@@ -23,4 +23,12 @@ public interface BookMapper {
     Integer updateBook(Book book);
 
     Book findBookById(Integer id);
+
+    List<Book> findByDatables(Map<String, Object> param);
+
+    long tableCount();
+
+    long countByKeyWord(String keyword);
+
+    Book findBookByCode(String code);
 }

@@ -53,5 +53,28 @@
         SELECT * FROM book WHERE id = #{id}
     </select>
 
+    <select id="findByDatables" resultType="Book" parameterType="map">
+        SELECT * FROM book
+        <where>
+            <if test="keyword != null and keyword != ''">
+               title  like concat("%",#{keyword},"%")
+            </if>
+        </where>
+        <if test="sortColumn != null and sortColumn != '' and sortType != null and sortType != ''">
+            order by ${sortColumn} ${sortType}
+        </if>
+        limit ${start} , ${length}
+    </select>
 
+    <select id="tableCount" resultType="long">
+         SELECT count(*) FROM book
+    </select>
+
+    <select id="countByKeyWord" resultType="long" parameterType="String">
+        SELECT count(*) FROM book WHERE title  like concat("%",#{keyword},"%")
+    </select>
+
+    <select id="findBookByCode" parameterType="String" resultType="Book">
+        select * from book WHERE  code = #{code};
+    </select>
 </mapper>
