@@ -43,8 +43,16 @@ public class TableController {
         String draw = request.getParameter("draw");
         String start = request.getParameter("start"); //当前页偏移量
         String length = request.getParameter("length"); //每页显示多少条数据
-        String keyword = request.getParameter("search[value]"); //搜索框中的值
-        keyword = SmallUtils.transtoUTF8(keyword);
+//      String keyword = request.getParameter("search[value]"); //搜索框中的值
+//      keyword = SmallUtils.transtoUTF8(keyword);
+        String title = request.getParameter("title");
+        String press = request.getParameter("press");
+        String author = request.getParameter("author");
+        title = SmallUtils.transtoUTF8(title);
+        press = SmallUtils.transtoUTF8(press);
+        author = SmallUtils.transtoUTF8(author);
+
+
         length = length == null ? "10" : length;
         start = start == null ? "0" : start;
         String sortColumnIndex = request.getParameter("order[0][column]"); //获取排序列的索引
@@ -54,16 +62,22 @@ public class TableController {
         Map<String, Object> param = Maps.newHashMap();
         param.put("start", start);
         param.put("length", length);
-        param.put("keyword", keyword);
+//        param.put("keyword", keyword);
+        param.put("title", title);
+        param.put("press", press);
+        param.put("author", author);
+
         param.put("sortColumn", sortColumnName);
         param.put("sortType", sortType);
-
         List<Book> bookList = bookService.findByDataTables(param);
         Map<String, Object> result = Maps.newHashMap();
         result.put("draw", draw);
         result.put("recordsTotal", bookService.tableCount());
-        result.put("recordsFiltered", bookService.countByKeyWord(keyword));
+        result.put("recordsFiltered", bookService.queryCount(param));
         result.put("data", bookList);
+//        result.put("rtitle", title);
+//        result.put("rpress", press);
+//        result.put("rauthor", author);
         logger.debug("result is {}", result);
         return result;
     }

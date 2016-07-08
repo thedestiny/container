@@ -91,16 +91,15 @@
     <div class="well well-sm">
         <form class="form form-inline" id="searchForm">
             <div class="form-group">
-                <input type="text" name="title" id="title" class="form-control" placeholder="输入书籍名" value="${rtitle}">
+                <input type="text" name="title" id="title" class="form-control" placeholder="输入书籍名" >
             </div>
             <div class="form-group">
-                <input type="text" name="author" id="author" class="form-control" placeholder="输入作者名"
-                       value="${rauthor}">
+                <input type="text" name="author" id="author" class="form-control" placeholder="输入作者名">
             </div>
             <div class="form-group">
-                <input type="text" name="press" id="press" class="form-control" placeholder="输入出版社名" value="${rpress}">
+                <input type="text" name="press" id="press" class="form-control" placeholder="输入出版社名" >
             </div>
-            <button class="btn btn-info">搜索</button>
+            <button id = "seaBtn" class="btn btn-info" type="button">搜索</button>
             <button type="reset" id="reset" class="btn btn-default">重置</button>
             <a id="addBtn" class="btn btn-success pull-right">添加书籍</a>
         </form>
@@ -186,7 +185,7 @@
                         <label class="control-label" for="bookcode">Bookcode</label>
                         <div>
                             <input type="text" class="form-control " id="editcode" name="code"
-                                   placeholder="Book code" readonly >
+                                   placeholder="Book code" readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -245,11 +244,11 @@
         "lengthMenu": [5, 10, 25, 50, 75, 100], //定义每页显示的数量列表
         "serverSide": true, //表示所有的操作都在服务端进行
         "ajax": {
-            url:"/table/data.json", //服务端URL地址
-            data:function(dataSource){
-                datasource.title= $("#title").val();
-                dataSource.press=$("#press").val();
-                dataSource.author=$("#author").val();
+            url: "/table/data.json", //服务端URL地址
+            data: function (dataSource) {
+                dataSource.title = $("#title").val();
+                dataSource.press = $("#press").val();
+                dataSource.author = $("#author").val();
             }
         },
         "order": [0, 'desc'],
@@ -350,7 +349,6 @@
                                 "<button type='button' class='close' data-dismiss='alert' >" +
                                 "<span aria-hidden='true'>&times;</span>" +
                                 "</button><strong>Tips:</strong>" + data + "</div>");
-                        console.log(data);
                         $("#add").modal("hide");
                         dataTable.ajax.reload();
                     })
@@ -413,7 +411,7 @@
     $(document).delegate(".btn-primary", "click", function () {
         var id = $(this).attr("rel");
         console.log(id);
-        if(id == null){
+        if (id == null) {
             return;
         }
         $.get("/table/edit/" + id)
@@ -473,10 +471,10 @@
                 required: "输入出版社"
             }
         },
-        errorElement:"span",
-        errorClass:"text-danger",
+        errorElement: "span",
+        errorClass: "text-danger",
         submitHandler: function (form) {
-            $.post("/table/edit",$(form).serialize())
+            $.post("/table/edit", $(form).serialize())
                     .done(function (data) {
                         $("#ta").prepend("<div class='alert alert-success alert-dismissible'>" +
                                 "<button type='button' class='close' data-dismiss='alert' >" +
@@ -491,6 +489,14 @@
                     });
         }
     });
+
+    // 搜索
+    $("#seaBtn").click(function(){
+        dataTable.ajax.reload();
+    });
+
+
+
 
 </script>
 

@@ -59,6 +59,12 @@
             <if test="keyword != null and keyword != ''">
                title  like concat("%",#{keyword},"%")
             </if>
+            <if test="press != null and press != ''">
+                and press = #{press}
+            </if>
+            <if test="author != null and author != ''">
+                and author = #{author}
+            </if>
         </where>
         <if test="sortColumn != null and sortColumn != '' and sortType != null and sortType != ''">
             order by ${sortColumn} ${sortType}
