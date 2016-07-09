@@ -7,8 +7,10 @@ package com.it.controller;
 
 
 import com.it.service.UserService;
+import com.it.utils.SmallUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -28,36 +30,56 @@ public class HomeController {
     @Inject
     private UserService userService;
 
+    // 获取登录界面
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
     }
 
+    // 提交用户信息用户名和密码
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPage(String username, String password,
                             RedirectAttributes redirectAttributes,
                             HttpServletRequest request) {
 
         Subject subject = SecurityUtils.getSubject();
+        //当前用户已经登录,如果返回登录界面则退出
         if (subject.isAuthenticated()) {
-            //当前用户已经登录,则先退出之前的账号（选做）
             subject.logout();
         }
         try {
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
             subject.login(usernamePasswordToken);
-            userService.insertLoginLog(request.getRemoteAddr());
+            String ip = SmallUtils.getRemoteIp(request);
+            logger.debug("ip is {}", ip);
+            redirectAttributes.addFlashAttribute("user",username);
+            userService.insertLoginLog(ip);
             return "redirect:/home";
+        } catch (LockedAccountException exception) {
+            redirectAttributes.addFlashAttribute("message", "该账户已经被冻结");
+            redirectAttributes.addFlashAttribute("style", "alert-danger");
+            return "redirect:/login";
         } catch (AuthenticationException exception) {
             redirectAttributes.addFlashAttribute("message", "账号或密码错误");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("style", "alert-danger");
+            return "redirect:/login";
         }
 
     }
 
+    // 跳转主界面
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String homePage() {
         return "home";
+    }
+
+    // 退出系统
+    @RequestMapping(value = "/signout", method = RequestMethod.GET)
+    public String signOut(RedirectAttributes redirectAttributes) {
+        SecurityUtils.getSubject().logout();
+        redirectAttributes.addFlashAttribute("message", "已经安全退出！");
+        redirectAttributes.addFlashAttribute("style", "alert-success");
+        return "redirect:/login";
     }
 
 

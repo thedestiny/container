@@ -3,6 +3,7 @@ package com.it.utils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
@@ -98,11 +99,11 @@ public class SmallUtils {
 
 
     public static String getTime() {
-        return new DateTime().toLocalDate().toString("MM-dd HH:mm:ss");
+        return new DateTime().toString("yyyy-MM-dd HH:mm:ss");
     }
 
     public static String getTime(int hours) {
-        return new DateTime().plusHours(hours).toLocalDate().toString("MM-dd HH:mm:ss");
+        return new DateTime().plusHours(hours).toString("yyyy-MM-dd HH:mm:ss");
     }
 
     /**
@@ -152,6 +153,13 @@ public class SmallUtils {
         }
         return "";
     }
+
+    public static String getRemoteIp(HttpServletRequest request){
+        String ip = request.getRemoteAddr();
+        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1":ip;
+    }
+
+
 
 
 

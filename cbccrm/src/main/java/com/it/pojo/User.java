@@ -1,13 +1,16 @@
 package com.it.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by xieyue on 2016/7/8.
  * User
  */
 
 
-public class User {
+public class User implements Serializable{
 
+    private static final long serialVersionUID = -5993034110583358547L;
     private Integer id;
     private String username;
     private String password;
@@ -19,6 +22,10 @@ public class User {
     private Role role;
 
     public User() {
+    }
+
+    public User(Integer id) {
+        this.id = id;
     }
 
     public User(String username) {

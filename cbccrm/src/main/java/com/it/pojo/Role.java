@@ -1,12 +1,16 @@
 package com.it.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by xieyue on 2016/7/8.
+ * Role
  */
 
 
-public class Role {
+public class Role implements Serializable {
 
+    private static final long serialVersionUID = 1788746974888725778L;
     private Integer id;
     private String rolename;
 

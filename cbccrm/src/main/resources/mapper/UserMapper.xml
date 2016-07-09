@@ -21,6 +21,29 @@
         VALUES (#{username},#{password},#{realname},#{createtime},#{weixin},#{roleid})
     </insert>
 
+    <update id="updateUserInfo" parameterType="User">
+        UPDATE t_user
+        <set>
+            <if test="username != null and username !=''">
+                username = #{username},
+            </if>
+            <if test="password != null and password !=''">
+                password = #{password},
+            </if>
+            <if test="realname != null and realname !=''">
+                realname = #{realname},
+            </if>
+            <if test="weixin != null and weixin !=''">
+                weixin = #{weixin},
+            </if>
+            <if test="roleid != null and roleid !=''">
+                roleid = #{roleid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
 
 
 </mapper>

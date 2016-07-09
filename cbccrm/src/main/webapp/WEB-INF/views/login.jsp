@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: xieyue
@@ -26,7 +27,7 @@
     <link rel="stylesheet" href="/static/adminlte/plugins/iCheck/square/blue.css">
 
     <style>
-        body{
+        body {
         }
     </style>
 
@@ -38,8 +39,15 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">请登陆你的账号</p>
-
+        <p class="login-box-msg">请登录你的账号</p>
+        <c:if test="${not empty message}">
+            <div class="alert ${style}" id="alert">
+                <button class="close" data-dismiss="alert">
+                    <p>&times;</p>
+                </button>
+                    ${message}
+            </div>
+        </c:if>
         <form action="/login" method="post">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" placeholder="账号" name="username">

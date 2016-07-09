@@ -6,4 +6,17 @@
         INSERT into t_login (userid,logintime,loginip) VALUES (#{userid},#{logintime},#{loginip})
     </insert>
 
+
+    <select id="queryLoginLog" parameterType="map" resultType="Login">
+        SELECT * FROM t_login WHERE  userid = #{login.userid}
+        order by id desc
+        limit ${start} , ${length}
+    </select>
+
+    <select id="queryCount" parameterType="map" resultType="long">
+        SELECT count(*) from t_login WHERE  userid = #{login.userid}
+    </select>
+
+
+
 </mapper>

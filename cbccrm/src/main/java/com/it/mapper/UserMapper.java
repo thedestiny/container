@@ -4,10 +4,16 @@ import com.it.pojo.User;
 
 /**
  * Created by xieyue on 2016/7/8.
+ * UserMapper
  */
 public interface UserMapper {
 
     User queryUser(User user);
     Integer insertUser(User user);
+    Integer updateUserInfo(User user);
+
+
+
+
 
 }

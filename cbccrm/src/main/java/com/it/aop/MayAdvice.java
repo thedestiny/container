@@ -19,20 +19,24 @@ public class MayAdvice {
     Logger logger = LoggerFactory.getLogger(MayAdvice.class);
 
     @Pointcut("execution(* com.it.mapper..*.*(..))")
-    public void myPointCut(){}
+    public void myPointCut() {
+    }
 
     @Before("myPointCut()")
     public void beforeAdvice() {
         logger.debug("前置通知++++++++++++");
     }
-    @AfterReturning(pointcut ="myPointCut()",returning = "result")
+
+    @AfterReturning(pointcut = "myPointCut()", returning = "result")
     public void afterReturningAdvice(Object result) {
         logger.debug("后置通知++++++++++++{}", result);
     }
-    @AfterThrowing(pointcut = "myPointCut()",throwing = "e")
+
+    @AfterThrowing(pointcut = "myPointCut()", throwing = "e")
     public void exceptionAdvice(Exception e) {
         logger.debug(" encounter exception and detail is {}", e.getMessage());
     }
+
     @After("myPointCut()")
     public void finallyAdvice() {
         logger.debug(" this is the end ===========");

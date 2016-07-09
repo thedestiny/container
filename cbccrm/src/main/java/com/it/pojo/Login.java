@@ -1,19 +1,30 @@
 package com.it.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by xieyue on 2016/7/8.
+ * Login
  */
 
 
-public class Login {
+public class Login implements Serializable{
 
+    private static final long serialVersionUID = -3621349802341585423L;
     private Integer id;
     private String logintime;
     private String loginip;
     private Integer userid;
 
+    public Login() {
+    }
 
-    public Login(String logintime, String loginip, Integer userid) {
+    public Login(Integer userid) {
+        this.userid = userid;
+    }
+
+
+    public Login(Integer userid, String logintime, String loginip) {
         this.logintime = logintime;
         this.loginip = loginip;
         this.userid = userid;

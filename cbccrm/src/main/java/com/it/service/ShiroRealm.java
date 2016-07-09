@@ -31,7 +31,6 @@ public class ShiroRealm extends AuthorizingRealm {
             //将用户的角色名称赋值给info
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             info.addRole(user.getRole().getRolename());
-
             return info;
         }
         return null;
