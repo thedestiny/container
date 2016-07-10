@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/static/adminlte/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/fonts/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -26,13 +27,10 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="/static/adminlte/plugins/iCheck/square/blue.css">
 
-    <style>
-        body {
-        }
-    </style>
 
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url(/static/image/123.jpg);filter:alpha(opacity=50);position:static;*zoom:1;">
+
 <div class="login-box">
     <div class="login-logo">
         <a href="/static/adminlte/index2.html"><b>CBC</b>CRM</a>

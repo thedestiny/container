@@ -7,6 +7,7 @@ package com.it.controller;
 
 
 import com.it.service.UserService;
+import com.it.utils.ShiroUtil;
 import com.it.utils.SmallUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -16,6 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -69,10 +71,10 @@ public class HomeController {
 
     // 跳转主界面
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String homePage() {
+    public String homePage(Model model) {
+        model.addAttribute("username", ShiroUtil.getCurrentUsername());
         return "home";
     }
-
     // 退出系统
     @RequestMapping(value = "/signout", method = RequestMethod.GET)
     public String signOut(RedirectAttributes redirectAttributes) {

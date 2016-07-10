@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 
-public class User implements Serializable{
+public class User implements Serializable {
 
     private static final long serialVersionUID = -5993034110583358547L;
     private Integer id;
@@ -115,6 +115,7 @@ public class User implements Serializable{
                 ", enable=" + enable +
                 ", weixin='" + weixin + '\'' +
                 ", roleid=" + roleid +
+                ", role=" + role +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.it.utils;
 
 /**
  * Created by xieyue on 2016/7/8.
+ * ShiroUtil
  */
 
 
@@ -16,7 +17,6 @@ public class ShiroUtil {
     public static User getCurrentUser(){
         return (User) SecurityUtils.getSubject().getPrincipal();
     }
-
 
     public static Integer getCurrentUserId(){
         return getCurrentUser().getId();

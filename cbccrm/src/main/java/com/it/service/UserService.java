@@ -8,8 +8,10 @@ package com.it.service;
 
 import com.google.common.collect.Maps;
 import com.it.mapper.LoginMapper;
+import com.it.mapper.RoleMapper;
 import com.it.mapper.UserMapper;
 import com.it.pojo.Login;
+import com.it.pojo.Role;
 import com.it.pojo.User;
 import com.it.utils.ShiroUtil;
 import com.it.utils.SmallUtils;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +30,14 @@ public class UserService {
 
     @Inject
     private UserMapper userMapper;
-
     @Inject
     private LoginMapper loginMapper;
+    @Inject
+    private RoleMapper roleMapper;
 
     public User findUserByUsername(String username){
         return userMapper.queryUser(new User(username));
     }
-
 
     public Integer insertLoginLog(String loginip){
         String logintime = SmallUtils.getTime();
@@ -64,6 +67,36 @@ public class UserService {
         Map<String, Object> map = Maps.newHashMap();
         map.put("login", new Login(userid));
         return loginMapper.queryCount(map);
+    }
+
+    public List<User> queryUserInformationByParam(Map<String, Object> param) {
+        return userMapper.queryUserInformation(param);
+    }
+
+    public long queryUserTotal() {
+        return queryFilterUserNum(new HashMap<String, Object>());
+    }
+
+    public long queryFilterUserNum(Map<String, Object> param) {
+        return userMapper.queryFilterUserNum(param);
+    }
+
+    public List<Role> queryRole(){
+        return roleMapper.queryRole();
+    }
+
+    public Integer addUser(User user){
+        user.setCreatetime(SmallUtils.getTime());
+        return userMapper.insertUser(user);
+    }
+
+
+    public User findUserById(Integer id) {
+        return userMapper.queryUser(new User(id));
+    }
+
+    public Integer updateUserInfo(User user) {
+        return userMapper.updateUserInfo(user);
     }
 
 }

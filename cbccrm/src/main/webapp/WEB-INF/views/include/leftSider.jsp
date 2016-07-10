@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -20,6 +21,7 @@
             </div>
         </div>
         <ul class="sidebar-menu">
+            <shiro:hasAnyRoles name="manager,employee">
             <li class="header">导航管理</li>
             <li class="treeview">
                 <a href="#">
@@ -50,11 +52,12 @@
                 </ul>
             </li>
             <li>
-                <a href="../widgets.html">
-                    <i class="fa fa-th"></i> <span>待办事项</span>
-                                <span class="pull-right-container">
-                                <small class="label pull-right bg-green">急hot</small>
-                        </span>
+                <a href="#">
+                    <i class="fa fa-th"></i>
+                    <span>待办事项</span>
+                    <span class="pull-right-container">
+                    <small class="label pull-right bg-green">急hot</small>
+                    </span>
                 </a>
             </li>
             <li class="treeview">
@@ -90,7 +93,7 @@
                 </ul>
             </li>
             <li>
-                <a href="../calendar.html">
+                <a href="#">
                     <i class="fa fa-calendar"></i> <span>日历</span>
                         <span class="pull-right-container">
                             <small class="label pull-right bg-red">3</small>
@@ -108,11 +111,16 @@
                         </span>
                 </a>
             </li>
-
-
-            <li><a href="/static/adminlte/documentation/index.html"><i class="fa fa-book"></i>
-                <span>系统设置</span></a>
-            </li>
+            </shiro:hasAnyRoles>
+            <shiro:hasRole name="administrator">
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-cogs"></i> <span>系统管理</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/user/manage">员工管理</a></li>
+                        <li><a href="#">系统设置</a></li>
+                    </ul>
+                </li>
+            </shiro:hasRole>
             <li class="header">其他</li>
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>

@@ -19,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Map;
 
 
@@ -54,7 +55,28 @@ public class UserServiceTestCase {
         logger.debug("time is {}",time);
     }
 
+    @Test
+    public void queryUserTotalTest(){
 
+        Map<String, Object> param = Maps.newHashMap();
+        param.put("start", 0);
+        param.put("length", 10);
+        param.put("username", "");
+       // param.put("roleid", Integer.parseInt("1"));
+        param.put("realname", "");
+        param.put("sortColumn", "id");
+        param.put("sortType", "desc");
 
+        long filter = userService.queryFilterUserNum(param);
+        long total = userService.queryUserTotal();
+        List<User> userList = userService.queryUserInformationByParam(param);
 
+        for(User user : userList){
+            logger.debug("user is {}",user);
+        }
+
+        Assert.assertNotNull(filter);
+        Assert.assertNotNull(total);
+        Assert.assertNotNull(userList);
+    }
 }
