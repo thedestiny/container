@@ -1,9 +1,9 @@
 package com.it.controller;
 
 /**
- * Created by xieyue on 2016/7/7.
- * HomeController
+ * Created by xieyue on 2016/7/11.
  */
+
 
 
 import com.it.service.UserService;
@@ -26,15 +26,16 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class HomeController {
-    Logger logger = LoggerFactory.getLogger(HomeController.class);
-
+public class HomesController {
+    Logger logger = LoggerFactory.getLogger(HomesController.class);
+    
     @Inject
     private UserService userService;
 
     // 获取登录界面
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
+
         return "login";
     }
 
@@ -54,7 +55,6 @@ public class HomeController {
             subject.login(usernamePasswordToken);
             String ip = SmallUtils.getRemoteIp(request);
             logger.debug("ip is {}", ip);
-            redirectAttributes.addFlashAttribute("user",username);
             userService.insertLoginLog(ip);
             return "redirect:/home";
         } catch (LockedAccountException exception) {
@@ -83,6 +83,4 @@ public class HomeController {
         redirectAttributes.addFlashAttribute("style", "alert-success");
         return "redirect:/login";
     }
-
-
 }

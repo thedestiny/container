@@ -79,4 +79,18 @@ public class UserServiceTestCase {
         Assert.assertNotNull(total);
         Assert.assertNotNull(userList);
     }
+
+    @Test
+    public void updateUserInfoTest(){
+
+        User user = new User(2);
+        user.setEnable(false);
+        Integer n = userService.updateUserInfo(user);
+        logger.debug(n.toString());
+    }
+
+
+
+
+
 }

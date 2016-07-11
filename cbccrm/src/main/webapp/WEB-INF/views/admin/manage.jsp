@@ -27,8 +27,8 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 
-    <%@include file="include/mainHeader.jsp" %>
-    <%@include file="include/leftSider.jsp" %>
+    <%@include file="../include/mainHeader.jsp" %>
+    <%@include file="../include/leftSider.jsp" %>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -125,7 +125,7 @@
                     <div class="form-group">
                         <label class="control-label" for="username">员工姓名</label>
                         <div>
-                            <input type="text" class="form-control" id="addusername" name="username" placeholder="员工姓名">
+                            <input type="text" class="form-control" id="addusername" name="username" placeholder="员工姓名" autofocus>
                         </div>
                     </div>
                     <div class="form-group">
@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <label class=" control-label" for="addweixin">微信号</label>
                         <div class="">
-                            <input type="text" class="form-control" id="editweixin" name="wenxin" placeholder="请输入微信号">
+                            <input type="text" class="form-control" id="editweixin" name="weixin" placeholder="请输入微信号">
                         </div>
                     </div>
                     <div class="form-group">
@@ -239,7 +239,7 @@
             searching: false,
             serverSide: true,
             ajax: {
-                url: "/user/manage/load",
+                url: "/admin/manage/load",
                 data: function (dataSource) {
                     dataSource.roleid = $("#roleid").val();
                     dataSource.username = $("#username").val();
@@ -253,14 +253,23 @@
                 {"data": "realname"},
                 {"data": "createtime"},
                 {"data": "role.rolename"},
-                {"data": "enable"},
+                {"data": function(row){
+                    return row.enable ? "<label class='label-primary'>正常</label>":"<label class='label-danger'>禁用</label>";
+                }},
                 {"data": "weixin"},
                 {
                     "data": function (row) {
-                        return "<td>" +
-                                "<button rel='" + row.id + "' class='btn btn-info'>修改</button>" +
-                                "<button rel='" + row.id + "' class='btn btn-danger'>冻结</button>" +
-                                "</td>";
+                        if (row.enable) {
+                            return "<td>" +
+                                    "<button rel='" + row.id + "' class='btn btn-info'>编辑</button>" +
+                                    "<button rel='" + row.id + "' class='btn btn-danger'>禁用</button>" +
+                                    "</td>";
+                        } else {
+                            return "<td>" +
+                                    "<button rel='" + row.id + "' class='btn btn-info'>编辑</button>" +
+                                    "<button rel='" + row.id + "' class='btn btn-danger'>激活</button>" +
+                                    "</td>";
+                        }
                     }
                 }
             ],
@@ -309,8 +318,8 @@
             rules: {
                 username: {
                     required: true,
-                    rangelength:[3,10],
-                    remote: "/user/manage/identify"
+                    rangelength: [3, 10],
+                    remote: "/admin/manage/identify"
                 },
                 realname: {
                     required: true
@@ -327,7 +336,7 @@
                 }
             },
             submitHandler: function (form) {
-                $.post("/user/manage/add", $(form).serialize())
+                $.post("/admin/manage/add", $(form).serialize())
                         .done(function (data) {
                             $("#msg").prepend("<div class='alert alert-success alert-dismissible'>" +
                                     "<button type='button' class='close' data-dismiss='alert' >" +
@@ -340,7 +349,6 @@
                             alert("添加失败")
                         })
                         .always(function () {
-
                         });
             }
         });
@@ -348,15 +356,16 @@
         // 冻结员工
         $(document).delegate(".btn-danger", "click", function () {
             var id = $(this).attr("rel");
-            if (confirm("确认冻结吗?")) {
-                $.get("/user/manage/block/" + id)
+            var content = $(this).html();
+            if (confirm("确认" + content + "吗?")) {
+                $.get("/admin/manage/block/" + id)
                         .done(function (data) {
                             if (data == "success") {
                                 dataTable.ajax.reload();
-                                $("#ta").prepend("<div class='alert alert-success alert-dismissible'>" +
+                                $("#msg").prepend("<div class='alert alert-success alert-dismissible'>" +
                                         "<button type='button' class='close' data-dismiss='alert' >" +
                                         "<span aria-hidden='true'>&times;</span>" +
-                                        "</button><strong>Tips:</strong>冻结" + data + "</div>");
+                                        "</button><strong>Tips:</strong>" + content + data + "</div>");
                             }
                         })
                         .fail(function () {
@@ -372,7 +381,7 @@
             if (id == null) {
                 return;
             }
-            $.get("/user/manage/edit/" + id)
+            $.get("/admin/manage/edit/" + id)
                     .done(function (data) {
                         $("#editid").val(data.id);
                         $("#editusername").val(data.username);
@@ -399,24 +408,10 @@
 
         // 添加验证
         $("#editForm").validate({
-            rules: {
-                username: {
-                    required: true
-                },
-                realname: {
-                    required: true
-                },
-                weixin: {
-                    required: true
-                },
-                roleid: {
-                    required: true
-                }
-            },
             errorElement: "span",
             errorClass: "text-danger",
             submitHandler: function (form) {
-                $.post("/user/manage/edit", $(form).serialize())
+                $.post("/admin/manage/edit", $(form).serialize())
                         .done(function (data) {
                             $("#edit").modal("hide");
                             dataTable.ajax.reload();

@@ -48,7 +48,7 @@
         </c:if>
         <form action="/login" method="post">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="账号" name="username">
+                <input type="text" class="form-control" placeholder="账号" name="username" autofocus>
                 <span class="fa fa-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

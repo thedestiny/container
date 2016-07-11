@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.it.mapper.UserMapper">
-
+    <cache/>
 
     <select id="queryUser" resultType="User" parameterType="User">
         SELECT t_user.*,t_role.rolename as 'role.rolename' FROM
-        t_user left JOIN t_role ON t_user.roleid = t_role.id
+        t_user INNER JOIN t_role ON t_user.roleid = t_role.id
         <where>
             <if test="username != null and username != ''">
                 username = #{username}
@@ -39,8 +39,11 @@
             <if test="roleid != null and roleid !=''">
                 roleid = #{roleid},
             </if>
-            <if test="enable != null and enable !=''">
-                enable = #{enable},
+            <if test="enable">
+                enable = 1,
+            </if>
+            <if test="!enable">
+                enable = 0,
             </if>
         </set>
         where id = #{id}
@@ -63,7 +66,7 @@
 
     <select id="queryUserInformation" resultType="User" parameterType="map">
         SELECT t_user.*,t_role.rolename as 'role.rolename' FROM
-        t_user left JOIN t_role ON t_user.roleid = t_role.id
+        t_user INNER JOIN t_role ON t_user.roleid = t_role.id
         <where>
             <if test="roleid != null and roleid != ''">
                 roleid = #{roleid}

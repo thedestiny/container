@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <table class="table" id="logTab">
+                <table class="table table-bordered" id="logTab">
                     <thead>
                     <tr>
                         <th>登录时间</th>
@@ -70,6 +70,7 @@
     $(function () {
         var dataTable = $("#logTab").DataTable({
             searching: false,
+            autoWith:false,
             serverSide: true,
             ajax: "/user/log/load",
             ordering: false,
