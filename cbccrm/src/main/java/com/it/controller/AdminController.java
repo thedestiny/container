@@ -133,6 +133,13 @@ public class AdminController {
         return n == 1 ? "success" : "failure";
     }
 
+    @RequestMapping(value = "/manage/resetpwd/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public String resetPassword(@PathVariable Integer id){
+        Integer n = userService.resetPassword(id);
+        return n == 1 ? "success" : "failure";
+    }
+
 
 
 

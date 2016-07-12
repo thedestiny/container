@@ -17,39 +17,31 @@
                 <img src="/static/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>${user}</p>
+                <p><shiro:principal property="realname"/></p>
             </div>
         </div>
         <ul class="sidebar-menu">
             <shiro:hasAnyRoles name="manager,employee">
             <li class="header">导航管理</li>
+                <li class="treeview <c:if test="${param.menu == home}">active</c:if>">
+                    <a href="/home">
+                        <i class="fa fa-home"></i> <span>首页</span>
+                    </a>
+                </li>
             <li class="treeview">
-                <a href="#">
+                <a href="/program">
                     <i class="fa fa-dashboard"></i> <span>项目管理</span>
-                        <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                        </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/static/adminlte/index.html"><i class="fa fa-circle-o"></i> 项目1</a></li>
                     <li><a href="/static/adminlte/index2.html"><i class="fa fa-circle-o"></i> 项目2</a></li>
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="#">
+            <li class="treeview <c:if test="${param.menu == notice}">active</c:if>">
+                <a href="/notice">
                     <i class="fa fa-files-o"></i>
                     <span>公告</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> 公告1</a></li>
-                    <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> 公告2</a></li>
-                    <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> 公告3</a></li>
-                    <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i>公告4</a>
-                    </li>
-                </ul>
             </li>
             <li>
                 <a href="#">
@@ -70,9 +62,6 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                    <li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                    <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                    <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -86,10 +75,6 @@
                 <ul class="treeview-menu">
                     <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
                     <li><a href="../UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                    <li><a href="../UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-                    <li><a href="../UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-                    <li><a href="../UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-                    <li><a href="../UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
                 </ul>
             </li>
             <li>

@@ -32,6 +32,7 @@
             <value>
                 /static/** = anon
                 /admin/** = roles[administrator]
+                /notice/new/** = roles[manager]
                 /** = authc
             </value>
         </property>

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <header class="main-header">
     <a href="#" class="logo">
         <span class="logo-mini"><b>C</b>RM</span>
@@ -100,7 +101,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/static/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">${queen}</span>
+                        <span class="hidden-xs"><shiro:principal property="realname"/></span>
                     </a>
                     <ul class="dropdown-menu text-center" style="width: 150px; right:0;">
                         <li class="user-header" style="height: 80px">

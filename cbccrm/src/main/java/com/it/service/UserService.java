@@ -99,4 +99,14 @@ public class UserService {
         return userMapper.updateUserInfo(user);
     }
 
+    /**
+     * 重置密码为000000
+     * @param id 用户id
+     * @return 返回影响行数
+     */
+    public Integer resetPassword(Integer id) {
+        User user = new User(id);
+        user.setPassword("000000");
+        return userMapper.updateUserInfo(user);
+    }
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.it.mapper.NoticeMapper">
+    <cache/>
+    <insert id="addNotice">
+        INSERT into t_notice
+        ( title, content, publisher, keyword, level, userid, publishtime)
+        VALUES (#{title},#{content},#{publisher},#{keyword},#{level},#{userid},#{publishtime})
+    </insert>
+
+
+    <select id="queryNotice" parameterType="map" resultType="Notice">
+        SELECT * FROM t_notice
+        <where>
+            <if test="keyword != null and keyword != null">
+                title LIKE concat("%",#{keyword},"%") or
+                publisher LIKE concat("%",#{keyword},"%") or
+                publishtime LIKE concat("%",#{keyword},"%")
+            </if>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+        ORDER by id desc
+        <if test="start != null and start!= '' and length != null and length != ''">
+            limit ${start} , ${length}
+        </if>
+    </select>
+
+
+    <select id="queryNoticeNum" resultType="Long" parameterType="map">
+        SELECT count(*) FROM t_notice
+        <where>
+            <if test="keyword != null and keyword != null">
+                title LIKE concat("%",#{keyword},"%") or
+                publisher LIKE concat("%",#{keyword},"%") or
+                publishtime LIKE concat("%",#{keyword},"%")
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>

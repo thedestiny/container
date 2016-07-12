@@ -14,51 +14,44 @@
     <title>Home</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/static/adminlte/bootstrap/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
     <link rel="stylesheet" href="/static/adminlte/dist/css/AdminLTE.min.css">
+
     <link rel="stylesheet" href="/static/adminlte/dist/css/skins/_all-skins.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
-    <%@include file="include/mainHeader.jsp"%>
-    <jsp:include page="include/leftSider.jsp">
-        <jsp:param name="menu" value="home"/>
-    </jsp:include>
+    <%@include file="../include/mainHeader.jsp"%>
+    <%@include file="../include/leftSider.jsp"%>
 
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                Blank page
-                <small>it all starts here</small>
+                内部公告
+                <small>内部公告</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Examples</a></li>
-                <li class="active">Blank page</li>
+                <li><a href="/notice"><i class="fa fa-list"></i>公告列表</a></li>
+                <li><a href="#">${notice.title}</a></li>
             </ol>
         </section>
         <section class="content">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Title</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                title="Collapse">
-                            <i class="fa fa-minus"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
-                                title="Remove">
-                            <i class="fa fa-times"></i></button>
-                    </div>
+                    <h3 class="box-title">${notice.title}</h3>
+                    <small>${notice.publisher}${notice.publishtime}</small>
                 </div>
                 <div class="box-body">
-                    Start creating your amazing application!
+                    ${notice.content}
                 </div>
                 <div class="box-footer">
-                    Footer
+                    仅限于浏览，不能转发
                 </div>
 
             </div>
@@ -80,11 +73,6 @@
 <script src="/static/adminlte/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/static/adminlte/dist/js/demo.js"></script>
-
-
-
-
-
 </body>
 </html>
 

@@ -125,7 +125,8 @@
                     <div class="form-group">
                         <label class="control-label" for="username">员工姓名</label>
                         <div>
-                            <input type="text" class="form-control" id="addusername" name="username" placeholder="员工姓名" autofocus>
+                            <input type="text" class="form-control" id="addusername" name="username" placeholder="员工姓名"
+                                   autofocus>
                         </div>
                     </div>
                     <div class="form-group">
@@ -253,9 +254,11 @@
                 {"data": "realname"},
                 {"data": "createtime"},
                 {"data": "role.rolename"},
-                {"data": function(row){
-                    return row.enable ? "<label class='label-primary'>正常</label>":"<label class='label-danger'>禁用</label>";
-                }},
+                {
+                    "data": function (row) {
+                        return row.enable ? "<label class='label-primary'>正常</label>" : "<label class='label-danger'>禁用</label>";
+                    }
+                },
                 {"data": "weixin"},
                 {
                     "data": function (row) {
@@ -263,11 +266,13 @@
                             return "<td>" +
                                     "<button rel='" + row.id + "' class='btn btn-info'>编辑</button>" +
                                     "<button rel='" + row.id + "' class='btn btn-danger'>禁用</button>" +
+                                    "<button rel='" + row.id + "' class='btn btn-default'>重置密码</button>" +
                                     "</td>";
                         } else {
                             return "<td>" +
                                     "<button rel='" + row.id + "' class='btn btn-info'>编辑</button>" +
                                     "<button rel='" + row.id + "' class='btn btn-danger'>激活</button>" +
+                                    "<button rel='" + row.id + "' class='btn btn-default'>重置密码</button>" +
                                     "</td>";
                         }
                     }
@@ -373,6 +378,26 @@
                         });
             }
         });
+
+        // 重置密码
+        $(document).delegate(".btn-default", "click", function () {
+            var id = $(this).attr("rel");
+            if (id == null) {
+                return;
+            }
+            $.get("/admin/manage/resetpwd/"+id)
+                    .done(function(data){
+                        $("#msg").prepend("<div class='alert alert-success alert-dismissible'>" +
+                                "<button type='button' class='close' data-dismiss='alert' >" +
+                                "<span aria-hidden='true'>&times;</span>" +
+                                "</button><strong>Tips:</strong>密码重置" + data + "</div>");
+                    })
+                    .fail(function(){
+                        alert("请求服务器异常");
+                    });
+
+        });
+
 
         // 编辑员工信息
         $(document).delegate(".btn-info", "click", function () {

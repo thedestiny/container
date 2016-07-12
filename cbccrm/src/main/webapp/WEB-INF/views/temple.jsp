@@ -50,9 +50,6 @@
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                                 title="Collapse">
                             <i class="fa fa-minus"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
-                                title="Remove">
-                            <i class="fa fa-times"></i></button>
                     </div>
                 </div>
                 <div class="box-body">
@@ -62,42 +59,6 @@
                     Footer
                 </div>
 
-            </div>
-        </section>
-        <section class="content col-sm-8 col-sm-push-2">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    修改密码
-                </div>
-            </div>
-            <div class="box-body">
-                <form id="pwdForm" class="form" style="line-height: 30px">
-                    <div class="form-group">
-                        <label for="orignalpwd">原始密码</label>
-                        <div>
-                            <input id="orignalpwd" type="password" class="form-control" name="password" placeholder="请输入旧密码">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="newpwd">新密码</label>
-                        <div>
-                            <input id="newpwd" type="password" class="form-control" name="newpwd" placeholder="请输入新密码">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmpwd">确认新密码</label>
-                        <div>
-                            <input id="confirmpwd" type="password" class="form-control" name="confirmpwd"
-                                   placeholder="请再次确认新密码">
-                        </div>
-                    </div>
-                    <div class="form-group pull-right">
-                        <button id="confirmBtn" class="btn btn-success" type="button">确认修改</button>
-                        <button class="btn btn-danger" type="reset">重新设置</button>
-                    </div>
-
-
-                </form>
             </div>
         </section>
     </div>
