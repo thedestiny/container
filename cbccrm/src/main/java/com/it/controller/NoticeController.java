@@ -10,6 +10,7 @@ import com.google.common.collect.Maps;
 import com.it.dto.DataTablesResult;
 import com.it.pojo.Notice;
 import com.it.service.NoticeService;
+import com.it.utils.SmallUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +60,7 @@ public class NoticeController {
         String start = request.getParameter("start"); //当前页偏移量
         String length = request.getParameter("length"); //每页显示多少条数据
 
-        String keyword = request.getParameter("keyword");
+        String keyword = request.getParameter("search[value]");
 
         String sortColumnIndex = request.getParameter("order[0][column]"); //获取排序列的索引
         String sortColumnName = request.getParameter("columns[" + sortColumnIndex + "][name]"); //根据排序列的索引获取列的名字
@@ -67,7 +69,7 @@ public class NoticeController {
         Map<String,Object> map = Maps.newHashMap();
         map.put("start",start);
         map.put("length",length);
-        map.put("keyword",keyword);
+        map.put("keyword", SmallUtils.transtoUTF8(keyword));
 
         Long total = noticeService.queryNoticeTotal();
         Long filter = noticeService.queryNoticeNumByParams(map);
@@ -86,12 +88,16 @@ public class NoticeController {
 
 
     @RequestMapping(value = "/image/upload",method = RequestMethod.POST)
+    @ResponseBody
     public Map<String,Object> uploadImage(MultipartFile file ){
-
         Map<String,Object> result = Maps.newHashMap();
-
         if(!file.isEmpty()){
-            String path = noticeService.saveImage(file);
+            String path;
+            try {
+                path = noticeService.saveImage(file);
+            } catch (IOException e) {
+                throw new RuntimeException("保存文件失败",e);
+            }
             result.put("success",true);
             result.put("file_path",path);
         } else{

@@ -30,6 +30,7 @@ public class NoticeService {
 
     @Inject
     private NoticeMapper noticeMapper;
+
     @Value("${file.imagepath}")
     protected String imageSavePath;
 
@@ -95,7 +96,7 @@ public class NoticeService {
         InputStream inputStream = file.getInputStream();
         String orginalName = file.getOriginalFilename();
         // 获取文件后缀名
-        String extName = "." + orginalName.split(".")[1];
+        String extName = orginalName.substring(orginalName.lastIndexOf("."));
         String newFileName = UUID.randomUUID().toString();
         FileOutputStream outputStream = new FileOutputStream(new File(imageSavePath, newFileName));
         IOUtils.copy(inputStream, outputStream);
@@ -103,6 +104,6 @@ public class NoticeService {
         outputStream.close();
         inputStream.close();
 
-        return "preview/"+newFileName;
+        return "/preview/"+newFileName;
     }
 }

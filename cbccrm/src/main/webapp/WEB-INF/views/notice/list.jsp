@@ -25,7 +25,9 @@
 <div class="wrapper">
 
     <%@include file="../include/mainHeader.jsp" %>
-    <%@include file="../include/leftSider.jsp" %>
+    <jsp:include page="../include/leftSider.jsp">
+        <jsp:param name="menu" value="notice"/>
+    </jsp:include>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -52,6 +54,7 @@
                     <table id="noticeTable" class="table table-responsive">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>标题</th>
                             <th>发布者</th>
                             <th>发布时间</th>
@@ -82,12 +85,16 @@
 <script>
     $(function () {
         var dataTable = $("#noticeTable").DataTable({
+            searching: true,
+            "autoWidth": false,
             serverSide: true,
+            ordering:false,
             ajax: {
                 url: "/notice/load"
             },
             // ordering: false,
             columns: [
+                {"data":"id"},
                 {"data": function(row){
                     return "<a href= '/notice/"+ row.id+"' >" + row.title+"</a>";
                 }},
@@ -112,7 +119,7 @@
                 }
             },
             "columnDefs": [ //定义列的特征
-                {targets: [0], visible: true},
+                {targets: [0], visible: false}
 //                {targets: [2, 3], orderable: false}
             ]
         });

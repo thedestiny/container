@@ -28,7 +28,9 @@
 <div class="wrapper">
 
     <%@include file="../include/mainHeader.jsp"%>
-    <%@include file="../include/leftSider.jsp"%>
+    <jsp:include page="../include/leftSider.jsp">
+        <jsp:param name="menu" value="notice"/>
+    </jsp:include>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -44,8 +46,7 @@
         <section class="content">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">${notice.title}</h3>
-                    <small>${notice.publisher}${notice.publishtime}</small>
+                    <pre><h3 class="box-title">${notice.title}</h3> ${notice.publisher}发表于  ${notice.publishtime}  </pre>
                 </div>
                 <div class="box-body">
                     ${notice.content}

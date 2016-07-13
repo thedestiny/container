@@ -22,80 +22,89 @@
         </div>
         <ul class="sidebar-menu">
             <shiro:hasAnyRoles name="manager,employee">
-            <li class="header">导航管理</li>
-                <li class="treeview <c:if test="${param.menu == home}">active</c:if>">
+                <li class="header">导航管理</li>
+                <li class="treeview <c:if test="${param.menu == 'home'}">active</c:if>">
                     <a href="/home">
                         <i class="fa fa-home"></i> <span>首页</span>
                     </a>
                 </li>
-            <li class="treeview">
-                <a href="/program">
-                    <i class="fa fa-dashboard"></i> <span>项目管理</span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="/static/adminlte/index.html"><i class="fa fa-circle-o"></i> 项目1</a></li>
-                    <li><a href="/static/adminlte/index2.html"><i class="fa fa-circle-o"></i> 项目2</a></li>
-                </ul>
-            </li>
-            <li class="treeview <c:if test="${param.menu == notice}">active</c:if>">
-                <a href="/notice">
-                    <i class="fa fa-files-o"></i>
-                    <span>公告</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-th"></i>
-                    <span>待办事项</span>
+                <li class="treeview">
+                    <a href="/program">
+                        <i class="fa fa-dashboard"></i> <span>项目管理</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/static/adminlte/index.html"><i class="fa fa-circle-o"></i> 项目1</a></li>
+                        <li><a href="/static/adminlte/index2.html"><i class="fa fa-circle-o"></i> 项目2</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>待办事项</span>
                     <span class="pull-right-container">
                     <small class="label pull-right bg-green">急hot</small>
                     </span>
-                </a>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>统计表</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-pie-chart"></i>
+                        <span>统计表</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-users"></i>
-                    <span>客户管理</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>客户管理</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-                    <li><a href="../UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-calendar"></i> <span>日历</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
+                        <li><a href="../UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-calendar"></i> <span>日历</span>
                         <span class="pull-right-container">
                             <small class="label pull-right bg-red">3</small>
                             <small class="label pull-right bg-blue">17</small>
                             </span>
-                </a>
-            </li>
-            <li>
-                <a href="../mailbox/mailbox.html">
-                    <i class="fa fa-envelope"></i> <span>邮件</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-envelope"></i> <span>邮件</span>
                         <span class="pull-right-container">
                           <small class="label pull-right bg-yellow">12</small>
                           <small class="label pull-right bg-green">16</small>
                           <small class="label pull-right bg-red">5</small>
                         </span>
-                </a>
-            </li>
+                    </a>
+                </li>
+
+                <li class="treeview <c:if test="${param.menu == 'notice'}">active</c:if>">
+                    <a href="/notice">
+                        <i class="fa fa-files-o"></i>
+                        <span>公告</span>
+                    </a>
+                </li>
+
+                <li class="treeview <c:if test="${param.menu == 'document'}">active</c:if>">
+                    <a href="/document">
+                        <i class="fa fa-file-text"></i>
+                        <span>文档管理</span>
+                    </a>
+                </li>
             </shiro:hasAnyRoles>
             <shiro:hasRole name="administrator">
                 <li class="treeview">
