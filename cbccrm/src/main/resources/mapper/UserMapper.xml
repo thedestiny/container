@@ -84,7 +84,12 @@
         <if test="start != null and start != '' and length != null and length != ''">
             limit #{start},#{length}
         </if>
+    </select>
 
+    <select id="queryUsers" resultType="User" parameterType="int">
+        SELECT t_user.*,t_role.rolename as 'role.rolename' FROM
+        t_user INNER JOIN t_role ON t_user.roleid = t_role.id
+        WHERE roleid != 1 and t_user.id != #{id}
     </select>
 
 </mapper>

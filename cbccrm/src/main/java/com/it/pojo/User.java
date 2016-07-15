@@ -19,9 +19,18 @@ public class User implements Serializable {
     private Boolean enable;
     private String weixin;
     private Integer roleid;
+    private String avatar;
     private Role role;
 
     public User() {
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public User(Integer id) {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.it.mapper.SaleRecordMapper">
+
+    <insert id="addSaleRecord" parameterType="SaleRecord">
+        insert into t_salerecord
+        (salename, price, createtime, process, userid, customerid, realname, customer)
+        VALUES (#{salename},#{price},#{createtime},#{process},#{userid},#{customerid},#{realname},#{customer})
+    </insert>
+    <update id="updateSaleRecord">
+        update t_salerecord
+        <set>
+            <if test="process != null and process != ''">
+                process = #{process}
+            </if>
+            <if test="lasttime != null and lasttime != ''">
+                lasttime = #{lasttime}
+            </if>
+            <if test="successtime != null and successtime != ''">
+                successtime = #{successtime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSaleRecord" parameterType="int">
+        DELETE  FROM t_salerecord WHERE id = #{id}
+    </delete>
+
+    <select id="querySaleRecord" parameterType="map" resultType="SaleRecord">
+        SELECT t_salerecord.* FROM t_salerecord
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+</mapper>

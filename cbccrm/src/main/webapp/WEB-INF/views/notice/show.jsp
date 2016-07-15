@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="/static/adminlte/dist/css/AdminLTE.min.css">
 
     <link rel="stylesheet" href="/static/adminlte/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/static/highlight/styles/atelier-dune-dark.css">
+
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -74,6 +77,8 @@
 <script src="/static/adminlte/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/static/adminlte/dist/js/demo.js"></script>
+<script src="/static/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
 

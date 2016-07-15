@@ -12,6 +12,7 @@ import com.it.pojo.Custom;
 import com.it.pojo.User;
 import com.it.utils.ShiroUtil;
 import com.it.utils.SmallUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -142,7 +143,6 @@ public class CustomService {
     }
 
 
-
     /**
      * @param param 根据参数查找客户列表 员工自动加上 userid
      * @return List<Custom>
@@ -197,13 +197,40 @@ public class CustomService {
     }
 
 
-
-
     public void moveCustom(Custom custom) {
         Integer userid = custom.getUserid();
         User user = userService.findUserById(userid);
         logger.debug("realname is {}", custom.getRealname());
         custom.setRealname(user.getRealname());
         customMapper.updateCustom(custom);
+    }
+
+    /**
+     * 转换成可以转换二维码的参数
+     * @param id 传入 Custom的id
+     * @return 转换成可以转换二维码的字符串
+     */
+    public String makeEcard(Integer id) {
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("id", id);
+        Custom custom = customMapper.queryCustomByParam(map);
+        StringBuilder ecard = new StringBuilder("MECARD:");
+        if (StringUtils.isNotEmpty(custom.getCustomer())) {
+            ecard.append("N:" + custom.getCustomer() + ";");
+        }
+        if (StringUtils.isNotEmpty(custom.getTel())) {
+            ecard.append("TEL:" + custom.getTel() + ";");
+        }
+        if (StringUtils.isNotEmpty(custom.getEmail())) {
+            ecard.append("EMAIL:" + custom.getEmail() + ";");
+        }
+        if (StringUtils.isNotEmpty(custom.getAddress())) {
+            ecard.append("ADR:" + custom.getAddress() + ";");
+        }
+        if (StringUtils.isNotEmpty(custom.getCompany())) {
+            ecard.append("ORG:" + custom.getCompany() + ";");
+        }
+        ecard.append(";");
+        return ecard.toString();
     }
 }

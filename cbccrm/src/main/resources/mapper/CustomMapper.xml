@@ -114,7 +114,7 @@
                 weixin LIKE concat("%",#{keyword},"%"))
             </if>
             <if test="userid != null and userid != ''">
-                and userid = #{userid} or (userid is null or userid = '')
+                and (userid = #{userid} or (userid is null or userid = ''))
             </if>
         </where>
         ORDER by id desc

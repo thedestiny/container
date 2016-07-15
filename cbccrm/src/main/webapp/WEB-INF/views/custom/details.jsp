@@ -17,7 +17,7 @@
 
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">--%>
     <link rel="stylesheet" href="/static/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">--%>
 
     <link rel="stylesheet" href="/static/adminlte/dist/css/AdminLTE.min.css">
 
@@ -55,13 +55,14 @@
                             </c:when>
                         </c:choose>
                         ${custom.customer}</h2>
-                    <button id="move" class="btn btn-primary pull-right" type="button">转移客户</button>
                     <c:choose>
                         <c:when test="${ not empty custom.userid}">
-                            <button id="open" class="btn btn-danger pull-right" type="button">公开客户</button>
+                            <button id="open" class="btn btn-danger" type="button">公开客户</button>
+                            &nbsp;&nbsp;
+                            <button id="move" class="btn btn-primary" type="button">转移客户</button>
                         </c:when>
                         <c:otherwise>
-                            <button id="open" class="btn btn-info pull-right" type="button">私有客户</button>
+                            <button id="open" class="btn btn-info" type="button">私有客户</button>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -97,10 +98,53 @@
                                 </td>
                             </tr>
                         </c:if>
-
                     </table>
                 </div>
                 <div class="box-footer">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="box box-info collapsed-box">
+                                <div class="box-header with-border ">
+                                    <h3 class="box-title"><i class="fa fa-list"></i> 项目列表</h3>
+                                    <div class="box-tools">
+                                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <h5>暂无项目</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <%--col-md-8 end--%>
+                        <div class="col-md-4">
+                            <div class="box box-success collapsed-box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-qrcode"></i> 电子名片</h3>
+                                    <div class="box-tools">
+                                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body" style="text-align: center">
+                                    <img src="/custom/qrcode/${custom.id}.png" alt="">
+                                </div>
+                            </div>
+                            <div class="box box-primary collapsed-box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-calendar-check-o"></i> 代办事项</h3>
+                                    <div class="box-tools">
+                                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <h5>暂无代办事项</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <%--col-md-4 end--%>
+                    </div>
                     请注意保护资料
                 </div>
 
@@ -121,7 +165,7 @@
                 <form id="moveto">
                     <input type="text" value="${custom.id}" name="id" class="hide">
                     <label>转移至:</label>
-                    <select name="userid" id="select">
+                    <select name="userid" id="select" class="form-control">
                         <option></option>
                     </select>
                 </form>
@@ -156,33 +200,32 @@
             var $content = $(this).html();
             alert("你确定" + $content + "吗？");
             alert("请考虑清楚。。。");
-            if($content == "公开客户"){
+            if ($content == "公开客户") {
                 $.get("/custom/open/" +${custom.id})
                         .done(function (data) {
                             $("#header").after("<div class='alert alert-success alert-dismissible'>" +
                                     "<button type='button' class='close' data-dismiss='alert' >" +
                                     "<span aria-hidden='true'>&times;</span>" +
-                                    "</button><strong>Tips:</strong>"+$content + data + "</div>");
+                                    "</button><strong>Tips:</strong>" + $content + data + "</div>");
+
                         })
                         .fail(function () {
                             alert("服务器异常");
                         });
-            } else{
+            } else {
+                console.log("私有");
                 $.get("/custom/private/" +${custom.id})
                         .done(function (data) {
+                            window.history.go(0);
                             $("#header").after("<div class='alert alert-success alert-dismissible'>" +
                                     "<button type='button' class='close' data-dismiss='alert' >" +
                                     "<span aria-hidden='true'>&times;</span>" +
-                                    "</button><strong>Tips:</strong>"+$content + data + "</div>");
+                                    "</button><strong>Tips:</strong>" + $content + data + "</div>");
                         })
                         .fail(function () {
                             alert("服务器异常");
                         });
             }
-
-
-
-
 
 
         });
@@ -215,9 +258,17 @@
         $("#save").click(function () {
             var $form = $("#moveto");
             $.post("/custom/move", $form.serialize())
+                    .done(function (data) {
+                        if (data == 'success') {
+                            window.history.go(0);
+                            $("#move").modal("hide");
+                            window.location.href = "/custom";
+                        }
+                    })
                     .fail(function () {
                         alert("服务器异常");
                     });
+
         })
 
 

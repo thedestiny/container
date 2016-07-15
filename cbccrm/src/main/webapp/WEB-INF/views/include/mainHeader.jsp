@@ -32,7 +32,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="pull-left">
-                                            <img src="/static/adminlte/dist/img/user2-160x160.jpg"
+                                            <img src="<shiro:principal property="avatar"/>"
                                                  class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
@@ -100,7 +100,7 @@
                 </li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="/static/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                        <img src="<shiro:principal property="avatar"/>" class="user-image" alt="User Image">
                         <span class="hidden-xs"><shiro:principal property="realname"/></span>
                     </a>
                     <ul class="dropdown-menu text-center" style="width: 150px; right:0;">

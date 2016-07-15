@@ -112,10 +112,10 @@ public class UserService {
 
 
     /**
-     * 查找所有用户
+     * 查找所有用户除去管理员和自身
      * @return List<User>
      */
     public List<User> findAllUsers(){
-        return userMapper.queryUserInformation(new HashMap<String, Object>());
+        return userMapper.queryUsers(ShiroUtil.getCurrentUserId());
     }
 }

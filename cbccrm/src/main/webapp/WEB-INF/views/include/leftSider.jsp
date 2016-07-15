@@ -14,7 +14,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="/static/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<shiro:principal property="avatar"/>" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p><shiro:principal property="realname"/></p>
@@ -28,9 +28,9 @@
                         <i class="fa fa-home"></i> <span>首页</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="/program">
-                        <i class="fa fa-dashboard"></i> <span>项目管理</span>
+                <li class="treeview <c:if test="${param.menu == 'sale'}">active</c:if>">
+                    <a href="/sale">
+                        <i class="fa fa-dashboard"></i> <span>销售记录</span>
                     </a>
                 </li>
                 <li>
@@ -60,26 +60,6 @@
                         <span>客户管理</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-calendar"></i> <span>日历</span>
-                        <span class="pull-right-container">
-                            <small class="label pull-right bg-red">3</small>
-                            <small class="label pull-right bg-blue">17</small>
-                            </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-envelope"></i> <span>邮件</span>
-                        <span class="pull-right-container">
-                          <small class="label pull-right bg-yellow">12</small>
-                          <small class="label pull-right bg-green">16</small>
-                          <small class="label pull-right bg-red">5</small>
-                        </span>
-                    </a>
-                </li>
-
                 <li class="treeview <c:if test="${param.menu == 'notice'}">active</c:if>">
                     <a href="/notice">
                         <i class="fa fa-files-o"></i>
