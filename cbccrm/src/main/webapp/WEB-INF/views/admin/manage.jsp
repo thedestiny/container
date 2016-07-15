@@ -148,7 +148,7 @@
                     <div class="form-group">
                         <label class=" control-label" for="addweixin">微信号</label>
                         <div class="">
-                            <input type="text" class="form-control" id="addweixin" name="wenxin" placeholder="请输入微信号">
+                            <input type="text" class="form-control" id="addweixin" name="weixin" placeholder="请输入微信号">
                         </div>
                     </div>
                     <div class="form-group">
@@ -343,12 +343,12 @@
             submitHandler: function (form) {
                 $.post("/admin/manage/add", $(form).serialize())
                         .done(function (data) {
+                            $("#add").modal("hide");
+                            dataTable.ajax.reload();
                             $("#msg").prepend("<div class='alert alert-success alert-dismissible'>" +
                                     "<button type='button' class='close' data-dismiss='alert' >" +
                                     "<span aria-hidden='true'>&times;</span>" +
                                     "</button><strong>Tips:</strong>" + data + "</div>");
-                            $("#add").modal("hide");
-                            dataTable.ajax.reload();
                         })
                         .fail(function (data) {
                             alert("添加失败")

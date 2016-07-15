@@ -43,12 +43,9 @@ public class DocumentController {
     public String getDocumentPage(Model model, @RequestParam(required = false, defaultValue = "0") Integer faid) {
 
         Map<String, Object> map = Maps.newHashMap();
-        List<Document> crumbList = null;
         map.put("faid", faid);
         List<Document> documentList = documentService.findDocumentByParams(map);
-        if(faid > 0) {
-            crumbList = documentService.breadCrumb(faid);
-        }
+        List<Document>  crumbList = documentService.breadCrumb(faid);
 
         model.addAttribute("crumbList", crumbList);
         model.addAttribute("documentList", documentList);

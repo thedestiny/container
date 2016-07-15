@@ -81,7 +81,10 @@
         <if test="sortColumn != null and sortColumn != '' and sortType!= null and sortType != '' ">
             ORDER by ${sortColumn}  ${sortType}
         </if>
-        limit #{start},#{length}
+        <if test="start != null and start != '' and length != null and length != ''">
+            limit #{start},#{length}
+        </if>
+
     </select>
 
 </mapper>

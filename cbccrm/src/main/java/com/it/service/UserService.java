@@ -109,4 +109,13 @@ public class UserService {
         user.setPassword("000000");
         return userMapper.updateUserInfo(user);
     }
+
+
+    /**
+     * 查找所有用户
+     * @return List<User>
+     */
+    public List<User> findAllUsers(){
+        return userMapper.queryUserInformation(new HashMap<String, Object>());
+    }
 }

@@ -30,5 +30,18 @@ public class ShiroUtil {
         return getCurrentUser().getRealname();
     }
 
+    public static boolean isAdmin(){
+        return getCurrentRolename().equals("administrator");
+    }
+    public static boolean isManager(){
+        return getCurrentRolename().equals("manager");
+    }
+    public static boolean isEmployee(){
+        return getCurrentRolename().equals("employee");
+    }
+
+    public static String getCurrentRolename(){
+        return getCurrentUser().getRole().getRolename();
+    }
 
 }

@@ -32,12 +32,7 @@
                     <a href="/program">
                         <i class="fa fa-dashboard"></i> <span>项目管理</span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="/static/adminlte/index.html"><i class="fa fa-circle-o"></i> 项目1</a></li>
-                        <li><a href="/static/adminlte/index2.html"><i class="fa fa-circle-o"></i> 项目2</a></li>
-                    </ul>
                 </li>
-
                 <li>
                     <a href="#">
                         <i class="fa fa-th"></i>
@@ -59,18 +54,11 @@
                         <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
-                    <a href="#">
+                <li class="treeview <c:if test="${param.menu == 'custom'}">active</c:if>">
+                    <a href="/custom">
                         <i class="fa fa-users"></i>
                         <span>客户管理</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-                        <li><a href="../UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                    </ul>
                 </li>
                 <li>
                     <a href="#">

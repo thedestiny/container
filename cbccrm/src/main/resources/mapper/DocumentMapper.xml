@@ -6,7 +6,7 @@
     <select id="queryDocumentByParams" parameterType="map" resultType="Document">
         SELECT * FROM t_document
         <where>
-            <if test = "id != null ">
+            <if test = "id != null and id != ''">
                 id = #{id}
             </if>
             <if test = "faid != null ">

@@ -43,25 +43,25 @@ public class DocumentService {
     protected String documentpath;
 
 
-    public List<Document> findAllDocument(){
+    public List<Document> findAllDocument() {
         return findDocumentByParams(new HashMap<String, Object>());
     }
 
 
-    public List<Document> findDocumentByParams(Map<String,Object> map){
-        logger.debug("faid is {}",map.get("faid"));
+    public List<Document> findDocumentByParams(Map<String, Object> map) {
+        logger.debug("faid is {}", map.get("faid"));
         return documentMapper.queryDocumentByParams(map);
     }
 
-    public Integer deleteDocumentById(Integer id){
+    public Integer deleteDocumentById(Integer id) {
         return documentMapper.deleteDocument(new Document(id));
     }
 
-    public Integer deleteDocumentByIds(List<Integer> idList){
+    public Integer deleteDocumentByIds(List<Integer> idList) {
         return documentMapper.deleteDocuments(idList);
     }
 
-    public Integer createDocument(String docname,Integer faid){
+    public Integer createDocument(String docname, Integer faid) {
         Document document = new Document(docname);
         document.setFaid(faid);
         document.setRealname(ShiroUtil.getCurrentRealname());
@@ -72,13 +72,14 @@ public class DocumentService {
 
     /**
      * 处理文件上传
+     *
      * @param file 传入文件对象
      * @param faid 所属父级id
      * @return
      * @throws IOException
      */
     @Transactional
-    public Integer uploadFile(MultipartFile file,Integer faid) throws IOException {
+    public Integer uploadFile(MultipartFile file, Integer faid) throws IOException {
         InputStream inputStream = file.getInputStream();
         String docname = file.getOriginalFilename();
         // 获取文件后缀名
@@ -90,7 +91,7 @@ public class DocumentService {
         outputStream.close();
         inputStream.close();
         // 文件原始名字创建文件对象
-        Document document = new Document(docname,true);
+        Document document = new Document(docname, true);
         document.setSuffix(suffix);
         document.setUserid(ShiroUtil.getCurrentUserId());
         document.setCreatetime(SmallUtils.getTime());
@@ -110,40 +111,45 @@ public class DocumentService {
     }
 
     public Document findDocumentById(Integer id) {
-        Map<String,Object> map = Maps.newHashMap();
-        map.put("id",id);
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("id", id);
         return findDocumentByParams(map).get(0);
     }
 
     public Document findDocumentByFaid(Integer faid) {
-        Map<String,Object> map = Maps.newHashMap();
-        map.put("faid",faid);
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("faid", faid);
         return findDocumentByParams(map).get(0);
     }
 
 
-
-
-    public List<Document> breadCrumb(Integer faid){
-        List<Document>  documentList = Lists.newArrayList();
-        List<Document>  documentList1 = Lists.newArrayList();
-        while (faid > 0){
-            Document document = findDocumentById(faid);
-            faid = document.getFaid();
-            documentList.add(document);
-            if(faid == 0){
-                break;
-            }
-        }
-        int len = documentList.size();
-        if(len == 1){
+    public List<Document> breadCrumb(Integer faid) {
+        List<Document> documentList = Lists.newArrayList();
+        if (faid == 0) {
             return documentList;
-        }else {
-            for(int i = 0 ; i < len ;i++ ){
-                documentList1.add(documentList.get(len - i -1));
-            }
-            return documentList1;
         }
+        while (faid > 0) {
+            Document document = findDocumentById(faid);
+            documentList.add(document);
+            faid = document.getFaid();
+        }
+        List<Document> documentList1 = Lists.newArrayList();
+        for (int i = 0, len = documentList.size(); i < len; i++) {
+            documentList1.add(documentList.get(len - i - 1));
+        }
+        return documentList1;
+
+//        int len = documentList.size();
+//        if(len < 2){
+//            return documentList;
+//        }else {
+//            List<Document>  documentList1 = Lists.newArrayList();
+//            for(int i = 0 ; i < len ; i++ ){
+//                documentList1.add(documentList.get(len - i -1));
+//            }
+//            return documentList1;
+//        }
+
 
     }
 

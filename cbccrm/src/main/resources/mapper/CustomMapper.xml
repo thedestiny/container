@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.it.mapper.CustomMapper">
+    <insert id="insertCustom" parameterType="Custom">
+        INSERT INTO t_custom
+        (customer, tel, weixin, address, dependid, userid, level, company, realname,createtime,pinyin,type,email)
+        VALUES (#{customer},#{tel},#{weixin},#{address},#{dependid},#{userid},#{level},#{company},#{realname},#{createtime},#{pinyin},#{type},#{email})
+    </insert>
+
+    <delete id="deleteCustom" parameterType="int">
+        DELETE FROM t_custom WHERE id = #{id}
+    </delete>
+
+    <update id="updateCustom" parameterType="Custom">
+        UPDATE t_custom
+        <set>
+            <if test="userid != null">
+                userid = #{userid},
+            </if>
+            <if test="customer != null and customer != ''">
+                customer = #{customer},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="weixin != null and weixin != ''">
+                weixin = #{weixin},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+
+                dependid = #{dependid},
+
+            <if test="level != null and level != ''">
+                t_custom.level = #{level},
+            </if>
+
+                company = #{company},
+
+            <if test="realname != null">
+                realname = #{realname},
+            </if>
+            <if test="pinyin != null and pinyin != ''">
+                pinyin = #{pinyin},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateCustomInf">
+        UPDATE t_custom
+        <set>
+                userid = #{userid},
+            <if test="customer != null and customer != ''">
+                customer = #{customer},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="weixin != null and weixin != ''">
+                weixin = #{weixin},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+                dependid = #{dependid},
+            <if test="level != null and level != ''">
+                t_custom.level = #{level},
+            </if>
+                company = #{company},
+                realname = #{realname},
+                pinyin = #{pinyin},
+            <if test="email != null and email != ''">
+                email = #{email}
+            </if>
+        </set>
+        where id = #{id}
+
+    </update>
+
+    <select id="queryCustomByParams" parameterType="map" resultType="Custom">
+        SELECT  id,userid,customer, tel, weixin, address,dependid, level, company, realname,createtime,type,email,pinyin
+        FROM t_custom
+        <where>
+            <if test="dependid != null and dependid != ''">
+                dependid = #{dependid}
+            </if>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="weixin != null and weixin != ''">
+                and weixin = #{weixin}
+            </if>
+            <if test="type != null and type != ''">
+                and t_custom.type = #{type}
+            </if>
+            <if test="level != null and level != ''">
+                and t_custom.level = #{level}
+            </if>
+            <if test="customer != null and customer != ''">
+                and customer = #{customer}
+            </if>
+            <if test="createtime != null and createtime != ''">
+                and createtime = #{createtime}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (pinyin LIKE concat("%",#{keyword},"%") or
+                pinyin LIKE concat("%",#{keyword},"%") or
+                t_custom.level LIKE concat("%",#{keyword},"%") or
+                customer LIKE concat("%",#{keyword},"%") or
+                weixin LIKE concat("%",#{keyword},"%"))
+            </if>
+            <if test="userid != null and userid != ''">
+                and userid = #{userid} or (userid is null or userid = '')
+            </if>
+        </where>
+        ORDER by id desc
+        <if test="start != null and start != '' and length != null and length != '' ">
+            limit ${start} ,${length}
+        </if>
+    </select>
+
+    <select id="queryCustomNumByParams" resultType="Long" parameterType="map">
+        SELECT count(*)
+        FROM t_custom
+        <where>
+            <if test="weixin != null and weixin != ''">
+                weixin = #{weixin}
+            </if>
+            <if test="level != null and level != ''">
+                and t_custom.level = #{level}
+            </if>
+            <if test="customer != null and customer != ''">
+                and customer = #{customer}
+            </if>
+            <if test="createtime != null and createtime != ''">
+                and createtime = #{createtime}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (pinyin LIKE concat("%",#{keyword},"%") or
+                pinyin LIKE concat("%",#{keyword},"%") or
+                t_custom.level LIKE concat("%",#{keyword},"%") or
+                customer LIKE concat("%",#{keyword},"%") or
+                weixin LIKE concat("%",#{keyword},"%"))
+            </if>
+            <if test="userid != null and userid != ''">
+                and userid = #{userid} or (userid is null or userid = '')
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUserid" parameterType="Custom">
+        UPDATE t_custom
+        set userid = #{userid}, realname = #{realname} where id = #{id}
+    </update>
+
+    <select id="queryCustomByParam" parameterType="map" resultType="Custom">
+        SELECT  id,userid,customer, tel, weixin, address,dependid, level, company, realname,createtime,type,email,pinyin
+        FROM t_custom
+        <where>
+            <if test="dependid != null and dependid != ''">
+                dependid = #{dependid}
+            </if>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="weixin != null and weixin != ''">
+                and weixin = #{weixin}
+            </if>
+            <if test="type != null and type != ''">
+                and t_custom.type = #{type}
+            </if>
+            <if test="level != null and level != ''">
+                and t_custom.level = #{level}
+            </if>
+            <if test="customer != null and customer != ''">
+                and customer = #{customer}
+            </if>
+            <if test="createtime != null and createtime != ''">
+                and createtime = #{createtime}
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>

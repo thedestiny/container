@@ -1,5 +1,11 @@
 package com.it.utils;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
@@ -157,6 +163,25 @@ public class SmallUtils {
     public static String getRemoteIp(HttpServletRequest request){
         String ip = request.getRemoteAddr();
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1":ip;
+    }
+
+    /**
+     *
+     * @param str 输入中文
+     * @return 返回汉语拼音
+     */
+    public static String transToPinyin(String str)  {
+
+        HanyuPinyinOutputFormat  format = new HanyuPinyinOutputFormat();
+        format.setCaseType(HanyuPinyinCaseType.LOWERCASE); // 小写
+        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE); // 不要音调
+        format.setVCharType(HanyuPinyinVCharType.WITH_V); //使用V
+        try {
+            return PinyinHelper.toHanYuPinyinString(str,format,"",true);
+        } catch (BadHanyuPinyinOutputFormatCombination ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("转换拼音异常",ex);
+        }
     }
 
 
