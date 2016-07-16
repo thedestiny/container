@@ -16,8 +16,10 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.oned.MultiFormatUPCEANReader;
 import com.it.dto.DataTablesResult;
 import com.it.pojo.Custom;
+import com.it.pojo.SaleRecord;
 import com.it.pojo.User;
 import com.it.service.CustomService;
+import com.it.service.SaleRecordService;
 import com.it.service.UserService;
 import com.it.utils.SmallUtils;
 import org.slf4j.Logger;
@@ -48,6 +50,9 @@ public class CustomController {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    private SaleRecordService saleRecordService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getCustomPage() {
@@ -135,6 +140,9 @@ public class CustomController {
         return n == 1 ? "success" : "failure";
     }
 
+    /**
+     * 获取客户详细资料根据客户id,如果是公司获取其关联员工
+     */
     @RequestMapping(value = "/detail/{id:\\d+}", method = RequestMethod.GET)
     public String customDetailInf(@PathVariable Integer id, Model model) {
         Custom custom = customService.findCustomById(id);
@@ -145,6 +153,9 @@ public class CustomController {
             List<Custom> customList = customService.queryCustomInformationByParam(map);
             model.addAttribute("customList", customList);
         }
+
+        List<SaleRecord> saleRecordList = saleRecordService.findCustomSaleList(id);
+        model.addAttribute("saleRecordList",saleRecordList);
         model.addAttribute("custom", custom);
         return "/custom/details";
     }

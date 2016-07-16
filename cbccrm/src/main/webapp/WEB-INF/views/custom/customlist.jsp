@@ -343,6 +343,7 @@
             $.get("/custom/company")
                     .done(function (data) {
                         var $adddependid = $("#adddependid");
+                        $adddependid.html("");
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
                             var custom = data[i];
@@ -421,8 +422,9 @@
             $.get("/custom/edit/" + $id)
                     .done(function (data) {
                         // 重置表单
-                        // $("#addForm")[0].reset();
+                        $("#addForm")[0].reset();
                         var $editdependid = $("#editdependid");
+                        $editdependid.html("");
                         if (data.state == "success") {
                             var list = data.companyList;
                             // 填写公司列表
@@ -430,7 +432,6 @@
                                 var custom = list[i];
                                 $editdependid.append("<option value='" + custom.id + "'>" + custom.customer + "</option>");
                             }
-                            data.companyList == null;
                             // 给表单填值
                             var cust = data.custom;
 

@@ -1,6 +1,7 @@
 package com.it.mapper;
 
 import com.it.pojo.SaleRecord;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface SaleRecordMapper {
     void updateSaleRecord(SaleRecord saleRecord);
 
     List<SaleRecord> querySaleRecord(Map<String,Object> map);
+
+    Long querySaleRecordNumByParams(Map<String,Object> map);
 }

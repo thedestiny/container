@@ -112,7 +112,12 @@
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <h5>暂无项目</h5>
+                                    <c:if test="${ empty saleRecordList}">
+                                        <h5>暂无项目</h5>
+                                    </c:if>
+                                    <c:forEach items="${saleRecordList}" var="saleRecord" varStatus="SS">
+                                       <h4> ${SS.count}.&nbsp;<a class="control-label" href="/sale/detail/${saleRecord.id}">${saleRecord.salename}</a></h4>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>

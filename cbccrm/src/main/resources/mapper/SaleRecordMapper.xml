@@ -2,22 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.it.mapper.SaleRecordMapper">
 
-    <insert id="addSaleRecord" parameterType="SaleRecord">
+    <insert id="addSaleRecord" parameterType="SaleRecord" useGeneratedKeys="true" keyProperty="id">
         insert into t_salerecord
-        (salename, price, createtime, process, userid, customerid, realname, customer)
-        VALUES (#{salename},#{price},#{createtime},#{process},#{userid},#{customerid},#{realname},#{customer})
+        (salename, price, createtime, process, userid, customerid, realname, customer,lasttime)
+        VALUES (#{salename},#{price},#{createtime},#{process},#{userid},#{customerid},#{realname},#{customer},#{lasttime})
     </insert>
     <update id="updateSaleRecord">
         update t_salerecord
         <set>
             <if test="process != null and process != ''">
-                process = #{process}
+                process = #{process},
             </if>
             <if test="lasttime != null and lasttime != ''">
-                lasttime = #{lasttime}
+                lasttime = #{lasttime},
             </if>
             <if test="successtime != null and successtime != ''">
-                successtime = #{successtime}
+                successtime = #{successtime},
             </if>
         </set>
         where id = #{id}
@@ -33,7 +33,51 @@
             <if test="id != null and id != ''">
                 id = #{id}
             </if>
+            <if test="customerid != null and customerid != ''">
+                and customerid = #{customerid}
+            </if>
+            <if test="userid != null and userid != ''">
+               and userid = #{userid}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (salename like concat("%",#{keyword},"%") or
+                  process like concat("%",#{keyword},"%") or
+                  customer like concat("%",#{keyword},"%"))
+            </if>
+
+            <if test="salename != null and salename != ''">
+                 and  salename like concat("%",#{salename},"%")
+            </if>
+            <if test="proce != null and proce != ''">
+                and  process = #{proce}
+            </if>
+            <if test="starts != null and starts != '' and ends != null and ends != ''">
+                and  (createtime BETWEEN  #{starts} and #{ends})
+            </if>
+        </where>
+        <if test="start != null and start != '' and length != null and length != ''">
+            limit ${start} , ${length}
+        </if>
+    </select>
+
+
+    <select id="querySaleRecordNumByParams" parameterType="map" resultType="Long">
+        SELECT count(*)
+        FROM t_salerecord
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="userid != null and userid != ''">
+                userid = #{userid}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (salename like concat("%",#{keyword},"%") or
+                process like concat("%",#{keyword},"%") or
+                customer like concat("%",#{keyword},"%"))
+            </if>
         </where>
     </select>
+
 
 </mapper>
