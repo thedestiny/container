@@ -20,6 +20,12 @@
         VALUES (#{filename},#{savename},#{contenttype},#{createtime},#{size},#{saleid})
     </insert>
 
+    <delete id="deleteSaleFiles" parameterType="list">
+        DELETE FROM t_salefile WHERE id IN
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 
 

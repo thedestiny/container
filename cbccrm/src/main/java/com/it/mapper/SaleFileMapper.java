@@ -14,4 +14,6 @@ public interface SaleFileMapper {
     List<SaleFile> findSaleFileByParams(Map<String, Object> map);
 
     void addNewFile(SaleFile saleFile);
+
+    Integer deleteSaleFiles(List<Integer> list);
 }

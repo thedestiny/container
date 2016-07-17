@@ -6,6 +6,7 @@ package com.it.service;
  */
 
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.it.mapper.SaleFileMapper;
 import com.it.mapper.SaleLogMapper;
@@ -51,7 +52,7 @@ public class SaleRecordService {
     private SaleFileMapper saleFileMapper;
 
     @Value("${file.documentpath}")
-    protected String documentpath;
+    protected String filepath;
 
     /**
      * 添加创建时间、客户名、创建人id、创建人
@@ -211,7 +212,7 @@ public class SaleRecordService {
         InputStream inputStream = file.getInputStream();
         String filename = file.getOriginalFilename();
         String savename = UUID.randomUUID().toString();
-        FileOutputStream outputStream = new FileOutputStream(new File(documentpath, savename));
+        FileOutputStream outputStream = new FileOutputStream(new File(filepath, savename));
         IOUtils.copy(inputStream, outputStream);
         outputStream.flush();
         outputStream.close();
@@ -266,5 +267,43 @@ public class SaleRecordService {
         map.put("customerid", id);
         return findSaleRecordList(map);
 
+    }
+
+    /**
+     * 删除交易详情 交易记录备忘 以及相关文件
+     * @param id 详情id
+     */
+    @Transactional
+    public void deleteSaleRecordById(Integer id) {
+
+        List<Integer> list = Lists.newArrayList();
+        // 先获得备忘记录列表 再删除备忘
+        List<SaleLog> saleLogList = querySaleLog(id);
+        if(saleLogList.size() > 0){
+            for(SaleLog saleLog : saleLogList ){
+                list.add(saleLog.getId());
+            }
+            saleLogMapper.deleteSaleLogs(list);
+            list.clear();
+        }
+
+        // 获得相关文件列表 先删除文件 在删除数据库中的记录
+        List<SaleFile> saleFileList = findSalefileBySaleid(id);
+        if(saleFileList.size() > 0){
+            for(SaleFile saleFile : saleFileList){
+                list.add(saleFile.getId());
+                // 删除文件
+                File file = new File(filepath, saleFile.getSavename());
+                if (!file.exists()) {
+                    throw new RuntimeException("文件回火星了。。");
+                } else {
+                    if(file.delete() ){
+                        list.add(saleFile.getId());
+                    }
+                }
+            }
+            saleFileMapper.deleteSaleFiles(list);
+        }
+        saleRecordMapper.deleteSaleRecord(id);
     }
 }

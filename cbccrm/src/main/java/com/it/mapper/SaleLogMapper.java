@@ -12,4 +12,7 @@ import java.util.Map;
 public interface SaleLogMapper {
     void insertSaleLog(SaleLog saleLog);
     List<SaleLog> querySaleLog (Map<String,Object> map);
+
+    Integer deleteSaleLogs(List<Integer> list);
+
 }

@@ -17,4 +17,13 @@
         </where>
     </select>
 
+    <delete id="deleteSaleLogs" parameterType="list">
+        DELETE from t_salelog WHERE id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
 </mapper>

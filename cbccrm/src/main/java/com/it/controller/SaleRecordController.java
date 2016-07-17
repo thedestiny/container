@@ -6,6 +6,7 @@ package com.it.controller;
  */
 
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.it.dto.DataTablesResult;
 import com.it.dto.JSONResult;
@@ -124,9 +125,16 @@ public class SaleRecordController {
     public String showDetailsPage(@PathVariable Integer id, Model model) {
         SaleRecord saleRecord = saleRecordService.findSaleRecordById(id);
         List<SaleFile> saleFileList = saleRecordService.findSalefileBySaleid(id);
-
+        List<SaleLog> saleLogList = saleRecordService.querySaleLog(id);
         model.addAttribute("saleRecord", saleRecord);
         model.addAttribute("saleFileList",saleFileList);
+        List<SaleLog> saleLogList1 = Lists.newArrayList();
+        for(SaleLog saleLog : saleLogList){
+            String  time = saleLog.getCreatetime();
+            saleLog.setCreatetime(SmallUtils.transTime(time));
+            saleLogList1.add(saleLog);
+        }
+        model.addAttribute("saleLogList",saleLogList1);
         return "sale/saledetails";
     }
 
@@ -147,15 +155,15 @@ public class SaleRecordController {
     @RequestMapping(value = "/log/{id:\\d+}",method = RequestMethod.GET)
     @ResponseBody
     public List<SaleLog> showSaleLog(@PathVariable Integer id){
+        List<SaleLog> saleLogList1 = Lists.newArrayList();
         List<SaleLog> saleLogList = saleRecordService.querySaleLog(id);
-        if(saleLogList != null){
-            return saleLogList;
-        }else {
-            return null;
+        for(SaleLog saleLog : saleLogList){
+            String  time = saleLog.getCreatetime();
+            saleLog.setCreatetime(SmallUtils.transTime(time));
+            saleLogList1.add(saleLog);
         }
+        return saleLogList1;
     }
-
-
     /**
      * 修改该进度
      */
@@ -215,6 +223,17 @@ public class SaleRecordController {
                 .body(new InputStreamResource(inputStream));
     }
 
+
+    /**
+     * 删除销售记录
+     */
+
+    @RequestMapping(value = "/del/{id:\\d+}",method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteTheSaleRecord(@PathVariable Integer id){
+        saleRecordService.deleteSaleRecordById(id);
+        return "success";
+    }
 
 
 
