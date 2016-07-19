@@ -1,12 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%--
-  Created by IntelliJ IDEA.
-  User: xieyue
-  Date: 2016/7/7
-  Time: 20:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -25,13 +19,36 @@
 
     <link rel="stylesheet" href="/static/adminlte/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="/static/webuploader/webuploader.css">
+    <link rel="stylesheet" href="/static/adminlte/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="/static/adminlte/plugins/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="/static/adminlte/plugins/fullcalendar/fullcalendar.print.css" media="print">
+    <link rel="stylesheet" href="/static/adminlte/plugins/colorpicker/bootstrap-colorpicker.css">
 
     <style>
         #upload {
-            width: 30px;
+            width: 50px;
             height: 25px;
             overflow: hidden;
-            align-self: center;
+        }
+
+        #upload .webuploader-pick{
+            background-color: #00bbfa;
+            border: 1px solid #999;
+            margin-top: -9px;
+            margin-left: -15px ;
+        }
+        .timeline>li>.timeline-item{
+            box-shadow:none;
+            -webkit-box-shadow:none;
+        }
+        .files li{
+            padding: 5px;
+        }
+        #task {
+            width: 402px;
+            height: 238px;
+            z-index: 999;
+            /*attr("z-index",999)*/
         }
     </style>
 </head>
@@ -65,8 +82,10 @@
                                 title="Collapse">
                             <i class="fa fa-minus"></i></button>
                     </div>
+                    <span class="time"><i class="fa fa-clock-o"></i><span class="timeago" title="2016-06-12 12:29:26"></span></span>
                     <shiro:hasRole name="manager">
-                        <a href="javascript:;" class="btn btn-danger btn-sm pull-right" rel= "${saleRecord.id}" style="margin-right: 40px" id="del"><i class="fa fa-trash"></i>删除</a>
+                        <a href="javascript:;" class="btn btn-danger btn-sm pull-right" rel="${saleRecord.id}"
+                           style="margin-right: 40px" id="del"><i class="fa fa-trash"></i>删除</a>
                     </shiro:hasRole>
                 </div>
                 <div class="box-body">
@@ -88,65 +107,60 @@
                             <td>最后联系时间</td>
                             <td>${saleRecord.lasttime}</td>
                         </tr>
+                        <tr>
+                            <td><span class="time"><i class="fa fa-clock-o"></i><span class="timeago" title="${saleRecord.lasttime}"></span></span>
+                            </td>
+                        </tr>
                     </table>
 
                 </div>
                 <div class="box-footer">
                     进度：
                     <div class="progress">
-                        <c:if test="${saleRecord.process == '初次接触'}">
-                            <div class="progress-bar progress-bar-info" style="width: 25%">
-                                <span>初次接触</span>
-                            </div>
-                        </c:if>
-                        <c:if test="${saleRecord.process == '确认意向'}">
-                            <div class="progress-bar progress-bar-info" style="width: 25%">
-                                <span>初次接触</span>
-                            </div>
-                            <div class="progress-bar progress-bar-primary" style="width: 25%">
-                                <span>确认意向</span>
-                            </div>
-                        </c:if>
-                        <c:if test="${saleRecord.process == '提供合同'}">
-                            <div class="progress-bar progress-bar-info" style="width: 25%">
-                                <span>初次接触</span>
-                            </div>
-                            <div class="progress-bar progress-bar-primary" style="width: 25%">
-                                <span>确认意向</span>
-                            </div>
-                            <div class="progress-bar progress-bar-success" style="width: 25%">
-                                <span>提供合同</span>
-                            </div>
-                        </c:if>
-                        <c:if test="${saleRecord.process == '完成交易'}">
-                            <div class="progress-bar progress-bar-info" style="width: 25%">
-                                <span>初次接触</span>
-                            </div>
-                            <div class="progress-bar progress-bar-primary" style="width: 25%">
-                                <span>确认意向</span>
-                            </div>
-                            <div class="progress-bar progress-bar-success" style="width: 25%">
-                                <span>提供合同</span>
-                            </div>
-                            <div class="progress-bar progress-bar-warning" style="width: 25%">
-                                <span>完成交易</span>
-                            </div>
-                        </c:if>
-                        <c:if test="${saleRecord.process == '交易搁置'}">
-                            <div class="progress-bar progress-bar-danger" style="width: 25%">
-                                <span>交易搁置</span>
-                            </div>
-                        </c:if>
+                        <c:forEach var="saleLog" items="${saleLogList}">
+                            <c:set var="flag" value="${saleLog.context}"/>
+                            <c:choose>
+                                <c:when test="${fn:contains(flag,'将当前进度修改为')}">
+                                    <c:if test="${saleLog.type == '确认意向'}">
+                                        <div class="progress-bar progress-bar-primary" style="width: 25%">
+                                            <span>确认意向</span>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${saleLog.type == '提供合同'}">
+                                        <div class="progress-bar progress-bar-success" style="width: 25%">
+                                            <span>提供合同</span>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${saleLog.type == '完成交易'}">
+                                        <div class="progress-bar progress-bar-warning" style="width: 25%">
+                                            <span>完成交易</span>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${saleLog.type == '交易搁置'}">
+                                        <div class="progress-bar progress-bar-danger" style="width: 25%">
+                                            <span>交易搁置</span>
+                                        </div>
+                                    </c:if>
+                                </c:when>
+                                <c:when test="${fn:contains(flag,'创建')}">
+                                    <c:if test="${saleLog.type == '初次接触'}">
+                                        <div class="progress-bar progress-bar-info" style="width: 25%">
+                                            <span>初次接触</span>
+                                        </div>
+                                    </c:if>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
                     </div>
                 </div>
 
             </div>
             <div class="row">
                 <div class="col-sm-8">
-                    <%--备忘日志--%>
-                    <div class="box collapsed-box box-success">
+                    <%--备忘日志 collapsed-box --%>
+                    <div class="box  box-success">
                         <div class="box-header with-border ">
-                            <h1 class="box-title">跟进记录</h1>
+                            <h1 class="box-title"><i class="fa fa-list"></i>跟进记录</h1>
                             <div class="box-tools pull-right">
                                 <button id="logBtn" type="button" class="btn btn-box-tool" data-widget="collapse"
                                         data-toggle="tooltip"
@@ -157,11 +171,45 @@
                             <c:if test="${saleRecord.process != '完成交易'}">
                                 <button type="button" class="btn btn-primary" id="addLog">新增记录</button>
                             </c:if>
-
-
                         </div>
                         <div class="box-body">
                             <ul class="timeline" id="timeline">
+                            </ul>
+                            <ul class="timeline">
+                                <%--<c:forEach var="saleLog" items="${saleLogList}">--%>
+                                    <%--<c:set var="flag" value="${saleLog.context}"/>--%>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${fn:contains(flag,'将当前进度修改为')}">--%>
+                                            <%--<li>--%>
+                                                <%--<i class='fa fa-history bg-yellow'></i>--%>
+                                                <%--<div class='timeline-item'>--%>
+                                                    <%--<span class='time'><i--%>
+                                                            <%--class='fa fa-clock-o'></i>${saleLog.createtime}</span>--%>
+                                                    <%--<h3 class='timeline-header no-border'>${saleLog.context}</h3>--%>
+                                                <%--</div>--%>
+                                            <%--</li>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:when test="${fn:contains(flag,'创建')}">--%>
+                                            <%--<li>--%>
+                                                <%--<i class='fa fa-history bg-yellow'></i>--%>
+                                                <%--<div class='timeline-item'>--%>
+                                                    <%--<span class='time'><i--%>
+                                                            <%--class='fa fa-clock-o'></i>${saleLog.createtime}</span>--%>
+                                                    <%--<h3 class='timeline-header no-border'>${saleLog.context}</h3>--%>
+                                                <%--</div>--%>
+                                            <%--</li>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--<li>--%>
+                                            <%--<i class='fa fa-commenting bg-aqua'></i>--%>
+                                            <%--<div class='timeline-item'>--%>
+                                            <%--<span class='time'><i class='fa fa-clock-o'></i>${saleLog.createtime}</span>--%>
+                                            <%--<div class='timeline-body'><p>${saleLog.context}</p></div>--%>
+                                            <%--</div></li>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                                <%--</c:forEach>--%>
+                                <%--<li><i class="fa fa-clock-o bg-gray"></i></li>--%>
                             </ul>
                         </div>
                         <div class="box-footer">
@@ -203,7 +251,8 @@
                     <%--待办事项--%>
                     <div class="box  box-info">
                         <div class="box-header with-border">
-                            <h1 class="box-title">代办事项</h1>
+                            <h1 class="box-title"><i class="fa fa-list-alt"></i>代办事项</h1>
+                            <button class="btn btn-xs btn-primary" id="addTask">新增事项</button>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"
                                         data-toggle="tooltip"
@@ -212,7 +261,17 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            代办事项显示
+                            <ul style="list-style: none">
+                                <c:forEach items="${taskList}" var="task" varStatus="SS">
+                                    <li>
+                                        <i>${SS.count} .</i>
+                                        <input type="checkbox" class="done" value="${task.id}">
+                                        <span class="text">${task.title}</span>
+                                        <a href="javascript:;" rel="${task.id}" class="del"><i class="fa fa-trash-o"></i></a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+
                         </div>
                         <div class="box-footer">
                             注意保护资料安全
@@ -304,27 +363,126 @@
 
 </div>
 
+<div id="task" style="visibility: hidden">
+    <section class="content">
+        <div class="box box-primary" style="border: 1px solid cyan;position: absolute;">
+            <div class="box-header with-border" style="background-color:#3c8dbc">
+                <h3 class="box-title">新增待办事项</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                            title="Collapse">
+                        <i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
+                            title="Remove">
+                        <i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <form id="taskForm">
+                     <input type="text" name="saleid" value="${saleRecord.id}" hidden >
+                    <div class="form-group">
+                        <label>事项内容</label>
+                        <input autofocus type="text" id="title" name="title" class="form-control"
+                               placeholder="例如:晚上一起吃饭">
+                    </div>
+                    <div class="form-group">
+                        <label>起始时间</label>
+                        <div class="form-inline">
+                            <input type="text" id="start_time" name="start" style="width: 120px;height: 25px" >
+                            <label>-</label>
+                            <input type="text" id="end_time" name="end" style="width: 120px;height: 25px" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>提醒时间</label>
+                        <div>
+                            <select name="hour" style="width: 120px;height: 25px">
+                                <option value=""></option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                            </select>时
+                            :
+                            <select name="min" style="width: 120px;height: 25px">
+                                <option value=""></option>
+                                <option value="0">0</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>分
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>显示颜色</label>
+                        <input type="text" class="form-control" name="color" id="color" value="#61a5e8">
+                    </div>
+                </form>
+            </div>
+            <div class="box-footer">
+                <button id="addBtn" class="btn btn-sm btn-primary pull-right">创建</button>
+            </div>
+        </div>
+    </section>
+</div>
+
 
 <!-- jQuery 2.2.3 -->
 <script src="/static/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="/static/adminlte/bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
+<script src="/static/js/jquery-ui.min.js"></script>
 <script src="/static/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="/static/adminlte/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/dist/js/app.min.js"></script>
+<script src="/static/moment/moment.min.js"></script>
+<script src="/static/adminlte/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/static/adminlte/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/static/adminlte/dist/js/demo.js"></script>
 <script src="/static/js/jquery.validate.min.js"></script>
 <script src="/static/webuploader/webuploader.min.js"></script>
-<script src="/static/js/timeago.js"></script>
+<script src="/static/timeago/timeago.js"></script>
+<script src="/static/timeago/timeago_zh_cn.js"></script>
+<script src="/static/adminlte/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 
 <script>
     $(function () {
 
-        $(document).ready(function(){
+        //相对时间
+        $(".timeago").timeago();
+
+        $(document).ready(function () {
             $("time.timeago").timeago();
         });
 
@@ -384,8 +542,42 @@
             }
         });
 
+        $.get("/sale/log/" + ${saleRecord.id})
+                .done(function (result) {
+                    if (result) {
+                        var $timeline = $("#timeline");
+                        $timeline.html("");
+                        $timeline.prepend("<li><i class='fa fa-clock-o bg-gray'></i></li>");
+                        for (var i = 0; i < result.length; i++) {
+                            var saleLog = result[i];
+                            console.log(saleLog.context);
+                            var content;
+                            if (saleLog.context.match("将当前进度修改为") || saleLog.context.match("创建")) {
+                                content = "<li>" +
+                                        "<i class='fa fa-history bg-yellow'></i>" +
+                                        "<div class='timeline-item'>" +
+                                        "<span class='time' ><i class='fa fa-clock-o'></i>" + saleLog.createtime + "</span>" +
+                                        "<h3 class='timeline-header no-border'>" + saleLog.context + "</h3>" +
+                                        "</div></li>";
+                            } else {
+                                content = "<li>" +
+                                        "<i class='fa fa-commenting bg-aqua'></i>" +
+                                        "<div class='timeline-item'>" +
+                                        "<span class='time'><i class='fa fa-clock-o'></i>" + saleLog.createtime + "</span>" +
+                                        "<div class='timeline-body'><p>" + saleLog.context + "</p></div>" +
+                                        "</div></li>";
+                            }
+                            $timeline.prepend(content);
+                        }
+                    }
+
+                })
+                .fail(function () {
+                    alert("服务器异常");
+                });
+
         // 加载销售记录
-        $("#logBtn").click(function () {
+        $("#logBt").click(function () {
             $.get("/sale/log/" + ${saleRecord.id})
                     .done(function (result) {
                         if (result) {
@@ -481,11 +673,11 @@
     });
 
     // 删除销售记录
-    $("#del").click(function(){
+    $("#del").click(function () {
         alert("确认删除记录吗？");
-        if(confirm("再次挽留一下")){
-           var $id =  $(this).attr("rel");
-            $.get("/sale/del/"+$id)
+        if (confirm("再次挽留一下")) {
+            var $id = $(this).attr("rel");
+            $.get("/sale/del/" + $id)
                     .done(function (data) {
                         $("#edit").modal("hide");
                         //  dataTable.ajax.reload();
@@ -499,13 +691,98 @@
                     });
         }
 
-
-
+    });
+    // 背景颜色
+    $("#color").colorpicker({
+        color:'#33FFFF'
+    });
+    $("#start_time,#end_time").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose:true,
+        language:'zh-CN',
+        todayHighlight:true
     });
 
+    // 添加待办事项弹出对话框
+    $("#addTask").click(function(){
+        var date = moment(new Date());
+        $("#taskForm")[0].reset();
+        $("#start_time").val(date.format("YYYY-MM-DD"));
+        $("#end_time").val(date.format("YYYY-MM-DD"));
+        $("#task").css({"visibility": "visible"});
+        $("#task").css({"position": "absolute", "left": 500  + "px", "top": 200  + "px"});
+    });
 
+    // 保存事项
+    $("#addBtn").click(function(){
+        // 事项不为空
+        if(!$("#title").val()){
+            $("#title").focus();
+            return;
+        }
+        if(moment($("#start_time").val()).isAfter(moment($("#end_time").val()))){
+            alert("结束时间需要大于开始时间");
+            return;
+        }
+        $.post("/sale/detail/task",$("#taskForm").serialize())
+                .done(function(result){
+                    if(result.state == 'success'){
+                        // 隐藏窗口
+                        $("#task").css({"visibility": "hidden"});
+                        // 显示结果
+                        $("#header").after("<div class='alert alert-success alert-dismissible'>" +
+                                "<button type='button' class='close' data-dismiss='alert' >" +
+                                "<span aria-hidden='true'>&times;</span>" +
+                                "</button><strong>Tips:</strong>新增" + result.state + "</div>");
+                    }
 
+                })
+                .fail(function(){
+                    alert("服务器异常");
+                });
+    });
 
+    // 删除事项
+    $(".del").click(function(){
+        var $id = $(this).attr("rel");
+        if(confirm("真的要删除该事项吗？")){
+            $.get("/schedule/del/"+$id)
+                    .done(function(data){
+                        $calendar.fullCalendar('removeEvents',$id);
+                        $("#edit").modal("hide");
+                        // 显示结果
+                        $("#header").after("<div class='alert alert-success alert-dismissible'>" +
+                                "<button type='button' class='close' data-dismiss='alert' >" +
+                                "<span aria-hidden='true'>&times;</span>" +
+                                "</button><strong>Tips:</strong>删除" + data + "</div>");
+                    })
+                    .fail(function(){
+                        alert("服务器异常");
+                    });
+        }
+    });
+
+    // 标记已完成
+    $(".done").click(function(){
+        var $id = $(this).val();
+        if(!confirm("确定做完了吗？")){
+            return;
+        }
+        $.get("/schedule/done/"+ $id)
+                .done(function(data){
+                    $("#edit").modal("hide");
+                    _event.color = "#cccccc";
+                    $calendar.fullCalendar('updateEvents',_event);
+                    // 显示结果
+                    $("#header").after("<div class='alert alert-success alert-dismissible'>" +
+                            "<button type='button' class='close' data-dismiss='alert' >" +
+                            "<span aria-hidden='true'>&times;</span>" +
+                            "</button><strong>Tips:</strong>修改" + data + "</div>");
+                })
+                .fail(function(){
+                    alert("服务器异常");
+                });
+    });
 
 
 

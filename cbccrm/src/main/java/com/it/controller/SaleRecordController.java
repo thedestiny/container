@@ -10,12 +10,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.it.dto.DataTablesResult;
 import com.it.dto.JSONResult;
-import com.it.pojo.Document;
-import com.it.pojo.SaleFile;
-import com.it.pojo.SaleLog;
-import com.it.pojo.SaleRecord;
+import com.it.pojo.*;
 import com.it.service.SaleRecordService;
+import com.it.service.TaskService;
 import com.it.utils.SmallUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +47,9 @@ public class SaleRecordController {
 
     @Inject
     private SaleRecordService saleRecordService;
+
+    @Inject
+    private TaskService taskService;
 
     @Value("${file.documentpath}")
     private String filepath;
@@ -97,8 +99,6 @@ public class SaleRecordController {
         } else{
             ends = SmallUtils.transtoUTF8(ends);
         }
-
-
         Map<String, Object> param = Maps.newHashMap();
         param.put("start", start);
         param.put("length", length);
@@ -119,13 +119,15 @@ public class SaleRecordController {
 
     /**
      * 跳转交易详情页
-     * 获取文件列表
+     * 交易详情、交易日志、获取文件列表
      */
     @RequestMapping(value = "/detail/{id:\\d+}", method = RequestMethod.GET)
     public String showDetailsPage(@PathVariable Integer id, Model model) {
         SaleRecord saleRecord = saleRecordService.findSaleRecordById(id);
         List<SaleFile> saleFileList = saleRecordService.findSalefileBySaleid(id);
         List<SaleLog> saleLogList = saleRecordService.querySaleLog(id);
+        List<Task> taskList = taskService.querySaleRecordTask(id);
+
         model.addAttribute("saleRecord", saleRecord);
         model.addAttribute("saleFileList",saleFileList);
         List<SaleLog> saleLogList1 = Lists.newArrayList();
@@ -134,7 +136,10 @@ public class SaleRecordController {
             saleLog.setCreatetime(SmallUtils.transTime(time));
             saleLogList1.add(saleLog);
         }
+        model.addAttribute("timeflag",new DateTime(2016,7,16,12,32,16).getMillis());
+        model.addAttribute("timeflag1",new DateTime(2016,8,16,12,32,16).getMillis());
         model.addAttribute("saleLogList",saleLogList1);
+        model.addAttribute("taskList",taskList);
         return "sale/saledetails";
     }
 
@@ -234,6 +239,21 @@ public class SaleRecordController {
         saleRecordService.deleteSaleRecordById(id);
         return "success";
     }
+
+    /**
+     * 添加待办事项
+     */
+    @RequestMapping(value = "/detail/task",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult addTask(Task task,String hour,String min){
+        String remindtime = hour + ":"+min + ":00";
+        task.setRemindtime(remindtime);
+        taskService.addNewUserTask(task);
+        return new JSONResult(task);
+    }
+
+
+
 
 
 

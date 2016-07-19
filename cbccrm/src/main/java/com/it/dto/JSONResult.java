@@ -7,8 +7,7 @@ package com.it.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JSONResult {
@@ -20,9 +19,31 @@ public class JSONResult {
     private String message;
     private Object data;
 
+    public String getState() {
+        return state;
+    }
 
+    public void setState(String state) {
+        this.state = state;
+    }
 
-    public JSONResult( Object data) {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public JSONResult(Object data) {
         this(SUCCESS,data);
     }
 

@@ -33,26 +33,17 @@
                         <i class="fa fa-dashboard"></i> <span>销售记录</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="treeview <c:if test="${param.menu == 'things'}">active</c:if>">
+                    <a href="/schedule">
                         <i class="fa fa-th"></i>
                         <span>待办事项</span>
-                    <span class="pull-right-container">
-                    <small class="label pull-right bg-green">急hot</small>
-                    </span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>统计表</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                <li class="treeview <c:if test="${param.menu == 'chart'}">active</c:if>">
+                    <a href="/chart">
+                        <i class="fa fa-bar-chart-o" style="width: 20px"></i>
+                        <span>统计表格</span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                    </ul>
                 </li>
                 <li class="treeview <c:if test="${param.menu == 'custom'}">active</c:if>">
                     <a href="/custom">

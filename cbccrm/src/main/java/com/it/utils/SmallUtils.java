@@ -123,19 +123,19 @@ public class SmallUtils {
     }
 
     public static String getStartOfDay(){
-       return new DateTime().millisOfDay().withMinimumValue().toLocalDate().toString("MM-dd HH:mm:ss:SSS");
+       return new DateTime().millisOfDay().withMinimumValue().toString("MM-dd HH:mm:ss:SSS");
 
     }
     // toLocalDate() 是获取当地时间，可以不加
     public static String getEndOfDay(){
-        return  new DateTime().millisOfDay().withMaximumValue().toLocalDate().toString("MM-dd HH:mm:ss:SSS");
+        return  new DateTime().millisOfDay().withMaximumValue().toString("MM-dd HH:mm:ss:SSS");
     }
 
     public static String getStartOfWeek(){
-        return new DateTime().dayOfWeek().withMinimumValue().toLocalDate().toString("MM-dd HH:mm:ss:SSS");
+        return new DateTime().dayOfWeek().withMinimumValue().toString("MM-dd HH:mm:ss:SSS");
     }
     public static String getEndOfWeek(){
-        return new DateTime().dayOfWeek().withMaximumValue().toLocalDate().toString("MM-dd HH:mm:ss:SSS");
+        return new DateTime().dayOfWeek().withMaximumValue().toString("MM-dd HH:mm:ss:SSS");
     }
 
     public static String transtoISO(String str){
@@ -202,6 +202,28 @@ public class SmallUtils {
             arr[i] = Integer.parseInt(array[i]);
         }
         DateTime obj = new DateTime(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+
+
+        if (obj.plusHours(1).isBeforeNow() && obj.plusHours(24).isAfterNow()) {
+            for (int i = 1; i <= 24; i++) {
+                if (obj.plusHours(i).isAfterNow()) {
+                    return i + "小时前";
+                }
+            }
+        } else if (obj.plusMinutes(30).isBeforeNow() && obj.plusMinutes(60).isAfterNow()) {
+            return "半小时前";
+
+        } else if (obj.plusMinutes(1).isBeforeNow() && obj.plusMinutes(30).isAfterNow()) {
+            for (int i = 1; i <= 30; i++) {
+                if (obj.plusMinutes(i).isAfterNow()) {
+                    return i + "分钟前";
+                }
+            }
+        }  else if (obj.plusMinutes(1).isAfterNow()){
+            return "刚刚";
+        }
+            // 获取当前时间当天的最后时间
+        obj = obj.millisOfDay().withMaximumValue();
         if (obj.plusMonths(1).isBeforeNow() && obj.plusMonths(12).isAfterNow()) {
             for (int i = 1; i <= 12; i++) {
                 if (obj.plusMonths(i).isAfterNow()) {
@@ -218,23 +240,6 @@ public class SmallUtils {
                     return i > 2 ? i + "天前" : (i > 1 ? "前天" : "昨天");
                 }
             }
-        } else if (obj.plusHours(1).isBeforeNow() && obj.plusHours(24).isAfterNow()) {
-            for (int i = 1; i <= 24; i++) {
-                if (obj.plusHours(i).isAfterNow()) {
-                    return i + "小时前";
-                }
-            }
-        } else if (obj.plusMinutes(30).isBeforeNow() && obj.plusMinutes(60).isAfterNow()) {
-            return "半小时前";
-
-        } else if (obj.plusMinutes(1).isBeforeNow() && obj.plusMinutes(30).isAfterNow()) {
-            for (int i = 1; i <= 30; i++) {
-                if (obj.plusMinutes(i).isAfterNow()) {
-                    return i + "分钟前";
-                }
-            }
-        } else if (obj.plusMinutes(1).isAfterNow()){
-            return "刚刚";
         }
         return time;
     }

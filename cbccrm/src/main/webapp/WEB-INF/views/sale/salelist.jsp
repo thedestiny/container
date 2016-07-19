@@ -84,6 +84,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <shiro:hasRole name="manager">
+                                <th>创建人</th>
+                            </shiro:hasRole>
                             <th>交易事项</th>
                             <th>关联客户</th>
                             <th>进展情况</th>
@@ -250,6 +253,9 @@
             },
             columns: [
                 {"data": "id"},
+                <shiro:hasRole name="manager">
+                {"data": "realname"},
+                </shiro:hasRole>
                 {
                     "data": function (row) {
                         return "<a href='/sale/detail/" + row.id + "'>" + row.salename + "</a>";
@@ -266,7 +272,7 @@
                             return "<p class='label label-success' >" + row.process + "</p>";
                         } else if (row.process == '交易搁置') {
                             return "<p class='label label-danger' >" + row.process + "</p>";
-                        } else if (row.process == '确认意向'){
+                        } else if (row.process == '确认意向') {
                             return "<p class='label label-primary' >" + row.process + "</p>";
                         } else {
                             return "<p class='label label-default' >" + row.process + "</p>";
@@ -275,8 +281,10 @@
                 },
                 {
                     "data": function (row) {
-                        return "<p>" + row.price + "</p>";
-                        <%--<fmt:formatNumber value="${'+row.price+'}" type="currency"/>--%>
+                        console.log(arguments);
+                        var dollar = "<fmt:formatNumber value='${data.row.price}' type='currency'/>";
+                        console.log("dollar is " + dollar);
+                        return "<p>￥" + row.price + "</p>";
                     }
                 },
                 {"data": "createtime"},
