@@ -20,4 +20,17 @@ public interface SaleRecordMapper {
     List<SaleRecord> querySaleRecord(Map<String,Object> map);
 
     Long querySaleRecordNumByParams(Map<String,Object> map);
+
+    List<Map<String,Object>> countEmployeeSale(Map<String,Object> map);
+
+
+    Long countSaleRecordNum(Map<String, Object> map);
+
+    Float countSaleTotal(Map<String, Object> map);
+
+    List<Map<String,Object>> countCustomSale(Map<String,Object> map);
+
+    List<Map<String,Object>> countProcessNum(Map<String,Object> map);
+
+
 }

@@ -36,7 +36,6 @@
         <section class="content-header" id="header">
             <h1>
                 销售列表
-                <small>it all starts here</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/sale"><i class="fa fa-dashboard"></i>销售列表</a></li>

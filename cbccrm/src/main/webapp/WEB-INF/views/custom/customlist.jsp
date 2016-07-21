@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home</title>
+    <title>客户列表</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/static/adminlte/bootstrap/css/bootstrap.min.css">
 
@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="/static/adminlte/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="/static/adminlte/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/static/adminlte/plugins/pace/pace.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -255,6 +256,7 @@
 <script src="/static/datatable/js/jquery.dataTables.min.js"></script>
 <script src="/static/datatable/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/adminlte/plugins/pace/pace.min.js"></script>
 
 <script>
     $(function () {

@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home</title>
+    <title>待办事项</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/static/adminlte/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/fonts/font-awesome.min.css">
@@ -39,7 +39,7 @@
         <jsp:param name="menu" value="shedule"/>
     </jsp:include>
 
-    <div class="content-wrapper" >
+    <div class="content-wrapper">
         <section class="content-header" id="header">
             <h1>
                 待办事项
@@ -68,7 +68,8 @@
                                         <input type="checkbox" class="done" value="${task.id}">
                                         <span class="text">${task.title}</span>
                                         <div class="tools">
-                                            <a href="javascript:;" rel="${task.id}" class="del"><i class="fa fa-trash-o"></i></a>
+                                            <a href="javascript:;" rel="${task.id}" class="del"><i
+                                                    class="fa fa-trash-o"></i></a>
                                         </div>
                                     </li>
                                 </c:forEach>
@@ -95,7 +96,7 @@
                     </div>
                     <div class="box-body">
                         <form id="addForm">
-                           <%--// <input type="text" name="userid" value="" hidden >--%>
+                            <%--// <input type="text" name="userid" value="" hidden >--%>
                             <div class="form-group">
                                 <label>事项内容</label>
                                 <input autofocus type="text" id="title" name="title" class="form-control"
@@ -104,9 +105,9 @@
                             <div class="form-group">
                                 <label>起始时间</label>
                                 <div class="form-inline">
-                                    <input type="text" id="start_time" name="start" style="width: 120px;height: 25px" >
+                                    <input type="text" id="start_time" name="start" style="width: 120px;height: 25px">
                                     <label>-</label>
-                                    <input type="text" id="end_time" name="end" style="width: 120px;height: 25px" >
+                                    <input type="text" id="end_time" name="end" style="width: 120px;height: 25px">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -174,10 +175,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">查看待办事项</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h4 class="modal-title">查看待办事项
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </h4>
                     </div>
                     <div class="modal-body">
                         <form id="editForm">
@@ -201,8 +203,11 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default " data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-danger " data-dismiss="modal" id="delBtn"><i class="fa fa-trash"></i>删除</button>
-                        <button type="button" class="btn btn-primary" id="editBtn"><i class="fa fa-check"></i>完成</button>
+                        <button type="button" class="btn btn-danger " data-dismiss="modal" id="delBtn"><i
+                                class="fa fa-trash"></i>删除
+                        </button>
+                        <button type="button" class="btn btn-primary" id="editBtn"><i class="fa fa-check"></i>完成
+                        </button>
                     </div>
 
                 </div>
@@ -230,12 +235,12 @@
 
         var _event = null;
         var $calendar = $("#calendar");
-        $("[title ='Collapse']").click(function(){
+        $("[title ='Collapse']").click(function () {
             $(this).css({"visibility": "hide"});
         });
 
         $calendar.fullCalendar({
-            lang:'zh-CN',
+            lang: 'zh-CN',
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -247,10 +252,10 @@
                 week: '周',
                 day: '天'
             },
-            events:"schedule/load",
-            dayClick: function(date, jsEvent, view) {
-               // console.log('Current view: ' + view.name);
-               // $(this).css('background-color', 'cyan');
+            events: "schedule/load",
+            dayClick: function (date, jsEvent, view) {
+                // console.log('Current view: ' + view.name);
+                // $(this).css('background-color', 'cyan');
 
 
                 $("#addForm")[0].reset();
@@ -263,25 +268,26 @@
                 x = x < 900 ? x : 900;
                 $("#time").html(date.format());
                 $("#add").css({"visibility": "visible"});
-                $("#add").css({"position": "absolute", "left": x  + "px", "top": y  + "px"});
+                $("#add").css({"position": "absolute", "left": x + "px", "top": y + "px"});
             },
-            eventClick:function(calEvent, jsEvent, view){
+            eventClick: function (calEvent, jsEvent, view) {
                 _event = calEvent;
-                console.log(calEvent);
                 $("#event_id").val(calEvent.id);
                 $("#event_title").text(calEvent.title);
                 $("#event_start").text(moment(calEvent.start).format("YYYY-MM-DD"));
-                $("#event_end").text(moment(calEvent.end).format("YYYY-MM-DD"));
-                if(calEvent.remindtime){
+                if(!moment(calEvent.end).format("YYYY-MM-DD").match("date")){
+                    $("#event_end").text(moment(calEvent.end).format("YYYY-MM-DD"));
+                }
+                if (calEvent.remindtime) {
                     $("#event_remindtime").text(calEvent.remindtime);
-                }else{
+                } else {
                     $("#event_remindtime").text("无");
                 }
 
                 $("#edit").modal({
-                    "show":true,
-                    "backdrop":"static",
-                    "keyboard":false
+                    "show": true,
+                    "backdrop": "static",
+                    "keyboard": false
                 });
             },
 
@@ -315,29 +321,29 @@
 
         // 背景颜色
         $("#color").colorpicker({
-            color:'#33FFFF'
+            color: '#33FFFF'
         });
         $("#start_time,#end_time").datepicker({
             format: 'yyyy-mm-dd',
-            autoclose:true,
-            language:'zh-CN',
-            todayHighlight:true
+            autoclose: true,
+            language: 'zh-CN',
+            todayHighlight: true
         });
 
         // 保存事项
-        $("#addBtn").click(function(){
+        $("#addBtn").click(function () {
             // 事项不为空
-           if(!$("#title").val()){
-               $("#title").focus();
-               return;
-           }
-            if(moment($("#start_time").val()).isAfter(moment($("#end_time").val()))){
+            if (!$("#title").val()) {
+                $("#title").focus();
+                return;
+            }
+            if (moment($("#start_time").val()).isAfter(moment($("#end_time").val()))) {
                 alert("结束时间需要大于开始时间");
                 return;
             }
-            $.post("/schedule/add",$("#addForm").serialize())
-                    .done(function(result){
-                        if(result.state == 'success'){
+            $.post("/schedule/add", $("#addForm").serialize())
+                    .done(function (result) {
+                        if (result.state == 'success') {
                             // 隐藏窗口
                             $("#add").css({"visibility": "hidden"});
                             // 获取最新结果
@@ -350,18 +356,18 @@
                         }
 
                     })
-                    .fail(function(){
+                    .fail(function () {
                         alert("服务器异常");
                     });
         });
 
         // 删除事项
-        $("#delBtn").click(function(){
+        $("#delBtn").click(function () {
             var $id = $("#event_id").val();
-            if(confirm("真的要删除该事项吗？")){
-                $.get("/schedule/del/"+$id)
-                        .done(function(data){
-                            $calendar.fullCalendar('removeEvents',$id);
+            if (confirm("真的要删除该事项吗？")) {
+                $.get("/schedule/del/" + $id)
+                        .done(function (data) {
+                            $calendar.fullCalendar('removeEvents', $id);
                             $("#edit").modal("hide");
                             // 显示结果
                             $("#header").after("<div class='alert alert-success alert-dismissible'>" +
@@ -369,17 +375,17 @@
                                     "<span aria-hidden='true'>&times;</span>" +
                                     "</button><strong>Tips:</strong>删除" + data + "</div>");
                         })
-                        .fail(function(){
+                        .fail(function () {
                             alert("服务器异常");
                         });
             }
         });
-        $(".del").click(function(){
+        $(".del").click(function () {
             var $id = $(this).attr("rel");
-            if(confirm("真的要删除该事项吗？")){
-                $.get("/schedule/del/"+$id)
-                        .done(function(data){
-                            $calendar.fullCalendar('removeEvents',$id);
+            if (confirm("真的要删除该事项吗？")) {
+                $.get("/schedule/del/" + $id)
+                        .done(function (data) {
+                            $calendar.fullCalendar('removeEvents', $id);
                             $("#edit").modal("hide");
                             // 显示结果
                             $("#header").after("<div class='alert alert-success alert-dismissible'>" +
@@ -387,74 +393,72 @@
                                     "<span aria-hidden='true'>&times;</span>" +
                                     "</button><strong>Tips:</strong>删除" + data + "</div>");
                         })
-                        .fail(function(){
+                        .fail(function () {
                             alert("服务器异常");
                         });
             }
         });
 
         // 标记事项已完成
-        $("#editBtn").click(function(){
+        $("#editBtn").click(function () {
             var $id = $("#event_id").val();
-            $.get("/schedule/done/"+ $id)
-                    .done(function(data){
+            $.get("/schedule/done/" + $id)
+                    .done(function (data) {
                         $("#edit").modal("hide");
                         _event.color = "#cccccc";
-                        $calendar.fullCalendar('updateEvents',_event);
+                        $calendar.fullCalendar('updateEvents', _event);
                         // 显示结果
                         $("#header").after("<div class='alert alert-success alert-dismissible'>" +
                                 "<button type='button' class='close' data-dismiss='alert' >" +
                                 "<span aria-hidden='true'>&times;</span>" +
                                 "</button><strong>Tips:</strong>修改" + data + "</div>");
                     })
-                    .fail(function(){
+                    .fail(function () {
                         alert("服务器异常");
                     });
         });
 
-        $(".done").click(function(){
+        $(".done").click(function () {
             var $id = $(this).val();
-            if(!confirm("确定做完了吗？")){
-              return;
+            if (!confirm("确定做完了吗？")) {
+                return;
             }
-            $.get("/schedule/done/"+ $id)
-                    .done(function(data){
+            $.get("/schedule/done/" + $id)
+                    .done(function (data) {
                         $("#edit").modal("hide");
                         _event.color = "#cccccc";
-                        $calendar.fullCalendar('updateEvents',_event);
+                        $calendar.fullCalendar('updateEvents', _event);
                         // 显示结果
                         $("#header").after("<div class='alert alert-success alert-dismissible'>" +
                                 "<button type='button' class='close' data-dismiss='alert' >" +
                                 "<span aria-hidden='true'>&times;</span>" +
                                 "</button><strong>Tips:</strong>修改" + data + "</div>");
                     })
-                    .fail(function(){
+                    .fail(function () {
                         alert("服务器异常");
                     });
         });
 
-        $("#ad").on("mousedown",function(ev){
+        $("#ad").on("mousedown", function (ev) {
             var x;
             var y;
-            var x0 = event.pageX -201;
-            var y0 = event.pageY -119;
+            var x0 = event.pageX - 201;
+            var y0 = event.pageY - 119;
             y0 = y0 > 220 ? y0 : 220;
             y0 = y0 > 500 ? 500 : y0;
             x0 = x0 < 900 ? x0 : 900;
 
-            $(this).on("mousemove",function(event){
+            $(this).on("mousemove", function (event) {
                 console.log(event.pageX);
                 console.log(event.pageY);
                 x = event.pageX - x0;
                 y = event.pageY - y0;
-                $(this).css({"position": "absolute", "left": x  + "px", "top": y  + "px"});
+                $(this).css({"position": "absolute", "left": x + "px", "top": y + "px"});
             });
-            $(this).on("mouseup",function(){
-                $(this).css({"position": "absolute", "left": x  + "px", "top": y  + "px"});
+            $(this).on("mouseup", function () {
+                $(this).css({"position": "absolute", "left": x + "px", "top": y + "px"});
             })
         });
-
-
 
 
         /* ADDING EVENTS */

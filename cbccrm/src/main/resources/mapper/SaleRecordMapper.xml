@@ -79,5 +79,87 @@
         </where>
     </select>
 
+    <select id="countProcessNum" parameterType="map" resultType="Map">
+        SELECT   temp.saletype as 'name',
+        (SELECT count(*) from t_salerecord WHERE t_salerecord.process = temp.saletype
+        <if test="start != null and start != '' and end != null and end != ''">
+            and createtime >= #{start} and  createtime &lt;= #{end}
+        </if>
+        <if test="userid != null and userid != ''">
+            and userid = #{userid}
+        </if>
+        ) as 'value'
+        from
+          (SELECT '初次接触' as 'saletype'
+          union select '确认意向'
+          union select '提供合同'
+          union select '完成交易'
+          union select '交易搁置') as temp
+    </select>
+
+    <select id="countEmployeeSale" parameterType="map" resultType="Map">
+        SELECT users.realname ,
+        (select ifnull(sum(price) , 0) FROM  t_salerecord
+        WHERE users.id = t_salerecord.userid
+        <if test="start != null and start != '' and end != null and end != ''">
+            and successtime >= #{start} and  successtime &lt;= #{end}
+        </if>
+        <if test="userid != null and userid != ''">
+            and userid = #{userid}
+        </if>
+        ) as 'amount'
+        FROM (SELECT id, realname FROM t_user) as users
+    </select>
+
+    <select id="countCustomSale" parameterType="map" resultType="Map">
+        select t_custom.customer as 'customer', ifnull(sum(price),0) as 'total'
+        from t_salerecord RIGHT JOIN t_custom
+        on t_salerecord.customerid = t_custom.id
+         <where>
+             <if test="start != null and start != '' and end != null and end != ''">
+                successtime >= #{start} and  successtime &lt;= #{end}
+             </if>
+             <if test="userid != null and userid != ''">
+                 and t_salerecord.userid = #{userid}
+             </if>
+             <if test="process != null and process != ''">
+                and process = #{process}
+            </if>
+         </where>
+         GROUP BY customer
+    </select>
+
+
+    <select id="countSaleRecordNum" parameterType="map" resultType="Long">
+        SELECT count(*) FROM t_salerecord
+        <where>
+            <if test="start != null and start != '' and end != null and end != ''">
+                successtime >= #{start} and  successtime &lt;= #{end}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userid = #{userid}
+            </if>
+            <if test="process != null and process != ''">
+                and process = #{process}
+            </if>
+        </where>
+    </select>
+
+    <select id="countSaleTotal" parameterType="map" resultType="Float">
+        SELECT sum(price) FROM t_salerecord
+        <where>
+            <if test="start != null and start != '' and end != null and end != ''">
+                successtime between #{start} and  #{end}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userid = #{userid}
+            </if>
+            <if test="process != null and process != ''">
+                and process = #{process}
+            </if>
+        </where>
+    </select>
+
+
 
 </mapper>

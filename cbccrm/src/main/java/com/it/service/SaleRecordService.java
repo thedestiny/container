@@ -306,4 +306,10 @@ public class SaleRecordService {
         }
         saleRecordMapper.deleteSaleRecord(id);
     }
+
+
+
+
+
+
 }
