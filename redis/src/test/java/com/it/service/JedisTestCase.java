@@ -20,7 +20,7 @@ public class JedisTestCase {
 
     @Before
     public void setReady() {
-        jedis = new Jedis("192.168.1.34");
+        jedis = new Jedis("192.168.56.1");
     }
 
     @After
@@ -37,6 +37,8 @@ public class JedisTestCase {
         String value = jedis.get("address");
         logger.debug("address is {}", value);
 
+
+
     }
 
     @Test
@@ -45,11 +47,11 @@ public class JedisTestCase {
         String value = jedis.get("signup");
         logger.debug("signup is {}", value);
 
-        jedis.incrBy("signup",10);
+        jedis.incrBy("signup", 10);
         value = jedis.get("signup");
         logger.debug("signup is {}", value);
 
-        jedis.incrByFloat("signup",3.4F);
+        jedis.incrByFloat("signup", 3.4F);
         value = jedis.get("signup");
         logger.debug("signup is {}", value);
 

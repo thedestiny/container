@@ -26,7 +26,7 @@
     <!--指定spring容器加载的配置文件地址-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:ApplicationContext*.xml</param-value>
+        <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
     <!--Spring字符集过滤器-->

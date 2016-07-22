@@ -63,6 +63,12 @@
             <artifactId>javax.inject</artifactId>
             <version>1</version>
         </dependency>
+        <!--spring-context-support -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>4.2.6.RELEASE</version>
+        </dependency>
 
 
         <!-- http://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -197,6 +203,13 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
             <version>1.7.2.RELEASE</version>
+        </dependency>
+
+        <!--Gson-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.5</version>
         </dependency>
 
 

@@ -60,16 +60,22 @@
     </context:component-scan>
     <!--开启基于注解的AOP-->
     <aop:aspectj-autoproxy/>
-    <!--redis-->
 
-    <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+
+    <!--spring-data-redis-->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="hostName" value="192.168.1.34"/>
         <property name="port" value="6379"/>
         <property name="usePool" value="true"/>
     </bean>
 
-    <bean class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" value="jedisConnectionFactory"/>
+    <bean id="stringRedisSerializer"
+          class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <property name="keySerializer" ref="stringRedisSerializer"/>
+        <property name="valueSerializer" ref="stringRedisSerializer"/>
     </bean>
 
     <!--<aop:config>-->
