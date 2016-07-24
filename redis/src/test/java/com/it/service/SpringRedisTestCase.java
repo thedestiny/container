@@ -6,7 +6,9 @@ package com.it.service;
  */
 
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.it.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,12 +36,20 @@ public class SpringRedisTestCase {
         ValueOperations<String,String> operations = redisTemplate.opsForValue();
         Map<String,String> map = Maps.newHashMap();
         map.put("address:1","us");
-        map.put("address:2","uk");
+        map.put("address:2","China");
         operations.multiSet(map);
-        String vale  = operations.get("address:1");
-        logger.debug("the value is {}",vale);
+        List<String> list = Lists.newArrayList();
+        list.add("address:1");
+        list.add("address:2");
+        List<String> stringList = operations.multiGet(list);
 
+        logger.debug("stringList is {},{}",stringList.get(0),stringList.get(1));
+    }
 
+    @Test
+    public void testIncr(){
+        redisTemplate.opsForValue().increment("increment:1",10);
+        logger.debug("increment:1 is {}",redisTemplate.opsForValue().get("increment:1"));
     }
 
 

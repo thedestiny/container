@@ -2,7 +2,7 @@ package com.it.service;
 
 /**
  * Created by xieyue on 2016/7/21.
- * JedisTestCase
+ * JedisStringTestCase
  */
 
 
@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
-public class JedisTestCase {
-    Logger logger = LoggerFactory.getLogger(JedisTestCase.class);
+public class JedisStringTestCase {
+    Logger logger = LoggerFactory.getLogger(JedisStringTestCase.class);
 
     private Jedis jedis = null;
 
