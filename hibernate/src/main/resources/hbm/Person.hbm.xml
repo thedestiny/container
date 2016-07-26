@@ -3,13 +3,19 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.it.pojo">
-    <!--实体类Pojo 和Table的对应关系-->
-    <class name="User" table="t_user">
+
+    <class name="Person" table="t_person">
         <id name="id" column="id">
             <generator class="native"/>
         </id>
         <property name="username"/>
-        <property name="password"/>
-        <property name="realname"/>
+
+        <!--one to one 的配置-->
+        <one-to-one name="card" class="Card" cascade="delete"/>
+
+
     </class>
+
+
+
 </hibernate-mapping>

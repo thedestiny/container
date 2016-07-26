@@ -48,4 +48,14 @@ public class User {
     public void setRealname(String realname) {
         this.realname = realname;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", realname='" + realname + '\'' +
+                '}';
+    }
 }

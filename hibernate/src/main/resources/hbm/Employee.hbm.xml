@@ -1,15 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.it.pojo">
     <!--实体类Pojo 和Table的对应关系-->
-    <class name="User" table="t_user">
-        <id name="id" column="id">
+
+    <class name="Employee" table="t_employee">
+        <id name="id">
             <generator class="native"/>
         </id>
-        <property name="username"/>
-        <property name="password"/>
         <property name="realname"/>
+
+        <!--many to one 的配置-->
+
+        <many-to-one name="department" column="deptid" class="Department" fetch="join"/>
+
     </class>
+
+
+
+
+
 </hibernate-mapping>
