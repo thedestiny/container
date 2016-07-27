@@ -17,10 +17,10 @@ public class OneToOneTestCase {
         session.beginTransaction();
 
         Person person = new Person();
-        person.setUsername("joe");
+        person.setUsername("jly");
 
         Card card = new Card();
-        card.setCardnum(139632595);
+        card.setCardnum(139965395);
         card.setPerson(person);
 
         session.save(person);
@@ -62,10 +62,8 @@ public class OneToOneTestCase {
 //        session.delete(card);
 
         // 删除人
-        Person person = (Person) session.get(Person.class,3);
+        Person person = (Person) session.get(Person.class,6);
         session.delete(person);
-
-
 
         session.getTransaction().commit();
     }

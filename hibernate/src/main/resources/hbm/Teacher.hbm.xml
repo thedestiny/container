@@ -1,22 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.it.pojo">
     <!--实体类Pojo 和Table的对应关系-->
-
-    <class name="Employee" table="t_employee">
+    <class name="Teacher" table="t_teacher">
         <id name="id">
             <generator class="native"/>
         </id>
-        <property name="realname"/>
-
-        <!--many to one 的配置-->
-        <many-to-one name="department" column="deptid" class="Department" fetch="join"/>
-
+        <property name="teaname"/>
+        <set name="studentSet" table="t_tea_stu" inverse="true">
+            <key column="teaid"/>
+            <many-to-many column="stuid" class="Student" order-by="id asc"/>
+        </set>
     </class>
-
-
-
-
-
 </hibernate-mapping>

@@ -78,7 +78,7 @@ public class CriteriaTestCase {
         session.beginTransaction();
 
         Criteria criteria = session.createCriteria(User.class);
-
+        
         criteria.add(Restrictions.eq("username", "Lisa"));
         User user = (User) criteria.uniqueResult();
 

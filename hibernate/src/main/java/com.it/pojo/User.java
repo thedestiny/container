@@ -1,12 +1,16 @@
 package com.it.pojo;
 
-/**
- * Created by xieyue on 2016/7/25.
- */
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "t_user")
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
     private String password;

@@ -32,6 +32,13 @@
             <version>${hibernate-version}</version>
         </dependency>
 
+        <!--hibernate -ehcache-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+
         <!--C3P0数据库连接池-->
         <dependency>
             <groupId>com.mchange</groupId>

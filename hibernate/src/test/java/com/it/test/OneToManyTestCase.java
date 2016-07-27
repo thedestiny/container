@@ -42,14 +42,11 @@ public class OneToManyTestCase {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        Department department = (Department) session.get(Department.class,2);
-
+        Department department = (Department) session.get(Department.class,3);
         System.out.println(department.getDeptname());
-
         Set<Employee> employeeSet = department.getEmployeeSet();
-
         for(Employee employee :employeeSet){
-            System.out.println(employee.getRealname());
+            System.out.println(employee.getRealname() + " : " + employee.getDepartment().getDeptname());
         }
 
         session.getTransaction().commit();
@@ -91,7 +88,6 @@ public class OneToManyTestCase {
         session.beginTransaction();
 
         Department department = (Department) session.get(Department.class,2);
-
         session.delete(department);
 
         session.getTransaction().commit();

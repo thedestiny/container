@@ -1,10 +1,19 @@
 package com.it.pojo;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "t_employee")
 public class Employee {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String realname;
+    // 延迟加载时 使用
+    @ManyToOne//(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deptid")
+    @OrderBy("id desc")
     private Department department;
 
     public Integer getId() {

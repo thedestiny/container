@@ -1,12 +1,19 @@
 package com.it.pojo;
 
 
+import javax.persistence.*;
 
-
+@Entity
+@Table(name = "t_person")
 public class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
+    // ALL 或者 REMOVE 级联删除
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @PrimaryKeyJoinColumn
     private Card card;
 
     public Integer getId() {

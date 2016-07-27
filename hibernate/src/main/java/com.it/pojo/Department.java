@@ -1,12 +1,18 @@
 package com.it.pojo;
 
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "t_department")
 public class Department {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String deptname;
+    @OneToMany(mappedBy = "department")
     private Set<Employee> employeeSet;
 
 

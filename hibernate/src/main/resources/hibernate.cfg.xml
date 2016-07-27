@@ -25,11 +25,36 @@
         <property name="show_sql">true</property>
         <property name="current_session_context_class">thread</property>
 
+        <!--事务隔离级别 1.2.4.8 级别高效率低-->
+        <!--<property name="connection.isolation">4</property>-->
+        <!--<property name="connection.isolation">8</property>-->
+        <!--二级缓存配置-->
+        <property name="cache.use_second_level_cache">true</property>
+        <property name="cache.region.factory_class">
+            org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+
         <!--添加映射文件-->
-        <mapping resource="hbm/User.hbm.xml"/>
-        <mapping resource="hbm/Person.hbm.xml"/>
-        <mapping resource="hbm/Card.hbm.xml"/>
-        <mapping resource="hbm/Department.hbm.xml"/>
-        <mapping resource="hbm/Employee.hbm.xml"/>
+        <!--<mapping resource="hbm/User.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Person.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Card.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Department.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Employee.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Title.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Context.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Student.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Teacher.hbm.xml"/>-->
+        <!--<mapping resource="hbm/Task.hbm.xml"/>-->
+
+        <mapping class="com.it.pojo.User"/>
+        <mapping class="com.it.pojo.Context"/>
+        <mapping class="com.it.pojo.Title"/>
+        <mapping class="com.it.pojo.Teacher"/>
+        <mapping class="com.it.pojo.Student"/>
+        <mapping class="com.it.pojo.Person"/>
+        <mapping class="com.it.pojo.Card"/>
+        <mapping class="com.it.pojo.Department"/>
+        <mapping class="com.it.pojo.Employee"/>
+        <mapping class="com.it.pojo.Task"/>
+
     </session-factory>
 </hibernate-configuration>
