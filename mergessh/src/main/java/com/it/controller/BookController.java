@@ -39,7 +39,7 @@ public class BookController {
         model.addAttribute("typeList",typeList);
         model.addAttribute("publisherList",publisherList);
         model.addAttribute("page",page);
-        return "book/list";
+        return "book/lists";
     }
 
     @RequestMapping(value = "/book/new",method = RequestMethod.POST)

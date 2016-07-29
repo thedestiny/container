@@ -5,13 +5,11 @@ import com.google.common.collect.Maps;
 import com.it.pojo.Search;
 import com.it.util.Page;
 import com.it.util.SmallUtils;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.hibernate.transform.ResultTransformer;
 
 
@@ -19,6 +17,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
@@ -124,61 +123,56 @@ public class BaseDao<T, PK extends Serializable> {
     private Criteria buildCriteriaBySearchParams(List<Search> searchList) {
 
         Criteria criteria = getSession().createCriteria(entityClass);
-
         if (searchList.size() == 0) {
             return criteria;
-        }
-        Field[] fields = entityClass.getDeclaredFields();
-        Map<String,String> map = Maps.newHashMap();
-        for (int i = 0; i < fields.length; i++) {
-            String prop = fields[i].getName();
-            String typename = fields[i].getType().getSimpleName();
-            map.put(prop,typename);
         }
         for (Search search : searchList) {
             String type = search.getType();
             String property = search.getProperty();
-            String value = search.getObject().toString();
-            if (map.containsKey(property) && map.get(property).equals("String")) {
-                if ("eq".equalsIgnoreCase(type)) {
-                    criteria.add(Restrictions.eq(property, value));
-                } else if ("like".equalsIgnoreCase(type)) {
-                    criteria.add(Restrictions.like(property, value, MatchMode.ANYWHERE));
+            Object value = search.getObject();
+            if(value == null){
+                continue;
+            }
+            if (property.contains("_or_")) {
+                String[] array = property.split("_or_");
+                Disjunction disjunction = Restrictions.disjunction();
+                for (String str : array) {
+                    disjunction.add(buildCondition(type,str,value));
                 }
-            } else if (map.containsKey(property) && map.get(property).equals("Float")) {
-                if ("ge".equalsIgnoreCase(type)) {
-                    criteria.add(Restrictions.ge(property, Float.valueOf(value)));
-                } else if ("gt".equalsIgnoreCase(type)) {
-                    criteria.add(Restrictions.gt(property, Float.valueOf(value)));
-                } else if ("le".equalsIgnoreCase(type)) {
-                    criteria.add(Restrictions.le(property, Float.valueOf(value)));
-                } else if ("lt".equalsIgnoreCase(type)) {
-                    criteria.add(Restrictions.lt(property, Float.valueOf(value)));
-                }
+                criteria.add(disjunction);
             } else {
-                if(property.contains(".")){
-                    // "."分割字符串要转译
-                    String temple = property.split("\\.")[0];
-                    System.out.println(temple);
-                    if (map.containsKey(temple)
-                            && (map.get(temple).equals("Publisher")
-                            || map.get(temple).equals("Type"))
-                            ) {
-                        criteria.add(Restrictions.eq(property, Integer.parseInt(value)));
-                    }
-                }
-                else{
-                    if(!map.containsKey(property) && !property.contains(".") ){
-                        criteria.add(Restrictions.or(
-                                Restrictions.like("author",value,MatchMode.ANYWHERE),
-                                Restrictions.like("title",value,MatchMode.ANYWHERE)
-                        ));
-                    }
+                criteria.add(buildCondition(type,property,value));
 
-                }
             }
         }
         return criteria;
+    }
+
+
+    private Criterion buildCondition(String type, String property, Object value) {
+
+        Class<?> obj = Restrictions.class;
+        Method[] methods = obj.getMethods();
+        Map<String, Method> map = Maps.newHashMap();
+        for (Method method : methods) {
+            System.out.println(method.getName());
+            map.put(method.getName(), method);
+        }
+
+        if ("eq".equalsIgnoreCase(type)) {
+            return Restrictions.eq(property, value);
+        } else if ("like".equalsIgnoreCase(type)) {
+            return Restrictions.like(property, value.toString(), MatchMode.ANYWHERE);
+        } else if("ge".equalsIgnoreCase(type)){
+            return Restrictions.ge(property,value);
+        }else if("gt".equalsIgnoreCase(type)){
+            return Restrictions.gt(property,value);
+        }else if("le".equalsIgnoreCase(type)){
+            return Restrictions.le(property,value);
+        }else if("lt".equalsIgnoreCase(type)){
+            return Restrictions.lt(property,value);
+        }
+        return null;
     }
 
     /**

@@ -45,39 +45,60 @@ public class Search {
 
     public static List<Search> getQueryParamList(HttpServletRequest request) {
         List<Search> searchList = Lists.newArrayList();
-        Map<String,String> map = getParams(request);
-        for(Map.Entry<String,String> entry : map.entrySet()){
+        Map<String,Object> map = getParams(request);
+        for(Map.Entry<String,Object> entry : map.entrySet()){
             String str = entry.getKey();
-            String value = entry.getValue();
+            Object value = entry.getValue();
+            String name = "administrator";
+            // q_i_like_title
             if (str.startsWith("q_")) {
-                String[] array = str.split("_");
-                if (array.length != 3) {
-                    throw new RuntimeException("字段有误！" + str);
-                }
-                if(StringUtils.isNotEmpty(value)){
+                String[] array = str.split("_",4);
+                System.out.println("==============================================");
+                System.out.println(array[0]);
+                System.out.println(array[1]);
+                System.out.println(array[2]);
+                System.out.println(array[3]);
+                if(StringUtils.isNotEmpty(value.toString())){
                     System.out.println(value);
                     Search search = new Search();
-                    search.setType(array[1]);
-                    search.setProperty(array[2]);
+                    search.setType(array[2]);
+                    search.setProperty(array[3]);
+                    value = transValue(value.toString(), array[1]);
                     search.setObject(value);
                     searchList.add(search);
                     request.setAttribute(str,value);
                 }
-
             }
         }
         return searchList;
     }
 
-    public static Map<String,String> getParams(HttpServletRequest request){
+    private static Object transValue(String value, String valueType) {
+
+        if("s".equalsIgnoreCase(valueType)){
+           return value;
+        } if("i".equalsIgnoreCase(valueType)){
+            return Integer.parseInt(value);
+        } if("f".equalsIgnoreCase(valueType)){
+            return Float.valueOf(value);
+        } if("d".equalsIgnoreCase(valueType)){
+            return Double.valueOf(value);
+        } if("b".equalsIgnoreCase(valueType)){
+            return Boolean.valueOf(value);
+        }
+        return null;
+    }
+
+    public static Map<String,Object> getParams(HttpServletRequest request){
         Enumeration<String> enumeration = request.getParameterNames();
-        Map<String,String> map = Maps.newHashMap();
+        Map<String,Object> map = Maps.newHashMap();
         while (enumeration.hasMoreElements()) {
             String str = enumeration.nextElement();
             String value = request.getParameter(str);
-            if(!value.matches("[\u4e00-\u9fa5]+")){
-                value = SmallUtils.transtoUTF8(value);
-            }
+//            if(!value.matches("[\u4e00-\u9fa5]+")){
+//                value = SmallUtils.transtoUTF8(value);
+//            }
+            System.out.println(value);
             map.put(str,value);
         }
         return map;
