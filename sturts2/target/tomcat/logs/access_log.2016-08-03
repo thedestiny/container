@@ -1,0 +1,11 @@
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:22:59:26 +0800] "GET /file/home HTTP/1.1" 200 426 http-bio-80-exec-1 929
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:22:59:42 +0800] "POST /file/upload HTTP/1.1" 302 - http-bio-80-exec-2 407
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:22:59:42 +0800] "GET /file/home.action HTTP/1.1" 200 426 http-bio-80-exec-3 9
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:02:19 +0800] "GET /file/home.action HTTP/1.1" 200 426 http-bio-80-exec-5 11
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:02:34 +0800] "POST /file/upload HTTP/1.1" 302 - http-bio-80-exec-6 215
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:02:34 +0800] "GET /file/home.action HTTP/1.1" 200 426 http-bio-80-exec-7 5
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:03:02 +0800] "GET /file/download.do HTTP/1.1" 404 983 http-bio-80-exec-8 5
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:03:19 +0800] "GET /file/download.do HTTP/1.1" 404 983 http-bio-80-exec-9 2
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:03:22 +0800] "GET /file/home.action HTTP/1.1" 200 423 http-bio-80-exec-10 103
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:03:29 +0800] "GET /file/download HTTP/1.1" 200 118169 http-bio-80-exec-2 2281
+0:0:0:0:0:0:0:1 - - [03/Aug/2016:23:03:33 +0800] "GET /file/download HTTP/1.1" 200 118169 http-bio-80-exec-2 14

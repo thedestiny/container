@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!--修改文件上传的体积-->
+    <constant name="struts.multipart.maxSize" value="200000000"/>
+
+    <package name="fileUploadPackage" namespace="/file" extends="struts-default">
+
+        <action name="tom" class="com.it.action.UploadAction" >
+            <result>/WEB-INF/views/file/upload.jsp</result>
+        </action>
+
+        <action name="upload" class="com.it.action.UploadAction" method="upload">
+            <result type="redirectAction">
+                <param name="actionName">tom</param>
+                <param name="namespace">/file</param>
+            </result>
+        </action>
+
+        <action name="download" class="com.it.action.UploadAction" method="download">
+            <result name="success" type="stream">
+                <param name="contentType">${downloadType}</param>
+                <param name="contentLength">${downloadFileSize}</param>
+                <param name="contentDisposition">attachment;filename="${donwloadFileName}"</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+                <param name="allowCaching">true</param>
+                <param name="contentCharSet">UTF-8</param>
+            </result>
+        </action>
+
+    </package>
+
+
+</struts>

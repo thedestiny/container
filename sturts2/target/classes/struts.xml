@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+
+    <include file="struts-fileupload.xml"/>
+    <include file="struts-json.xml"/>
+
+
+    <!-- 拦截器-->
+    <package name="basePackage" abstract="true" extends="struts-default">
+
+        <interceptors>
+            <interceptor name="login" class="com.it.action.LoginInterceptor"/>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="login"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myStack"/>
+
+        <global-results>
+            <result name="login" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+                <param name="code">403</param>
+            </result>
+        </global-results>
+    </package>
+
+
+    <!--修改default.properties文件默认值  value="do"-->
+    <!--<constant name="struts.action.extension" value="action,,"/>-->
+    <!--namespace 是前缀-->
+    <package name="myPackage" extends="struts-default">
+        <!--
+            name : url中请求的名字
+            class : Action类的完全限定名
+        -->
+        <action name="home" class="com.it.action.HomeAction">
+            <!--
+                name : Action中方法的返回值
+            -->
+            <result name="success">/WEB-INF/views/home.jsp</result>
+        </action>
+    </package>
+
+    <package name="userPackage" namespace="/user" extends="basePackage">
+        <!--计时器-->
+        <interceptors >
+            <interceptor name="myTimer" class="com.it.action.MyTimeInterceptor"/>
+
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="myTimer"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myStack"/>
+
+        <action name="new" class="com.it.action.UserAction" method="toPage">
+            <result name="success" type="dispatcher">/WEB-INF/views/user/page.jsp</result>
+        </action>
+
+        <!-- name 是方法中的返回值,如果是success 可以不写
+             type="dispatcher" 也可以不写
+        -->
+        <action name="save" class="com.it.action.UserAction" method="save">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">list</param>
+                <param name="namespace">/user</param>
+            </result>
+        </action>
+
+        <action name="list" class="com.it.action.UserAction" method="list">
+            <result name="success">/WEB-INF/views/user/list.jsp</result>
+        </action>
+    </package>
+
+    <package name="homePackage" extends="basePackage">
+
+        <action name="index" class="com.it.action.HomeAction" method="toLogin">
+            <result>/WEB-INF/views/login.jsp</result>
+        </action>
+
+        <action name="login" class="com.it.action.HomeAction" method="login">
+            <result type="redirectAction">
+                <param name="actionName">list</param>
+                <param name="namespace">/user</param>
+            </result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="code">${code}</param>
+            </result>
+        </action>
+    </package>
+
+    <package name="indexPackage" namespace="/index" extends="basePackage">
+        <action name="find" class="com.it.action.HomeAction" method="find">
+            <result>/WEB-INF/views/index/find.jsp</result>
+        </action>
+    </package>
+
+
+    <package name="bookPackage" namespace="/book" extends="basePackage">
+        <action name="list" class="com.it.action.BookAction" method="list">
+            <result>/WEB-INF/views/book/list.jsp</result>
+        </action>
+    </package>
+
+    <!--修改文件上传的体积-->
+    <constant name="struts.multipart.maxSize" value="200000000"/>
+
+    <package name="UploadPackage" namespace="/file" extends="struts-default">
+
+        <action name="home" class="com.it.action.UploadAction" >
+            <result>/WEB-INF/views/file/upload.jsp</result>
+        </action>
+
+        <action name="upload" class="com.it.action.UploadAction" method="upload">
+            <result type="redirectAction">
+                <param name="actionName">home</param>
+                <param name="namespace">/file</param>
+            </result>
+        </action>
+
+        <action name="download" class="com.it.action.UploadAction" method="download">
+            <result name="success" type="stream">
+                <param name="contentType">${downloadType}</param>
+                <param name="contentLength">${downloadFileSize}</param>
+                <param name="contentDisposition">attachment;filename="${donwloadFileName}"</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+                <param name="allowCaching">true</param>
+                <param name="contentCharSet">UTF-8</param>
+            </result>
+        </action>
+
+    </package>
+
+
+
+</struts>

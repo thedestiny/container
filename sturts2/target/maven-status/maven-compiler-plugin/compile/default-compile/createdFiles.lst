@@ -1,0 +1,9 @@
+com\it\action\BookAction.class
+com\it\action\MyTimeInterceptor.class
+com\it\action\LoginInterceptor.class
+com\it\action\HomeAction.class
+com\it\action\UserAction.class
+com\it\action\UploadAction.class
+com\it\action\BaseAction.class
+com\it\pojo\User.class
+com\it\action\JSONAction.class
